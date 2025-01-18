@@ -4,9 +4,9 @@ from typing import Optional
 
 from .._models import BaseModel
 
-__all__ = ["DocumentAddDocumentResponse"]
+__all__ = ["DocumentDeleteResponse"]
 
 
-class DocumentAddDocumentResponse(BaseModel):
+class DocumentDeleteResponse(BaseModel):
     message: Optional[str] = None
     """This string will always be "Success!". This may change in the future."""

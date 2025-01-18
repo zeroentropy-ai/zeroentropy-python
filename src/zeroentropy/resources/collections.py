@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import httpx
 
-from ..types import collection_add_collection_params, collection_delete_collection_params
+from ..types import collection_add_params, collection_delete_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from .._utils import (
     maybe_transform,
@@ -19,9 +19,9 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from ..types.collection_add_response import CollectionAddResponse
+from ..types.collection_delete_response import CollectionDeleteResponse
 from ..types.collection_get_list_response import CollectionGetListResponse
-from ..types.collection_add_collection_response import CollectionAddCollectionResponse
-from ..types.collection_delete_collection_response import CollectionDeleteCollectionResponse
 
 __all__ = ["CollectionsResource", "AsyncCollectionsResource"]
 
@@ -46,7 +46,7 @@ class CollectionsResource(SyncAPIResource):
         """
         return CollectionsResourceWithStreamingResponse(self)
 
-    def add_collection(
+    def delete(
         self,
         *,
         collection_name: str,
@@ -56,7 +56,44 @@ class CollectionsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> CollectionAddCollectionResponse:
+    ) -> CollectionDeleteResponse:
+        """
+        Deletes a collection.
+
+        A `404 Not Found` status code will be returned, if the provided collection name
+        does not exist.
+
+        Args:
+          collection_name: The name of the collection to delete.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/collections/delete-collection",
+            body=maybe_transform({"collection_name": collection_name}, collection_delete_params.CollectionDeleteParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=CollectionDeleteResponse,
+        )
+
+    def add(
+        self,
+        *,
+        collection_name: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> CollectionAddResponse:
         """
         Adds a collection.
 
@@ -77,53 +114,11 @@ class CollectionsResource(SyncAPIResource):
         """
         return self._post(
             "/collections/add-collection",
-            body=maybe_transform(
-                {"collection_name": collection_name}, collection_add_collection_params.CollectionAddCollectionParams
-            ),
+            body=maybe_transform({"collection_name": collection_name}, collection_add_params.CollectionAddParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=CollectionAddCollectionResponse,
-        )
-
-    def delete_collection(
-        self,
-        *,
-        collection_name: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> CollectionDeleteCollectionResponse:
-        """
-        Deletes a collection.
-
-        A `404 Not Found` status code will be returned, if the provided collection name
-        does not exist.
-
-        Args:
-          collection_name: The name of the collection to delete.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._post(
-            "/collections/delete-collection",
-            body=maybe_transform(
-                {"collection_name": collection_name},
-                collection_delete_collection_params.CollectionDeleteCollectionParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=CollectionDeleteCollectionResponse,
+            cast_to=CollectionAddResponse,
         )
 
     def get_list(
@@ -166,7 +161,7 @@ class AsyncCollectionsResource(AsyncAPIResource):
         """
         return AsyncCollectionsResourceWithStreamingResponse(self)
 
-    async def add_collection(
+    async def delete(
         self,
         *,
         collection_name: str,
@@ -176,7 +171,46 @@ class AsyncCollectionsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> CollectionAddCollectionResponse:
+    ) -> CollectionDeleteResponse:
+        """
+        Deletes a collection.
+
+        A `404 Not Found` status code will be returned, if the provided collection name
+        does not exist.
+
+        Args:
+          collection_name: The name of the collection to delete.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/collections/delete-collection",
+            body=await async_maybe_transform(
+                {"collection_name": collection_name}, collection_delete_params.CollectionDeleteParams
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=CollectionDeleteResponse,
+        )
+
+    async def add(
+        self,
+        *,
+        collection_name: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> CollectionAddResponse:
         """
         Adds a collection.
 
@@ -198,52 +232,12 @@ class AsyncCollectionsResource(AsyncAPIResource):
         return await self._post(
             "/collections/add-collection",
             body=await async_maybe_transform(
-                {"collection_name": collection_name}, collection_add_collection_params.CollectionAddCollectionParams
+                {"collection_name": collection_name}, collection_add_params.CollectionAddParams
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=CollectionAddCollectionResponse,
-        )
-
-    async def delete_collection(
-        self,
-        *,
-        collection_name: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> CollectionDeleteCollectionResponse:
-        """
-        Deletes a collection.
-
-        A `404 Not Found` status code will be returned, if the provided collection name
-        does not exist.
-
-        Args:
-          collection_name: The name of the collection to delete.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._post(
-            "/collections/delete-collection",
-            body=await async_maybe_transform(
-                {"collection_name": collection_name},
-                collection_delete_collection_params.CollectionDeleteCollectionParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=CollectionDeleteCollectionResponse,
+            cast_to=CollectionAddResponse,
         )
 
     async def get_list(
@@ -270,11 +264,11 @@ class CollectionsResourceWithRawResponse:
     def __init__(self, collections: CollectionsResource) -> None:
         self._collections = collections
 
-        self.add_collection = to_raw_response_wrapper(
-            collections.add_collection,
+        self.delete = to_raw_response_wrapper(
+            collections.delete,
         )
-        self.delete_collection = to_raw_response_wrapper(
-            collections.delete_collection,
+        self.add = to_raw_response_wrapper(
+            collections.add,
         )
         self.get_list = to_raw_response_wrapper(
             collections.get_list,
@@ -285,11 +279,11 @@ class AsyncCollectionsResourceWithRawResponse:
     def __init__(self, collections: AsyncCollectionsResource) -> None:
         self._collections = collections
 
-        self.add_collection = async_to_raw_response_wrapper(
-            collections.add_collection,
+        self.delete = async_to_raw_response_wrapper(
+            collections.delete,
         )
-        self.delete_collection = async_to_raw_response_wrapper(
-            collections.delete_collection,
+        self.add = async_to_raw_response_wrapper(
+            collections.add,
         )
         self.get_list = async_to_raw_response_wrapper(
             collections.get_list,
@@ -300,11 +294,11 @@ class CollectionsResourceWithStreamingResponse:
     def __init__(self, collections: CollectionsResource) -> None:
         self._collections = collections
 
-        self.add_collection = to_streamed_response_wrapper(
-            collections.add_collection,
+        self.delete = to_streamed_response_wrapper(
+            collections.delete,
         )
-        self.delete_collection = to_streamed_response_wrapper(
-            collections.delete_collection,
+        self.add = to_streamed_response_wrapper(
+            collections.add,
         )
         self.get_list = to_streamed_response_wrapper(
             collections.get_list,
@@ -315,11 +309,11 @@ class AsyncCollectionsResourceWithStreamingResponse:
     def __init__(self, collections: AsyncCollectionsResource) -> None:
         self._collections = collections
 
-        self.add_collection = async_to_streamed_response_wrapper(
-            collections.add_collection,
+        self.delete = async_to_streamed_response_wrapper(
+            collections.delete,
         )
-        self.delete_collection = async_to_streamed_response_wrapper(
-            collections.delete_collection,
+        self.add = async_to_streamed_response_wrapper(
+            collections.add,
         )
         self.get_list = async_to_streamed_response_wrapper(
             collections.get_list,

@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from typing_extensions import Required, TypedDict
 
-__all__ = ["DocumentDeleteDocumentParams"]
+__all__ = ["DocumentDeleteParams"]
 
 
-class DocumentDeleteDocumentParams(TypedDict, total=False):
+class DocumentDeleteParams(TypedDict, total=False):
     collection_name: Required[str]
     """The name of the collection."""
 

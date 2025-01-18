@@ -10,9 +10,9 @@ import pytest
 from tests.utils import assert_matches_type
 from zeroentropy import Zeroentropy, AsyncZeroentropy
 from zeroentropy.types import (
+    CollectionAddResponse,
+    CollectionDeleteResponse,
     CollectionGetListResponse,
-    CollectionAddCollectionResponse,
-    CollectionDeleteCollectionResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -22,64 +22,64 @@ class TestCollections:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    def test_method_add_collection(self, client: Zeroentropy) -> None:
-        collection = client.collections.add_collection(
+    def test_method_delete(self, client: Zeroentropy) -> None:
+        collection = client.collections.delete(
             collection_name="collection_name",
         )
-        assert_matches_type(CollectionAddCollectionResponse, collection, path=["response"])
+        assert_matches_type(CollectionDeleteResponse, collection, path=["response"])
 
     @parametrize
-    def test_raw_response_add_collection(self, client: Zeroentropy) -> None:
-        response = client.collections.with_raw_response.add_collection(
+    def test_raw_response_delete(self, client: Zeroentropy) -> None:
+        response = client.collections.with_raw_response.delete(
             collection_name="collection_name",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         collection = response.parse()
-        assert_matches_type(CollectionAddCollectionResponse, collection, path=["response"])
+        assert_matches_type(CollectionDeleteResponse, collection, path=["response"])
 
     @parametrize
-    def test_streaming_response_add_collection(self, client: Zeroentropy) -> None:
-        with client.collections.with_streaming_response.add_collection(
+    def test_streaming_response_delete(self, client: Zeroentropy) -> None:
+        with client.collections.with_streaming_response.delete(
             collection_name="collection_name",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             collection = response.parse()
-            assert_matches_type(CollectionAddCollectionResponse, collection, path=["response"])
+            assert_matches_type(CollectionDeleteResponse, collection, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_method_delete_collection(self, client: Zeroentropy) -> None:
-        collection = client.collections.delete_collection(
+    def test_method_add(self, client: Zeroentropy) -> None:
+        collection = client.collections.add(
             collection_name="collection_name",
         )
-        assert_matches_type(CollectionDeleteCollectionResponse, collection, path=["response"])
+        assert_matches_type(CollectionAddResponse, collection, path=["response"])
 
     @parametrize
-    def test_raw_response_delete_collection(self, client: Zeroentropy) -> None:
-        response = client.collections.with_raw_response.delete_collection(
+    def test_raw_response_add(self, client: Zeroentropy) -> None:
+        response = client.collections.with_raw_response.add(
             collection_name="collection_name",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         collection = response.parse()
-        assert_matches_type(CollectionDeleteCollectionResponse, collection, path=["response"])
+        assert_matches_type(CollectionAddResponse, collection, path=["response"])
 
     @parametrize
-    def test_streaming_response_delete_collection(self, client: Zeroentropy) -> None:
-        with client.collections.with_streaming_response.delete_collection(
+    def test_streaming_response_add(self, client: Zeroentropy) -> None:
+        with client.collections.with_streaming_response.add(
             collection_name="collection_name",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             collection = response.parse()
-            assert_matches_type(CollectionDeleteCollectionResponse, collection, path=["response"])
+            assert_matches_type(CollectionAddResponse, collection, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -113,64 +113,64 @@ class TestAsyncCollections:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    async def test_method_add_collection(self, async_client: AsyncZeroentropy) -> None:
-        collection = await async_client.collections.add_collection(
+    async def test_method_delete(self, async_client: AsyncZeroentropy) -> None:
+        collection = await async_client.collections.delete(
             collection_name="collection_name",
         )
-        assert_matches_type(CollectionAddCollectionResponse, collection, path=["response"])
+        assert_matches_type(CollectionDeleteResponse, collection, path=["response"])
 
     @parametrize
-    async def test_raw_response_add_collection(self, async_client: AsyncZeroentropy) -> None:
-        response = await async_client.collections.with_raw_response.add_collection(
+    async def test_raw_response_delete(self, async_client: AsyncZeroentropy) -> None:
+        response = await async_client.collections.with_raw_response.delete(
             collection_name="collection_name",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         collection = await response.parse()
-        assert_matches_type(CollectionAddCollectionResponse, collection, path=["response"])
+        assert_matches_type(CollectionDeleteResponse, collection, path=["response"])
 
     @parametrize
-    async def test_streaming_response_add_collection(self, async_client: AsyncZeroentropy) -> None:
-        async with async_client.collections.with_streaming_response.add_collection(
+    async def test_streaming_response_delete(self, async_client: AsyncZeroentropy) -> None:
+        async with async_client.collections.with_streaming_response.delete(
             collection_name="collection_name",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             collection = await response.parse()
-            assert_matches_type(CollectionAddCollectionResponse, collection, path=["response"])
+            assert_matches_type(CollectionDeleteResponse, collection, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_method_delete_collection(self, async_client: AsyncZeroentropy) -> None:
-        collection = await async_client.collections.delete_collection(
+    async def test_method_add(self, async_client: AsyncZeroentropy) -> None:
+        collection = await async_client.collections.add(
             collection_name="collection_name",
         )
-        assert_matches_type(CollectionDeleteCollectionResponse, collection, path=["response"])
+        assert_matches_type(CollectionAddResponse, collection, path=["response"])
 
     @parametrize
-    async def test_raw_response_delete_collection(self, async_client: AsyncZeroentropy) -> None:
-        response = await async_client.collections.with_raw_response.delete_collection(
+    async def test_raw_response_add(self, async_client: AsyncZeroentropy) -> None:
+        response = await async_client.collections.with_raw_response.add(
             collection_name="collection_name",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         collection = await response.parse()
-        assert_matches_type(CollectionDeleteCollectionResponse, collection, path=["response"])
+        assert_matches_type(CollectionAddResponse, collection, path=["response"])
 
     @parametrize
-    async def test_streaming_response_delete_collection(self, async_client: AsyncZeroentropy) -> None:
-        async with async_client.collections.with_streaming_response.delete_collection(
+    async def test_streaming_response_add(self, async_client: AsyncZeroentropy) -> None:
+        async with async_client.collections.with_streaming_response.add(
             collection_name="collection_name",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             collection = await response.parse()
-            assert_matches_type(CollectionDeleteCollectionResponse, collection, path=["response"])
+            assert_matches_type(CollectionAddResponse, collection, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

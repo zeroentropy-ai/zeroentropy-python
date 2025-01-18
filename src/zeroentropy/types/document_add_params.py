@@ -6,7 +6,7 @@ from typing import Dict, List, Union
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
 __all__ = [
-    "DocumentAddDocumentParams",
+    "DocumentAddParams",
     "Content",
     "ContentAPITextDocument",
     "ContentAPITextPagesDocument",
@@ -14,7 +14,7 @@ __all__ = [
 ]
 
 
-class DocumentAddDocumentParams(TypedDict, total=False):
+class DocumentAddParams(TypedDict, total=False):
     collection_name: Required[str]
     """The name of the collection to be used for this request.
 

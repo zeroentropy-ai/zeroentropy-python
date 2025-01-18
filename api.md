@@ -16,16 +16,16 @@ Types:
 
 ```python
 from zeroentropy.types import (
-    CollectionAddCollectionResponse,
-    CollectionDeleteCollectionResponse,
+    CollectionDeleteResponse,
+    CollectionAddResponse,
     CollectionGetListResponse,
 )
 ```
 
 Methods:
 
-- <code title="post /collections/add-collection">client.collections.<a href="./src/zeroentropy/resources/collections.py">add_collection</a>(\*\*<a href="src/zeroentropy/types/collection_add_collection_params.py">params</a>) -> <a href="./src/zeroentropy/types/collection_add_collection_response.py">CollectionAddCollectionResponse</a></code>
-- <code title="post /collections/delete-collection">client.collections.<a href="./src/zeroentropy/resources/collections.py">delete_collection</a>(\*\*<a href="src/zeroentropy/types/collection_delete_collection_params.py">params</a>) -> <a href="./src/zeroentropy/types/collection_delete_collection_response.py">CollectionDeleteCollectionResponse</a></code>
+- <code title="post /collections/delete-collection">client.collections.<a href="./src/zeroentropy/resources/collections.py">delete</a>(\*\*<a href="src/zeroentropy/types/collection_delete_params.py">params</a>) -> <a href="./src/zeroentropy/types/collection_delete_response.py">CollectionDeleteResponse</a></code>
+- <code title="post /collections/add-collection">client.collections.<a href="./src/zeroentropy/resources/collections.py">add</a>(\*\*<a href="src/zeroentropy/types/collection_add_params.py">params</a>) -> <a href="./src/zeroentropy/types/collection_add_response.py">CollectionAddResponse</a></code>
 - <code title="post /collections/get-collection-list">client.collections.<a href="./src/zeroentropy/resources/collections.py">get_list</a>() -> <a href="./src/zeroentropy/types/collection_get_list_response.py">CollectionGetListResponse</a></code>
 
 # Documents
@@ -34,8 +34,8 @@ Types:
 
 ```python
 from zeroentropy.types import (
-    DocumentAddDocumentResponse,
-    DocumentDeleteDocumentResponse,
+    DocumentDeleteResponse,
+    DocumentAddResponse,
     DocumentGetInfoResponse,
     DocumentGetInfoListResponse,
     DocumentGetPageInfoResponse,
@@ -44,8 +44,8 @@ from zeroentropy.types import (
 
 Methods:
 
-- <code title="post /documents/add-document">client.documents.<a href="./src/zeroentropy/resources/documents.py">add_document</a>(\*\*<a href="src/zeroentropy/types/document_add_document_params.py">params</a>) -> <a href="./src/zeroentropy/types/document_add_document_response.py">DocumentAddDocumentResponse</a></code>
-- <code title="post /documents/delete-document">client.documents.<a href="./src/zeroentropy/resources/documents.py">delete_document</a>(\*\*<a href="src/zeroentropy/types/document_delete_document_params.py">params</a>) -> <a href="./src/zeroentropy/types/document_delete_document_response.py">DocumentDeleteDocumentResponse</a></code>
+- <code title="post /documents/delete-document">client.documents.<a href="./src/zeroentropy/resources/documents.py">delete</a>(\*\*<a href="src/zeroentropy/types/document_delete_params.py">params</a>) -> <a href="./src/zeroentropy/types/document_delete_response.py">DocumentDeleteResponse</a></code>
+- <code title="post /documents/add-document">client.documents.<a href="./src/zeroentropy/resources/documents.py">add</a>(\*\*<a href="src/zeroentropy/types/document_add_params.py">params</a>) -> <a href="./src/zeroentropy/types/document_add_response.py">DocumentAddResponse</a></code>
 - <code title="post /documents/get-document-info">client.documents.<a href="./src/zeroentropy/resources/documents.py">get_info</a>(\*\*<a href="src/zeroentropy/types/document_get_info_params.py">params</a>) -> <a href="./src/zeroentropy/types/document_get_info_response.py">DocumentGetInfoResponse</a></code>
 - <code title="post /documents/get-document-info-list">client.documents.<a href="./src/zeroentropy/resources/documents.py">get_info_list</a>(\*\*<a href="src/zeroentropy/types/document_get_info_list_params.py">params</a>) -> <a href="./src/zeroentropy/types/document_get_info_list_response.py">DocumentGetInfoListResponse</a></code>
 - <code title="post /documents/get-page-info">client.documents.<a href="./src/zeroentropy/resources/documents.py">get_page_info</a>(\*\*<a href="src/zeroentropy/types/document_get_page_info_params.py">params</a>) -> <a href="./src/zeroentropy/types/document_get_page_info_response.py">DocumentGetPageInfoResponse</a></code>
@@ -73,12 +73,12 @@ Methods:
 Types:
 
 ```python
-from zeroentropy.types import ParserParseResponse
+from zeroentropy.types import ParserParseDocumentResponse
 ```
 
 Methods:
 
-- <code title="post /parsers/parse-document">client.parsers.<a href="./src/zeroentropy/resources/parsers.py">parse</a>(\*\*<a href="src/zeroentropy/types/parser_parse_params.py">params</a>) -> <a href="./src/zeroentropy/types/parser_parse_response.py">ParserParseResponse</a></code>
+- <code title="post /parsers/parse-document">client.parsers.<a href="./src/zeroentropy/resources/parsers.py">parse_document</a>(\*\*<a href="src/zeroentropy/types/parser_parse_document_params.py">params</a>) -> <a href="./src/zeroentropy/types/parser_parse_document_response.py">ParserParseDocumentResponse</a></code>
 
 # Models
 
