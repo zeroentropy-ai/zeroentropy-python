@@ -24,7 +24,7 @@ from zeroentropy import Zeroentropy, AsyncZeroentropy, APIResponseValidationErro
 from zeroentropy._types import Omit
 from zeroentropy._models import BaseModel, FinalRequestOptions
 from zeroentropy._constants import RAW_RESPONSE_HEADER
-from zeroentropy._exceptions import APIStatusError, APITimeoutError, APIResponseValidationError
+from zeroentropy._exceptions import APIStatusError, APITimeoutError, ZeroentropyError, APIResponseValidationError
 from zeroentropy._base_client import (
     DEFAULT_TIMEOUT,
     HTTPX_DEFAULT_TIMEOUT,
@@ -338,6 +338,16 @@ class TestZeroentropy:
         request = client2._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "stainless"
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
+
+    def test_validate_headers(self) -> None:
+        client = Zeroentropy(base_url=base_url, bearer_token=bearer_token, _strict_response_validation=True)
+        request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
+        assert request.headers.get("Authorization") == f"Bearer {bearer_token}"
+
+        with pytest.raises(ZeroentropyError):
+            with update_env(**{"ZEROENTROPY_API_KEY": Omit()}):
+                client2 = Zeroentropy(base_url=base_url, bearer_token=None, _strict_response_validation=True)
+            _ = client2
 
     def test_default_query_option(self) -> None:
         client = Zeroentropy(
@@ -1122,6 +1132,16 @@ class TestAsyncZeroentropy:
         request = client2._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "stainless"
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
+
+    def test_validate_headers(self) -> None:
+        client = AsyncZeroentropy(base_url=base_url, bearer_token=bearer_token, _strict_response_validation=True)
+        request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
+        assert request.headers.get("Authorization") == f"Bearer {bearer_token}"
+
+        with pytest.raises(ZeroentropyError):
+            with update_env(**{"ZEROENTROPY_API_KEY": Omit()}):
+                client2 = AsyncZeroentropy(base_url=base_url, bearer_token=None, _strict_response_validation=True)
+            _ = client2
 
     def test_default_query_option(self) -> None:
         client = AsyncZeroentropy(

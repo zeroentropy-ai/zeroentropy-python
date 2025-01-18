@@ -27,9 +27,12 @@ pip install git+ssh://git@github.com/stainless-sdks/zeroentropy-python.git
 The full API of this library can be found in [api.md](api.md).
 
 ```python
+import os
 from zeroentropy import Zeroentropy
 
-client = Zeroentropy()
+client = Zeroentropy(
+    bearer_token=os.environ.get("ZEROENTROPY_API_KEY"),  # This is the default and can be omitted
+)
 
 response = client.documents.get_info(
     collection_name="collection_name",
@@ -48,10 +51,13 @@ so that your Bearer Token is not stored in source control.
 Simply import `AsyncZeroentropy` instead of `Zeroentropy` and use `await` with each API call:
 
 ```python
+import os
 import asyncio
 from zeroentropy import AsyncZeroentropy
 
-client = AsyncZeroentropy()
+client = AsyncZeroentropy(
+    bearer_token=os.environ.get("ZEROENTROPY_API_KEY"),  # This is the default and can be omitted
+)
 
 
 async def main() -> None:
