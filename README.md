@@ -99,7 +99,7 @@ client = Zeroentropy()
 all_documents = []
 # Automatically fetches more pages as needed.
 for document in client.documents.get_info_list(
-    collection_name="collection_name",
+    collection_name="example_collection",
 ):
     # Do something with document here
     all_documents.append(document)
@@ -119,7 +119,7 @@ async def main() -> None:
     all_documents = []
     # Iterate through items across all pages, issuing requests as needed.
     async for document in client.documents.get_info_list(
-        collection_name="collection_name",
+        collection_name="example_collection",
     ):
         all_documents.append(document)
     print(all_documents)
@@ -132,7 +132,7 @@ Alternatively, you can use the `.has_next_page()`, `.next_page_info()`, or `.get
 
 ```python
 first_page = await client.documents.get_info_list(
-    collection_name="collection_name",
+    collection_name="example_collection",
 )
 if first_page.has_next_page():
     print(f"will fetch next page using these details: {first_page.next_page_info()}")
@@ -146,7 +146,7 @@ Or just work directly with the returned data:
 
 ```python
 first_page = await client.documents.get_info_list(
-    collection_name="collection_name",
+    collection_name="example_collection",
 )
 
 print(f"next page cursor: {first_page.id_gt}")  # => "next page cursor: ..."
