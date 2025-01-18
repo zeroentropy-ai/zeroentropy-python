@@ -18,11 +18,11 @@ __all__ = [
 ]
 
 
-class ZeroentropyError(Exception):
+class ZeroEntropyError(Exception):
     pass
 
 
-class APIError(ZeroentropyError):
+class APIError(ZeroEntropyError):
     message: str
     request: httpx.Request
 

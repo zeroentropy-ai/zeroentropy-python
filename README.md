@@ -1,8 +1,8 @@
-# Zeroentropy Python API library
+# ZeroEntropy Python API library
 
 [![PyPI version](https://img.shields.io/pypi/v/zeroentropy.svg)](https://pypi.org/project/zeroentropy/)
 
-The Zeroentropy Python library provides convenient access to the Zeroentropy REST API from any Python 3.8+
+The ZeroEntropy Python library provides convenient access to the ZeroEntropy REST API from any Python 3.8+
 application. The library includes type definitions for all request params and response fields,
 and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
 
@@ -25,9 +25,9 @@ The full API of this library can be found in [api.md](api.md).
 
 ```python
 import os
-from zeroentropy import Zeroentropy
+from zeroentropy import ZeroEntropy
 
-client = Zeroentropy(
+client = ZeroEntropy(
     api_key=os.environ.get("ZEROENTROPY_API_KEY"),  # This is the default and can be omitted
 )
 
@@ -49,14 +49,14 @@ so that your API Key is not stored in source control.
 
 ## Async usage
 
-Simply import `AsyncZeroentropy` instead of `Zeroentropy` and use `await` with each API call:
+Simply import `AsyncZeroEntropy` instead of `ZeroEntropy` and use `await` with each API call:
 
 ```python
 import os
 import asyncio
-from zeroentropy import AsyncZeroentropy
+from zeroentropy import AsyncZeroEntropy
 
-client = AsyncZeroentropy(
+client = AsyncZeroEntropy(
     api_key=os.environ.get("ZEROENTROPY_API_KEY"),  # This is the default and can be omitted
 )
 
@@ -89,14 +89,14 @@ Typed requests and responses provide autocomplete and documentation within your 
 
 ## Pagination
 
-List methods in the Zeroentropy API are paginated.
+List methods in the ZeroEntropy API are paginated.
 
 This library provides auto-paginating iterators with each list response, so you do not have to request successive pages manually:
 
 ```python
-from zeroentropy import Zeroentropy
+from zeroentropy import ZeroEntropy
 
-client = Zeroentropy()
+client = ZeroEntropy()
 
 all_documents = []
 # Automatically fetches more pages as needed.
@@ -112,9 +112,9 @@ Or, asynchronously:
 
 ```python
 import asyncio
-from zeroentropy import AsyncZeroentropy
+from zeroentropy import AsyncZeroEntropy
 
-client = AsyncZeroentropy()
+client = AsyncZeroEntropy()
 
 
 async def main() -> None:
@@ -169,9 +169,9 @@ All errors inherit from `zeroentropy.APIError`.
 
 ```python
 import zeroentropy
-from zeroentropy import Zeroentropy
+from zeroentropy import ZeroEntropy
 
-client = Zeroentropy()
+client = ZeroEntropy()
 
 try:
     client.status.get_status()
@@ -208,10 +208,10 @@ Connection errors (for example, due to a network connectivity problem), 408 Requ
 You can use the `max_retries` option to configure or disable retry settings:
 
 ```python
-from zeroentropy import Zeroentropy
+from zeroentropy import ZeroEntropy
 
 # Configure the default for all requests:
-client = Zeroentropy(
+client = ZeroEntropy(
     # default is 2
     max_retries=0,
 )
@@ -226,16 +226,16 @@ By default requests time out after 1 minute. You can configure this with a `time
 which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/#fine-tuning-the-configuration) object:
 
 ```python
-from zeroentropy import Zeroentropy
+from zeroentropy import ZeroEntropy
 
 # Configure the default for all requests:
-client = Zeroentropy(
+client = ZeroEntropy(
     # 20 seconds (default is 1 minute)
     timeout=20.0,
 )
 
 # More granular control:
-client = Zeroentropy(
+client = ZeroEntropy(
     timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0),
 )
 
@@ -278,9 +278,9 @@ if response.my_field is None:
 The "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,
 
 ```py
-from zeroentropy import Zeroentropy
+from zeroentropy import ZeroEntropy
 
-client = Zeroentropy()
+client = ZeroEntropy()
 response = client.status.with_raw_response.get_status()
 print(response.headers.get('X-My-Header'))
 
@@ -352,9 +352,9 @@ You can directly override the [httpx client](https://www.python-httpx.org/api/#c
 
 ```python
 import httpx
-from zeroentropy import Zeroentropy, DefaultHttpxClient
+from zeroentropy import ZeroEntropy, DefaultHttpxClient
 
-client = Zeroentropy(
+client = ZeroEntropy(
     # Or use the `ZEROENTROPY_BASE_URL` env var
     base_url="http://my.test.server.example.com:8083",
     http_client=DefaultHttpxClient(
@@ -375,9 +375,9 @@ client.with_options(http_client=DefaultHttpxClient(...))
 By default the library closes underlying HTTP connections whenever the client is [garbage collected](https://docs.python.org/3/reference/datamodel.html#object.__del__). You can manually close the client using the `.close()` method if desired, or with a context manager that closes when exiting.
 
 ```py
-from zeroentropy import Zeroentropy
+from zeroentropy import ZeroEntropy
 
-with Zeroentropy() as client:
+with ZeroEntropy() as client:
   # make requests here
   ...
 
