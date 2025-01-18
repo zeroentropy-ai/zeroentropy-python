@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from .str_json_param import StrJsonParam as StrJsonParam
 from .document_add_params import DocumentAddParams as DocumentAddParams
 from .collection_add_params import CollectionAddParams as CollectionAddParams
 from .document_add_response import DocumentAddResponse as DocumentAddResponse
