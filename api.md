@@ -79,11 +79,3 @@ from zeroentropy.types import ParserParseDocumentResponse
 Methods:
 
 - <code title="post /parsers/parse-document">client.parsers.<a href="./src/zeroentropy/resources/parsers.py">parse_document</a>(\*\*<a href="src/zeroentropy/types/parser_parse_document_params.py">params</a>) -> <a href="./src/zeroentropy/types/parser_parse_document_response.py">ParserParseDocumentResponse</a></code>
-
-# Models
-
-Types:
-
-```python
-from zeroentropy.types import StrJson
-```
