@@ -26,7 +26,7 @@ from ._utils import (
 from ._version import __version__
 from .resources import status, parsers, queries, documents, collections
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
-from ._exceptions import APIStatusError, ZeroentropyError
+from ._exceptions import APIStatusError, ZeroEntropyError
 from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
@@ -38,21 +38,21 @@ __all__ = [
     "Transport",
     "ProxiesTypes",
     "RequestOptions",
-    "Zeroentropy",
-    "AsyncZeroentropy",
+    "ZeroEntropy",
+    "AsyncZeroEntropy",
     "Client",
     "AsyncClient",
 ]
 
 
-class Zeroentropy(SyncAPIClient):
+class ZeroEntropy(SyncAPIClient):
     status: status.StatusResource
     collections: collections.CollectionsResource
     documents: documents.DocumentsResource
     queries: queries.QueriesResource
     parsers: parsers.ParsersResource
-    with_raw_response: ZeroentropyWithRawResponse
-    with_streaming_response: ZeroentropyWithStreamedResponse
+    with_raw_response: ZeroEntropyWithRawResponse
+    with_streaming_response: ZeroEntropyWithStreamedResponse
 
     # client options
     api_key: str
@@ -87,7 +87,7 @@ class Zeroentropy(SyncAPIClient):
         if api_key is None:
             api_key = os.environ.get("ZEROENTROPY_API_KEY")
         if api_key is None:
-            raise ZeroentropyError(
+            raise ZeroEntropyError(
                 "The api_key client option must be set either by passing api_key to the client or by setting the ZEROENTROPY_API_KEY environment variable"
             )
         self.api_key = api_key
@@ -113,8 +113,8 @@ class Zeroentropy(SyncAPIClient):
         self.documents = documents.DocumentsResource(self)
         self.queries = queries.QueriesResource(self)
         self.parsers = parsers.ParsersResource(self)
-        self.with_raw_response = ZeroentropyWithRawResponse(self)
-        self.with_streaming_response = ZeroentropyWithStreamedResponse(self)
+        self.with_raw_response = ZeroEntropyWithRawResponse(self)
+        self.with_streaming_response = ZeroEntropyWithStreamedResponse(self)
 
     @property
     @override
@@ -221,14 +221,14 @@ class Zeroentropy(SyncAPIClient):
         return APIStatusError(err_msg, response=response, body=body)
 
 
-class AsyncZeroentropy(AsyncAPIClient):
+class AsyncZeroEntropy(AsyncAPIClient):
     status: status.AsyncStatusResource
     collections: collections.AsyncCollectionsResource
     documents: documents.AsyncDocumentsResource
     queries: queries.AsyncQueriesResource
     parsers: parsers.AsyncParsersResource
-    with_raw_response: AsyncZeroentropyWithRawResponse
-    with_streaming_response: AsyncZeroentropyWithStreamedResponse
+    with_raw_response: AsyncZeroEntropyWithRawResponse
+    with_streaming_response: AsyncZeroEntropyWithStreamedResponse
 
     # client options
     api_key: str
@@ -263,7 +263,7 @@ class AsyncZeroentropy(AsyncAPIClient):
         if api_key is None:
             api_key = os.environ.get("ZEROENTROPY_API_KEY")
         if api_key is None:
-            raise ZeroentropyError(
+            raise ZeroEntropyError(
                 "The api_key client option must be set either by passing api_key to the client or by setting the ZEROENTROPY_API_KEY environment variable"
             )
         self.api_key = api_key
@@ -289,8 +289,8 @@ class AsyncZeroentropy(AsyncAPIClient):
         self.documents = documents.AsyncDocumentsResource(self)
         self.queries = queries.AsyncQueriesResource(self)
         self.parsers = parsers.AsyncParsersResource(self)
-        self.with_raw_response = AsyncZeroentropyWithRawResponse(self)
-        self.with_streaming_response = AsyncZeroentropyWithStreamedResponse(self)
+        self.with_raw_response = AsyncZeroEntropyWithRawResponse(self)
+        self.with_streaming_response = AsyncZeroEntropyWithStreamedResponse(self)
 
     @property
     @override
@@ -397,8 +397,8 @@ class AsyncZeroentropy(AsyncAPIClient):
         return APIStatusError(err_msg, response=response, body=body)
 
 
-class ZeroentropyWithRawResponse:
-    def __init__(self, client: Zeroentropy) -> None:
+class ZeroEntropyWithRawResponse:
+    def __init__(self, client: ZeroEntropy) -> None:
         self.status = status.StatusResourceWithRawResponse(client.status)
         self.collections = collections.CollectionsResourceWithRawResponse(client.collections)
         self.documents = documents.DocumentsResourceWithRawResponse(client.documents)
@@ -406,8 +406,8 @@ class ZeroentropyWithRawResponse:
         self.parsers = parsers.ParsersResourceWithRawResponse(client.parsers)
 
 
-class AsyncZeroentropyWithRawResponse:
-    def __init__(self, client: AsyncZeroentropy) -> None:
+class AsyncZeroEntropyWithRawResponse:
+    def __init__(self, client: AsyncZeroEntropy) -> None:
         self.status = status.AsyncStatusResourceWithRawResponse(client.status)
         self.collections = collections.AsyncCollectionsResourceWithRawResponse(client.collections)
         self.documents = documents.AsyncDocumentsResourceWithRawResponse(client.documents)
@@ -415,8 +415,8 @@ class AsyncZeroentropyWithRawResponse:
         self.parsers = parsers.AsyncParsersResourceWithRawResponse(client.parsers)
 
 
-class ZeroentropyWithStreamedResponse:
-    def __init__(self, client: Zeroentropy) -> None:
+class ZeroEntropyWithStreamedResponse:
+    def __init__(self, client: ZeroEntropy) -> None:
         self.status = status.StatusResourceWithStreamingResponse(client.status)
         self.collections = collections.CollectionsResourceWithStreamingResponse(client.collections)
         self.documents = documents.DocumentsResourceWithStreamingResponse(client.documents)
@@ -424,8 +424,8 @@ class ZeroentropyWithStreamedResponse:
         self.parsers = parsers.ParsersResourceWithStreamingResponse(client.parsers)
 
 
-class AsyncZeroentropyWithStreamedResponse:
-    def __init__(self, client: AsyncZeroentropy) -> None:
+class AsyncZeroEntropyWithStreamedResponse:
+    def __init__(self, client: AsyncZeroEntropy) -> None:
         self.status = status.AsyncStatusResourceWithStreamingResponse(client.status)
         self.collections = collections.AsyncCollectionsResourceWithStreamingResponse(client.collections)
         self.documents = documents.AsyncDocumentsResourceWithStreamingResponse(client.documents)
@@ -433,6 +433,6 @@ class AsyncZeroentropyWithStreamedResponse:
         self.parsers = parsers.AsyncParsersResourceWithStreamingResponse(client.parsers)
 
 
-Client = Zeroentropy
+Client = ZeroEntropy
 
-AsyncClient = AsyncZeroentropy
+AsyncClient = AsyncZeroEntropy

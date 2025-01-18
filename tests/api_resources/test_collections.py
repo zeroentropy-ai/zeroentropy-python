@@ -8,7 +8,7 @@ from typing import Any, cast
 import pytest
 
 from tests.utils import assert_matches_type
-from zeroentropy import Zeroentropy, AsyncZeroentropy
+from zeroentropy import ZeroEntropy, AsyncZeroEntropy
 from zeroentropy.types import (
     CollectionAddResponse,
     CollectionDeleteResponse,
@@ -22,14 +22,14 @@ class TestCollections:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    def test_method_delete(self, client: Zeroentropy) -> None:
+    def test_method_delete(self, client: ZeroEntropy) -> None:
         collection = client.collections.delete(
             collection_name="collection_name",
         )
         assert_matches_type(CollectionDeleteResponse, collection, path=["response"])
 
     @parametrize
-    def test_raw_response_delete(self, client: Zeroentropy) -> None:
+    def test_raw_response_delete(self, client: ZeroEntropy) -> None:
         response = client.collections.with_raw_response.delete(
             collection_name="collection_name",
         )
@@ -40,7 +40,7 @@ class TestCollections:
         assert_matches_type(CollectionDeleteResponse, collection, path=["response"])
 
     @parametrize
-    def test_streaming_response_delete(self, client: Zeroentropy) -> None:
+    def test_streaming_response_delete(self, client: ZeroEntropy) -> None:
         with client.collections.with_streaming_response.delete(
             collection_name="collection_name",
         ) as response:
@@ -53,14 +53,14 @@ class TestCollections:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_method_add(self, client: Zeroentropy) -> None:
+    def test_method_add(self, client: ZeroEntropy) -> None:
         collection = client.collections.add(
             collection_name="collection_name",
         )
         assert_matches_type(CollectionAddResponse, collection, path=["response"])
 
     @parametrize
-    def test_raw_response_add(self, client: Zeroentropy) -> None:
+    def test_raw_response_add(self, client: ZeroEntropy) -> None:
         response = client.collections.with_raw_response.add(
             collection_name="collection_name",
         )
@@ -71,7 +71,7 @@ class TestCollections:
         assert_matches_type(CollectionAddResponse, collection, path=["response"])
 
     @parametrize
-    def test_streaming_response_add(self, client: Zeroentropy) -> None:
+    def test_streaming_response_add(self, client: ZeroEntropy) -> None:
         with client.collections.with_streaming_response.add(
             collection_name="collection_name",
         ) as response:
@@ -84,12 +84,12 @@ class TestCollections:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_method_get_list(self, client: Zeroentropy) -> None:
+    def test_method_get_list(self, client: ZeroEntropy) -> None:
         collection = client.collections.get_list()
         assert_matches_type(CollectionGetListResponse, collection, path=["response"])
 
     @parametrize
-    def test_raw_response_get_list(self, client: Zeroentropy) -> None:
+    def test_raw_response_get_list(self, client: ZeroEntropy) -> None:
         response = client.collections.with_raw_response.get_list()
 
         assert response.is_closed is True
@@ -98,7 +98,7 @@ class TestCollections:
         assert_matches_type(CollectionGetListResponse, collection, path=["response"])
 
     @parametrize
-    def test_streaming_response_get_list(self, client: Zeroentropy) -> None:
+    def test_streaming_response_get_list(self, client: ZeroEntropy) -> None:
         with client.collections.with_streaming_response.get_list() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -113,14 +113,14 @@ class TestAsyncCollections:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    async def test_method_delete(self, async_client: AsyncZeroentropy) -> None:
+    async def test_method_delete(self, async_client: AsyncZeroEntropy) -> None:
         collection = await async_client.collections.delete(
             collection_name="collection_name",
         )
         assert_matches_type(CollectionDeleteResponse, collection, path=["response"])
 
     @parametrize
-    async def test_raw_response_delete(self, async_client: AsyncZeroentropy) -> None:
+    async def test_raw_response_delete(self, async_client: AsyncZeroEntropy) -> None:
         response = await async_client.collections.with_raw_response.delete(
             collection_name="collection_name",
         )
@@ -131,7 +131,7 @@ class TestAsyncCollections:
         assert_matches_type(CollectionDeleteResponse, collection, path=["response"])
 
     @parametrize
-    async def test_streaming_response_delete(self, async_client: AsyncZeroentropy) -> None:
+    async def test_streaming_response_delete(self, async_client: AsyncZeroEntropy) -> None:
         async with async_client.collections.with_streaming_response.delete(
             collection_name="collection_name",
         ) as response:
@@ -144,14 +144,14 @@ class TestAsyncCollections:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_method_add(self, async_client: AsyncZeroentropy) -> None:
+    async def test_method_add(self, async_client: AsyncZeroEntropy) -> None:
         collection = await async_client.collections.add(
             collection_name="collection_name",
         )
         assert_matches_type(CollectionAddResponse, collection, path=["response"])
 
     @parametrize
-    async def test_raw_response_add(self, async_client: AsyncZeroentropy) -> None:
+    async def test_raw_response_add(self, async_client: AsyncZeroEntropy) -> None:
         response = await async_client.collections.with_raw_response.add(
             collection_name="collection_name",
         )
@@ -162,7 +162,7 @@ class TestAsyncCollections:
         assert_matches_type(CollectionAddResponse, collection, path=["response"])
 
     @parametrize
-    async def test_streaming_response_add(self, async_client: AsyncZeroentropy) -> None:
+    async def test_streaming_response_add(self, async_client: AsyncZeroEntropy) -> None:
         async with async_client.collections.with_streaming_response.add(
             collection_name="collection_name",
         ) as response:
@@ -175,12 +175,12 @@ class TestAsyncCollections:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_method_get_list(self, async_client: AsyncZeroentropy) -> None:
+    async def test_method_get_list(self, async_client: AsyncZeroEntropy) -> None:
         collection = await async_client.collections.get_list()
         assert_matches_type(CollectionGetListResponse, collection, path=["response"])
 
     @parametrize
-    async def test_raw_response_get_list(self, async_client: AsyncZeroentropy) -> None:
+    async def test_raw_response_get_list(self, async_client: AsyncZeroEntropy) -> None:
         response = await async_client.collections.with_raw_response.get_list()
 
         assert response.is_closed is True
@@ -189,7 +189,7 @@ class TestAsyncCollections:
         assert_matches_type(CollectionGetListResponse, collection, path=["response"])
 
     @parametrize
-    async def test_streaming_response_get_list(self, async_client: AsyncZeroentropy) -> None:
+    async def test_streaming_response_get_list(self, async_client: AsyncZeroEntropy) -> None:
         async with async_client.collections.with_streaming_response.get_list() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

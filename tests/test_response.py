@@ -6,7 +6,7 @@ import httpx
 import pytest
 import pydantic
 
-from zeroentropy import BaseModel, Zeroentropy, AsyncZeroentropy
+from zeroentropy import BaseModel, ZeroEntropy, AsyncZeroEntropy
 from zeroentropy._response import (
     APIResponse,
     BaseAPIResponse,
@@ -56,7 +56,7 @@ def test_extract_response_type_binary_response() -> None:
 class PydanticModel(pydantic.BaseModel): ...
 
 
-def test_response_parse_mismatched_basemodel(client: Zeroentropy) -> None:
+def test_response_parse_mismatched_basemodel(client: ZeroEntropy) -> None:
     response = APIResponse(
         raw=httpx.Response(200, content=b"foo"),
         client=client,
@@ -74,7 +74,7 @@ def test_response_parse_mismatched_basemodel(client: Zeroentropy) -> None:
 
 
 @pytest.mark.asyncio
-async def test_async_response_parse_mismatched_basemodel(async_client: AsyncZeroentropy) -> None:
+async def test_async_response_parse_mismatched_basemodel(async_client: AsyncZeroEntropy) -> None:
     response = AsyncAPIResponse(
         raw=httpx.Response(200, content=b"foo"),
         client=async_client,
@@ -91,7 +91,7 @@ async def test_async_response_parse_mismatched_basemodel(async_client: AsyncZero
         await response.parse(to=PydanticModel)
 
 
-def test_response_parse_custom_stream(client: Zeroentropy) -> None:
+def test_response_parse_custom_stream(client: ZeroEntropy) -> None:
     response = APIResponse(
         raw=httpx.Response(200, content=b"foo"),
         client=client,
@@ -106,7 +106,7 @@ def test_response_parse_custom_stream(client: Zeroentropy) -> None:
 
 
 @pytest.mark.asyncio
-async def test_async_response_parse_custom_stream(async_client: AsyncZeroentropy) -> None:
+async def test_async_response_parse_custom_stream(async_client: AsyncZeroEntropy) -> None:
     response = AsyncAPIResponse(
         raw=httpx.Response(200, content=b"foo"),
         client=async_client,
@@ -125,7 +125,7 @@ class CustomModel(BaseModel):
     bar: int
 
 
-def test_response_parse_custom_model(client: Zeroentropy) -> None:
+def test_response_parse_custom_model(client: ZeroEntropy) -> None:
     response = APIResponse(
         raw=httpx.Response(200, content=json.dumps({"foo": "hello!", "bar": 2})),
         client=client,
@@ -141,7 +141,7 @@ def test_response_parse_custom_model(client: Zeroentropy) -> None:
 
 
 @pytest.mark.asyncio
-async def test_async_response_parse_custom_model(async_client: AsyncZeroentropy) -> None:
+async def test_async_response_parse_custom_model(async_client: AsyncZeroEntropy) -> None:
     response = AsyncAPIResponse(
         raw=httpx.Response(200, content=json.dumps({"foo": "hello!", "bar": 2})),
         client=async_client,
@@ -156,7 +156,7 @@ async def test_async_response_parse_custom_model(async_client: AsyncZeroentropy)
     assert obj.bar == 2
 
 
-def test_response_parse_annotated_type(client: Zeroentropy) -> None:
+def test_response_parse_annotated_type(client: ZeroEntropy) -> None:
     response = APIResponse(
         raw=httpx.Response(200, content=json.dumps({"foo": "hello!", "bar": 2})),
         client=client,
@@ -173,7 +173,7 @@ def test_response_parse_annotated_type(client: Zeroentropy) -> None:
     assert obj.bar == 2
 
 
-async def test_async_response_parse_annotated_type(async_client: AsyncZeroentropy) -> None:
+async def test_async_response_parse_annotated_type(async_client: AsyncZeroEntropy) -> None:
     response = AsyncAPIResponse(
         raw=httpx.Response(200, content=json.dumps({"foo": "hello!", "bar": 2})),
         client=async_client,
@@ -201,7 +201,7 @@ async def test_async_response_parse_annotated_type(async_client: AsyncZeroentrop
         ("FalSe", False),
     ],
 )
-def test_response_parse_bool(client: Zeroentropy, content: str, expected: bool) -> None:
+def test_response_parse_bool(client: ZeroEntropy, content: str, expected: bool) -> None:
     response = APIResponse(
         raw=httpx.Response(200, content=content),
         client=client,
@@ -226,7 +226,7 @@ def test_response_parse_bool(client: Zeroentropy, content: str, expected: bool) 
         ("FalSe", False),
     ],
 )
-async def test_async_response_parse_bool(client: AsyncZeroentropy, content: str, expected: bool) -> None:
+async def test_async_response_parse_bool(client: AsyncZeroEntropy, content: str, expected: bool) -> None:
     response = AsyncAPIResponse(
         raw=httpx.Response(200, content=content),
         client=client,
@@ -245,7 +245,7 @@ class OtherModel(BaseModel):
 
 
 @pytest.mark.parametrize("client", [False], indirect=True)  # loose validation
-def test_response_parse_expect_model_union_non_json_content(client: Zeroentropy) -> None:
+def test_response_parse_expect_model_union_non_json_content(client: ZeroEntropy) -> None:
     response = APIResponse(
         raw=httpx.Response(200, content=b"foo", headers={"Content-Type": "application/text"}),
         client=client,
@@ -262,7 +262,7 @@ def test_response_parse_expect_model_union_non_json_content(client: Zeroentropy)
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("async_client", [False], indirect=True)  # loose validation
-async def test_async_response_parse_expect_model_union_non_json_content(async_client: AsyncZeroentropy) -> None:
+async def test_async_response_parse_expect_model_union_non_json_content(async_client: AsyncZeroEntropy) -> None:
     response = AsyncAPIResponse(
         raw=httpx.Response(200, content=b"foo", headers={"Content-Type": "application/text"}),
         client=async_client,
