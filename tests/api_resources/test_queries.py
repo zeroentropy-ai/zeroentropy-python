@@ -36,7 +36,7 @@ class TestQueries:
             collection_name="collection_name",
             k=0,
             query="query",
-            filter={},
+            filter={"foo": "bar"},
             include_metadata=True,
         )
         assert_matches_type(QueryTopDocumentsResponse, query, path=["response"])
@@ -84,7 +84,7 @@ class TestQueries:
             collection_name="collection_name",
             k=0,
             query="query",
-            filter={},
+            filter={"foo": "bar"},
             include_content=True,
         )
         assert_matches_type(QueryTopPagesResponse, query, path=["response"])
@@ -132,7 +132,7 @@ class TestQueries:
             collection_name="collection_name",
             k=0,
             query="query",
-            filter={},
+            filter={"foo": "bar"},
             precise_responses=True,
         )
         assert_matches_type(QueryTopSnippetsResponse, query, path=["response"])
@@ -184,7 +184,7 @@ class TestAsyncQueries:
             collection_name="collection_name",
             k=0,
             query="query",
-            filter={},
+            filter={"foo": "bar"},
             include_metadata=True,
         )
         assert_matches_type(QueryTopDocumentsResponse, query, path=["response"])
@@ -232,7 +232,7 @@ class TestAsyncQueries:
             collection_name="collection_name",
             k=0,
             query="query",
-            filter={},
+            filter={"foo": "bar"},
             include_content=True,
         )
         assert_matches_type(QueryTopPagesResponse, query, path=["response"])
@@ -280,7 +280,7 @@ class TestAsyncQueries:
             collection_name="collection_name",
             k=0,
             query="query",
-            filter={},
+            filter={"foo": "bar"},
             precise_responses=True,
         )
         assert_matches_type(QueryTopSnippetsResponse, query, path=["response"])
