@@ -5,6 +5,8 @@ from __future__ import annotations
 from typing import Optional
 from typing_extensions import Required, TypedDict
 
+from .str_json_param import StrJsonParam
+
 __all__ = ["QueryTopSnippetsParams"]
 
 
@@ -26,7 +28,7 @@ class QueryTopSnippetsParams(TypedDict, total=False):
     be 1 character).
     """
 
-    filter: Optional["StrJsonParam"]
+    filter: Optional[StrJsonParam]
     """The query filter to apply.
 
     Please read [Metadata Filtering](/metadata-filtering) for more information. If
@@ -41,6 +43,3 @@ class QueryTopSnippetsParams(TypedDict, total=False):
     200 characters. If set to `false`, the responses will average 2000 characters.
     The default is `false`.
     """
-
-
-from .str_json_param import StrJsonParam
