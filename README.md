@@ -15,8 +15,8 @@ The REST API documentation can be found on [docs.zeroentropy.com](https://docs.z
 ## Installation
 
 ```sh
-# install from this staging repo
-pip install git+ssh://git@github.com/stainless-sdks/zeroentropy-python.git
+# install from the production repo
+pip install git+ssh://git@github.com/ZeroEntropy-AI/zeroentropy-python.git
 ```
 
 > [!NOTE]
@@ -224,9 +224,9 @@ document = response.parse()  # get the object that `documents.get_info()` would 
 print(document.document)
 ```
 
-These methods return an [`APIResponse`](https://github.com/stainless-sdks/zeroentropy-python/tree/main/src/zeroentropy/_response.py) object.
+These methods return an [`APIResponse`](https://github.com/ZeroEntropy-AI/zeroentropy-python/tree/main/src/zeroentropy/_response.py) object.
 
-The async client returns an [`AsyncAPIResponse`](https://github.com/stainless-sdks/zeroentropy-python/tree/main/src/zeroentropy/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
+The async client returns an [`AsyncAPIResponse`](https://github.com/ZeroEntropy-AI/zeroentropy-python/tree/main/src/zeroentropy/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
 
 #### `.with_streaming_response`
 
@@ -333,7 +333,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/zeroentropy-python/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/ZeroEntropy-AI/zeroentropy-python/issues) with questions, bugs, or suggestions.
 
 ### Determining the installed version
 
