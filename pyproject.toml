@@ -5,7 +5,7 @@ description = "The official Python library for the zeroentropy API"
 dynamic = ["readme"]
 license = "Apache-2.0"
 authors = [
-{ name = "Zeroentropy", email = "founders@zeroentropy.com" },
+{ name = "Zeroentropy", email = "founders@zeroentropy.dev" },
 ]
 dependencies = [
     "httpx>=0.23.0, <1",
