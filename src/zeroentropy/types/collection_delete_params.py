@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from typing_extensions import Required, TypedDict
 
-__all__ = ["ParserParseParams"]
+__all__ = ["CollectionDeleteParams"]
 
 
-class ParserParseParams(TypedDict, total=False):
-    base64_data: Required[str]
-    """The document's raw data, as a base64-encoded string"""
+class CollectionDeleteParams(TypedDict, total=False):
+    collection_name: Required[str]
+    """The name of the collection to delete."""

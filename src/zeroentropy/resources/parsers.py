@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import httpx
 
-from ..types import parser_parse_params
+from ..types import parser_parse_document_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from .._utils import (
     maybe_transform,
@@ -19,7 +19,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.parser_parse_response import ParserParseResponse
+from ..types.parser_parse_document_response import ParserParseDocumentResponse
 
 __all__ = ["ParsersResource", "AsyncParsersResource"]
 
@@ -44,7 +44,7 @@ class ParsersResource(SyncAPIResource):
         """
         return ParsersResourceWithStreamingResponse(self)
 
-    def parse(
+    def parse_document(
         self,
         *,
         base64_data: str,
@@ -54,7 +54,7 @@ class ParsersResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ParserParseResponse:
+    ) -> ParserParseDocumentResponse:
         """This provides access to the parsers that we use for indexing.
 
         This endpoint will
@@ -78,11 +78,11 @@ class ParsersResource(SyncAPIResource):
         """
         return self._post(
             "/parsers/parse-document",
-            body=maybe_transform({"base64_data": base64_data}, parser_parse_params.ParserParseParams),
+            body=maybe_transform({"base64_data": base64_data}, parser_parse_document_params.ParserParseDocumentParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ParserParseResponse,
+            cast_to=ParserParseDocumentResponse,
         )
 
 
@@ -106,7 +106,7 @@ class AsyncParsersResource(AsyncAPIResource):
         """
         return AsyncParsersResourceWithStreamingResponse(self)
 
-    async def parse(
+    async def parse_document(
         self,
         *,
         base64_data: str,
@@ -116,7 +116,7 @@ class AsyncParsersResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ParserParseResponse:
+    ) -> ParserParseDocumentResponse:
         """This provides access to the parsers that we use for indexing.
 
         This endpoint will
@@ -140,11 +140,13 @@ class AsyncParsersResource(AsyncAPIResource):
         """
         return await self._post(
             "/parsers/parse-document",
-            body=await async_maybe_transform({"base64_data": base64_data}, parser_parse_params.ParserParseParams),
+            body=await async_maybe_transform(
+                {"base64_data": base64_data}, parser_parse_document_params.ParserParseDocumentParams
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ParserParseResponse,
+            cast_to=ParserParseDocumentResponse,
         )
 
 
@@ -152,8 +154,8 @@ class ParsersResourceWithRawResponse:
     def __init__(self, parsers: ParsersResource) -> None:
         self._parsers = parsers
 
-        self.parse = to_raw_response_wrapper(
-            parsers.parse,
+        self.parse_document = to_raw_response_wrapper(
+            parsers.parse_document,
         )
 
 
@@ -161,8 +163,8 @@ class AsyncParsersResourceWithRawResponse:
     def __init__(self, parsers: AsyncParsersResource) -> None:
         self._parsers = parsers
 
-        self.parse = async_to_raw_response_wrapper(
-            parsers.parse,
+        self.parse_document = async_to_raw_response_wrapper(
+            parsers.parse_document,
         )
 
 
@@ -170,8 +172,8 @@ class ParsersResourceWithStreamingResponse:
     def __init__(self, parsers: ParsersResource) -> None:
         self._parsers = parsers
 
-        self.parse = to_streamed_response_wrapper(
-            parsers.parse,
+        self.parse_document = to_streamed_response_wrapper(
+            parsers.parse_document,
         )
 
 
@@ -179,6 +181,6 @@ class AsyncParsersResourceWithStreamingResponse:
     def __init__(self, parsers: AsyncParsersResource) -> None:
         self._parsers = parsers
 
-        self.parse = async_to_streamed_response_wrapper(
-            parsers.parse,
+        self.parse_document = async_to_streamed_response_wrapper(
+            parsers.parse_document,
         )

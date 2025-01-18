@@ -7,11 +7,11 @@ from typing import Dict, List, Union, Optional
 import httpx
 
 from ..types import (
+    document_add_params,
+    document_delete_params,
     document_get_info_params,
-    document_add_document_params,
     document_get_info_list_params,
     document_get_page_info_params,
-    document_delete_document_params,
 )
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from .._utils import (
@@ -27,11 +27,11 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from ..types.document_add_response import DocumentAddResponse
+from ..types.document_delete_response import DocumentDeleteResponse
 from ..types.document_get_info_response import DocumentGetInfoResponse
-from ..types.document_add_document_response import DocumentAddDocumentResponse
 from ..types.document_get_info_list_response import DocumentGetInfoListResponse
 from ..types.document_get_page_info_response import DocumentGetPageInfoResponse
-from ..types.document_delete_document_response import DocumentDeleteDocumentResponse
 
 __all__ = ["DocumentsResource", "AsyncDocumentsResource"]
 
@@ -56,11 +56,58 @@ class DocumentsResource(SyncAPIResource):
         """
         return DocumentsResourceWithStreamingResponse(self)
 
-    def add_document(
+    def delete(
         self,
         *,
         collection_name: str,
-        content: document_add_document_params.Content,
+        path: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> DocumentDeleteResponse:
+        """
+        Deletes a document
+
+        A `404 Not Found` status code will be returned, if the provided collection name
+        or document path does not exist.
+
+        Args:
+          collection_name: The name of the collection.
+
+          path: The filepath of the document that you are deleting. A `404 Not Found` status
+              code will be returned if no document with this path was found.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/documents/delete-document",
+            body=maybe_transform(
+                {
+                    "collection_name": collection_name,
+                    "path": path,
+                },
+                document_delete_params.DocumentDeleteParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=DocumentDeleteResponse,
+        )
+
+    def add(
+        self,
+        *,
+        collection_name: str,
+        content: document_add_params.Content,
         path: str,
         metadata: Dict[str, Union[str, List[str]]] | NotGiven = NOT_GIVEN,
         overwrite: bool | NotGiven = NOT_GIVEN,
@@ -70,7 +117,7 @@ class DocumentsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DocumentAddDocumentResponse:
+    ) -> DocumentAddResponse:
         """
         Adds a document to a given collection.
 
@@ -128,59 +175,12 @@ class DocumentsResource(SyncAPIResource):
                     "metadata": metadata,
                     "overwrite": overwrite,
                 },
-                document_add_document_params.DocumentAddDocumentParams,
+                document_add_params.DocumentAddParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DocumentAddDocumentResponse,
-        )
-
-    def delete_document(
-        self,
-        *,
-        collection_name: str,
-        path: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DocumentDeleteDocumentResponse:
-        """
-        Deletes a document
-
-        A `404 Not Found` status code will be returned, if the provided collection name
-        or document path does not exist.
-
-        Args:
-          collection_name: The name of the collection.
-
-          path: The filepath of the document that you are deleting. A `404 Not Found` status
-              code will be returned if no document with this path was found.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._post(
-            "/documents/delete-document",
-            body=maybe_transform(
-                {
-                    "collection_name": collection_name,
-                    "path": path,
-                },
-                document_delete_document_params.DocumentDeleteDocumentParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=DocumentDeleteDocumentResponse,
+            cast_to=DocumentAddResponse,
         )
 
     def get_info(
@@ -388,11 +388,58 @@ class AsyncDocumentsResource(AsyncAPIResource):
         """
         return AsyncDocumentsResourceWithStreamingResponse(self)
 
-    async def add_document(
+    async def delete(
         self,
         *,
         collection_name: str,
-        content: document_add_document_params.Content,
+        path: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> DocumentDeleteResponse:
+        """
+        Deletes a document
+
+        A `404 Not Found` status code will be returned, if the provided collection name
+        or document path does not exist.
+
+        Args:
+          collection_name: The name of the collection.
+
+          path: The filepath of the document that you are deleting. A `404 Not Found` status
+              code will be returned if no document with this path was found.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/documents/delete-document",
+            body=await async_maybe_transform(
+                {
+                    "collection_name": collection_name,
+                    "path": path,
+                },
+                document_delete_params.DocumentDeleteParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=DocumentDeleteResponse,
+        )
+
+    async def add(
+        self,
+        *,
+        collection_name: str,
+        content: document_add_params.Content,
         path: str,
         metadata: Dict[str, Union[str, List[str]]] | NotGiven = NOT_GIVEN,
         overwrite: bool | NotGiven = NOT_GIVEN,
@@ -402,7 +449,7 @@ class AsyncDocumentsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DocumentAddDocumentResponse:
+    ) -> DocumentAddResponse:
         """
         Adds a document to a given collection.
 
@@ -460,59 +507,12 @@ class AsyncDocumentsResource(AsyncAPIResource):
                     "metadata": metadata,
                     "overwrite": overwrite,
                 },
-                document_add_document_params.DocumentAddDocumentParams,
+                document_add_params.DocumentAddParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DocumentAddDocumentResponse,
-        )
-
-    async def delete_document(
-        self,
-        *,
-        collection_name: str,
-        path: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DocumentDeleteDocumentResponse:
-        """
-        Deletes a document
-
-        A `404 Not Found` status code will be returned, if the provided collection name
-        or document path does not exist.
-
-        Args:
-          collection_name: The name of the collection.
-
-          path: The filepath of the document that you are deleting. A `404 Not Found` status
-              code will be returned if no document with this path was found.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._post(
-            "/documents/delete-document",
-            body=await async_maybe_transform(
-                {
-                    "collection_name": collection_name,
-                    "path": path,
-                },
-                document_delete_document_params.DocumentDeleteDocumentParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=DocumentDeleteDocumentResponse,
+            cast_to=DocumentAddResponse,
         )
 
     async def get_info(
@@ -704,11 +704,11 @@ class DocumentsResourceWithRawResponse:
     def __init__(self, documents: DocumentsResource) -> None:
         self._documents = documents
 
-        self.add_document = to_raw_response_wrapper(
-            documents.add_document,
+        self.delete = to_raw_response_wrapper(
+            documents.delete,
         )
-        self.delete_document = to_raw_response_wrapper(
-            documents.delete_document,
+        self.add = to_raw_response_wrapper(
+            documents.add,
         )
         self.get_info = to_raw_response_wrapper(
             documents.get_info,
@@ -725,11 +725,11 @@ class AsyncDocumentsResourceWithRawResponse:
     def __init__(self, documents: AsyncDocumentsResource) -> None:
         self._documents = documents
 
-        self.add_document = async_to_raw_response_wrapper(
-            documents.add_document,
+        self.delete = async_to_raw_response_wrapper(
+            documents.delete,
         )
-        self.delete_document = async_to_raw_response_wrapper(
-            documents.delete_document,
+        self.add = async_to_raw_response_wrapper(
+            documents.add,
         )
         self.get_info = async_to_raw_response_wrapper(
             documents.get_info,
@@ -746,11 +746,11 @@ class DocumentsResourceWithStreamingResponse:
     def __init__(self, documents: DocumentsResource) -> None:
         self._documents = documents
 
-        self.add_document = to_streamed_response_wrapper(
-            documents.add_document,
+        self.delete = to_streamed_response_wrapper(
+            documents.delete,
         )
-        self.delete_document = to_streamed_response_wrapper(
-            documents.delete_document,
+        self.add = to_streamed_response_wrapper(
+            documents.add,
         )
         self.get_info = to_streamed_response_wrapper(
             documents.get_info,
@@ -767,11 +767,11 @@ class AsyncDocumentsResourceWithStreamingResponse:
     def __init__(self, documents: AsyncDocumentsResource) -> None:
         self._documents = documents
 
-        self.add_document = async_to_streamed_response_wrapper(
-            documents.add_document,
+        self.delete = async_to_streamed_response_wrapper(
+            documents.delete,
         )
-        self.delete_document = async_to_streamed_response_wrapper(
-            documents.delete_document,
+        self.add = async_to_streamed_response_wrapper(
+            documents.add,
         )
         self.get_info = async_to_streamed_response_wrapper(
             documents.get_info,

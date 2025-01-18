@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from typing_extensions import Required, TypedDict
 
-__all__ = ["CollectionAddCollectionParams"]
+__all__ = ["CollectionAddParams"]
 
 
-class CollectionAddCollectionParams(TypedDict, total=False):
+class CollectionAddParams(TypedDict, total=False):
     collection_name: Required[str]
     """The name of the collection to add.
 
