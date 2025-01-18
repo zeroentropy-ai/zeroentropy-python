@@ -5,6 +5,8 @@ from __future__ import annotations
 from typing import Optional
 from typing_extensions import Required, TypedDict
 
+from .str_json_param import StrJsonParam
+
 __all__ = ["QueryTopDocumentsParams"]
 
 
@@ -26,7 +28,7 @@ class QueryTopDocumentsParams(TypedDict, total=False):
     be 1 character).
     """
 
-    filter: Optional["StrJsonParam"]
+    filter: Optional[StrJsonParam]
     """The query filter to apply.
 
     Please read [Metadata Filtering](/metadata-filtering) for more information. If
@@ -38,6 +40,3 @@ class QueryTopDocumentsParams(TypedDict, total=False):
 
     If not provided, then the default will be `False`.
     """
-
-
-from .str_json_param import StrJsonParam
