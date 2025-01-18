@@ -4,9 +4,9 @@ from typing import List
 
 from .._models import BaseModel
 
-__all__ = ["CollectionListResponse"]
+__all__ = ["CollectionGetListResponse"]
 
 
-class CollectionListResponse(BaseModel):
+class CollectionGetListResponse(BaseModel):
     collection_names: List[str]
     """The names of the matched collections."""

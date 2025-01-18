@@ -19,7 +19,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.collection_list_response import CollectionListResponse
+from ..types.collection_get_list_response import CollectionGetListResponse
 from ..types.collection_add_collection_response import CollectionAddCollectionResponse
 from ..types.collection_delete_collection_response import CollectionDeleteCollectionResponse
 
@@ -45,25 +45,6 @@ class CollectionsResource(SyncAPIResource):
         For more information, see https://www.github.com/stainless-sdks/zeroentropy-python#with_streaming_response
         """
         return CollectionsResourceWithStreamingResponse(self)
-
-    def list(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> CollectionListResponse:
-        """Gets a complete list of all of your collections."""
-        return self._post(
-            "/collections/get-collection-list",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=CollectionListResponse,
-        )
 
     def add_collection(
         self,
@@ -145,6 +126,25 @@ class CollectionsResource(SyncAPIResource):
             cast_to=CollectionDeleteCollectionResponse,
         )
 
+    def get_list(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> CollectionGetListResponse:
+        """Gets a complete list of all of your collections."""
+        return self._post(
+            "/collections/get-collection-list",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=CollectionGetListResponse,
+        )
+
 
 class AsyncCollectionsResource(AsyncAPIResource):
     @cached_property
@@ -165,25 +165,6 @@ class AsyncCollectionsResource(AsyncAPIResource):
         For more information, see https://www.github.com/stainless-sdks/zeroentropy-python#with_streaming_response
         """
         return AsyncCollectionsResourceWithStreamingResponse(self)
-
-    async def list(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> CollectionListResponse:
-        """Gets a complete list of all of your collections."""
-        return await self._post(
-            "/collections/get-collection-list",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=CollectionListResponse,
-        )
 
     async def add_collection(
         self,
@@ -265,19 +246,38 @@ class AsyncCollectionsResource(AsyncAPIResource):
             cast_to=CollectionDeleteCollectionResponse,
         )
 
+    async def get_list(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> CollectionGetListResponse:
+        """Gets a complete list of all of your collections."""
+        return await self._post(
+            "/collections/get-collection-list",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=CollectionGetListResponse,
+        )
+
 
 class CollectionsResourceWithRawResponse:
     def __init__(self, collections: CollectionsResource) -> None:
         self._collections = collections
 
-        self.list = to_raw_response_wrapper(
-            collections.list,
-        )
         self.add_collection = to_raw_response_wrapper(
             collections.add_collection,
         )
         self.delete_collection = to_raw_response_wrapper(
             collections.delete_collection,
+        )
+        self.get_list = to_raw_response_wrapper(
+            collections.get_list,
         )
 
 
@@ -285,14 +285,14 @@ class AsyncCollectionsResourceWithRawResponse:
     def __init__(self, collections: AsyncCollectionsResource) -> None:
         self._collections = collections
 
-        self.list = async_to_raw_response_wrapper(
-            collections.list,
-        )
         self.add_collection = async_to_raw_response_wrapper(
             collections.add_collection,
         )
         self.delete_collection = async_to_raw_response_wrapper(
             collections.delete_collection,
+        )
+        self.get_list = async_to_raw_response_wrapper(
+            collections.get_list,
         )
 
 
@@ -300,14 +300,14 @@ class CollectionsResourceWithStreamingResponse:
     def __init__(self, collections: CollectionsResource) -> None:
         self._collections = collections
 
-        self.list = to_streamed_response_wrapper(
-            collections.list,
-        )
         self.add_collection = to_streamed_response_wrapper(
             collections.add_collection,
         )
         self.delete_collection = to_streamed_response_wrapper(
             collections.delete_collection,
+        )
+        self.get_list = to_streamed_response_wrapper(
+            collections.get_list,
         )
 
 
@@ -315,12 +315,12 @@ class AsyncCollectionsResourceWithStreamingResponse:
     def __init__(self, collections: AsyncCollectionsResource) -> None:
         self._collections = collections
 
-        self.list = async_to_streamed_response_wrapper(
-            collections.list,
-        )
         self.add_collection = async_to_streamed_response_wrapper(
             collections.add_collection,
         )
         self.delete_collection = async_to_streamed_response_wrapper(
             collections.delete_collection,
+        )
+        self.get_list = async_to_streamed_response_wrapper(
+            collections.get_list,
         )

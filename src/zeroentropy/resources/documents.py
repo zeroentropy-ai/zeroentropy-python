@@ -8,8 +8,8 @@ import httpx
 
 from ..types import (
     document_get_info_params,
-    document_list_info_params,
     document_add_document_params,
+    document_get_info_list_params,
     document_get_page_info_params,
     document_delete_document_params,
 )
@@ -28,8 +28,8 @@ from .._response import (
 )
 from .._base_client import make_request_options
 from ..types.document_get_info_response import DocumentGetInfoResponse
-from ..types.document_list_info_response import DocumentListInfoResponse
 from ..types.document_add_document_response import DocumentAddDocumentResponse
+from ..types.document_get_info_list_response import DocumentGetInfoListResponse
 from ..types.document_get_page_info_response import DocumentGetPageInfoResponse
 from ..types.document_delete_document_response import DocumentDeleteDocumentResponse
 
@@ -238,6 +238,63 @@ class DocumentsResource(SyncAPIResource):
             cast_to=DocumentGetInfoResponse,
         )
 
+    def get_info_list(
+        self,
+        *,
+        collection_name: str,
+        id_gt: Optional[str] | NotGiven = NOT_GIVEN,
+        limit: int | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> DocumentGetInfoListResponse:
+        """
+        Retrives a list of document metadata information that matches the provided
+        filters.
+
+        The documents returned will be sorted by ID in ascending order. `id_gt` can be
+        used for pagination, and should be set to the ID of the last document returned
+        in the previous call.
+
+        A `404 Not Found` will be returned if either the collection name does not exist,
+        or the document path does not exist within the provided collection.
+
+        Args:
+          collection_name: The name of the collection.
+
+          id_gt: All documents returned will have a UUID strictly greater than the provided UUID.
+              (Comparison will be on the binary representations of the UUIDs)
+
+          limit: The maximum number of documents to return. This field is by default 1024, and
+              cannot be set larger than 1024
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/documents/get-document-info-list",
+            body=maybe_transform(
+                {
+                    "collection_name": collection_name,
+                    "id_gt": id_gt,
+                    "limit": limit,
+                },
+                document_get_info_list_params.DocumentGetInfoListParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=DocumentGetInfoListResponse,
+        )
+
     def get_page_info(
         self,
         *,
@@ -308,63 +365,6 @@ class DocumentsResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=DocumentGetPageInfoResponse,
-        )
-
-    def list_info(
-        self,
-        *,
-        collection_name: str,
-        id_gt: Optional[str] | NotGiven = NOT_GIVEN,
-        limit: int | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DocumentListInfoResponse:
-        """
-        Retrives a list of document metadata information that matches the provided
-        filters.
-
-        The documents returned will be sorted by ID in ascending order. `id_gt` can be
-        used for pagination, and should be set to the ID of the last document returned
-        in the previous call.
-
-        A `404 Not Found` will be returned if either the collection name does not exist,
-        or the document path does not exist within the provided collection.
-
-        Args:
-          collection_name: The name of the collection.
-
-          id_gt: All documents returned will have a UUID strictly greater than the provided UUID.
-              (Comparison will be on the binary representations of the UUIDs)
-
-          limit: The maximum number of documents to return. This field is by default 1024, and
-              cannot be set larger than 1024
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._post(
-            "/documents/get-document-info-list",
-            body=maybe_transform(
-                {
-                    "collection_name": collection_name,
-                    "id_gt": id_gt,
-                    "limit": limit,
-                },
-                document_list_info_params.DocumentListInfoParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=DocumentListInfoResponse,
         )
 
 
@@ -570,6 +570,63 @@ class AsyncDocumentsResource(AsyncAPIResource):
             cast_to=DocumentGetInfoResponse,
         )
 
+    async def get_info_list(
+        self,
+        *,
+        collection_name: str,
+        id_gt: Optional[str] | NotGiven = NOT_GIVEN,
+        limit: int | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> DocumentGetInfoListResponse:
+        """
+        Retrives a list of document metadata information that matches the provided
+        filters.
+
+        The documents returned will be sorted by ID in ascending order. `id_gt` can be
+        used for pagination, and should be set to the ID of the last document returned
+        in the previous call.
+
+        A `404 Not Found` will be returned if either the collection name does not exist,
+        or the document path does not exist within the provided collection.
+
+        Args:
+          collection_name: The name of the collection.
+
+          id_gt: All documents returned will have a UUID strictly greater than the provided UUID.
+              (Comparison will be on the binary representations of the UUIDs)
+
+          limit: The maximum number of documents to return. This field is by default 1024, and
+              cannot be set larger than 1024
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/documents/get-document-info-list",
+            body=await async_maybe_transform(
+                {
+                    "collection_name": collection_name,
+                    "id_gt": id_gt,
+                    "limit": limit,
+                },
+                document_get_info_list_params.DocumentGetInfoListParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=DocumentGetInfoListResponse,
+        )
+
     async def get_page_info(
         self,
         *,
@@ -642,63 +699,6 @@ class AsyncDocumentsResource(AsyncAPIResource):
             cast_to=DocumentGetPageInfoResponse,
         )
 
-    async def list_info(
-        self,
-        *,
-        collection_name: str,
-        id_gt: Optional[str] | NotGiven = NOT_GIVEN,
-        limit: int | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DocumentListInfoResponse:
-        """
-        Retrives a list of document metadata information that matches the provided
-        filters.
-
-        The documents returned will be sorted by ID in ascending order. `id_gt` can be
-        used for pagination, and should be set to the ID of the last document returned
-        in the previous call.
-
-        A `404 Not Found` will be returned if either the collection name does not exist,
-        or the document path does not exist within the provided collection.
-
-        Args:
-          collection_name: The name of the collection.
-
-          id_gt: All documents returned will have a UUID strictly greater than the provided UUID.
-              (Comparison will be on the binary representations of the UUIDs)
-
-          limit: The maximum number of documents to return. This field is by default 1024, and
-              cannot be set larger than 1024
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._post(
-            "/documents/get-document-info-list",
-            body=await async_maybe_transform(
-                {
-                    "collection_name": collection_name,
-                    "id_gt": id_gt,
-                    "limit": limit,
-                },
-                document_list_info_params.DocumentListInfoParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=DocumentListInfoResponse,
-        )
-
 
 class DocumentsResourceWithRawResponse:
     def __init__(self, documents: DocumentsResource) -> None:
@@ -713,11 +713,11 @@ class DocumentsResourceWithRawResponse:
         self.get_info = to_raw_response_wrapper(
             documents.get_info,
         )
+        self.get_info_list = to_raw_response_wrapper(
+            documents.get_info_list,
+        )
         self.get_page_info = to_raw_response_wrapper(
             documents.get_page_info,
-        )
-        self.list_info = to_raw_response_wrapper(
-            documents.list_info,
         )
 
 
@@ -734,11 +734,11 @@ class AsyncDocumentsResourceWithRawResponse:
         self.get_info = async_to_raw_response_wrapper(
             documents.get_info,
         )
+        self.get_info_list = async_to_raw_response_wrapper(
+            documents.get_info_list,
+        )
         self.get_page_info = async_to_raw_response_wrapper(
             documents.get_page_info,
-        )
-        self.list_info = async_to_raw_response_wrapper(
-            documents.list_info,
         )
 
 
@@ -755,11 +755,11 @@ class DocumentsResourceWithStreamingResponse:
         self.get_info = to_streamed_response_wrapper(
             documents.get_info,
         )
+        self.get_info_list = to_streamed_response_wrapper(
+            documents.get_info_list,
+        )
         self.get_page_info = to_streamed_response_wrapper(
             documents.get_page_info,
-        )
-        self.list_info = to_streamed_response_wrapper(
-            documents.list_info,
         )
 
 
@@ -776,9 +776,9 @@ class AsyncDocumentsResourceWithStreamingResponse:
         self.get_info = async_to_streamed_response_wrapper(
             documents.get_info,
         )
+        self.get_info_list = async_to_streamed_response_wrapper(
+            documents.get_info_list,
+        )
         self.get_page_info = async_to_streamed_response_wrapper(
             documents.get_page_info,
-        )
-        self.list_info = async_to_streamed_response_wrapper(
-            documents.list_info,
         )
