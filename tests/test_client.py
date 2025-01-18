@@ -721,12 +721,22 @@ class TestZeroentropy:
     @mock.patch("zeroentropy._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/status/get-status").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/documents/add-document").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
             self.client.post(
-                "/status/get-status",
-                body=cast(object, dict()),
+                "/documents/add-document",
+                body=cast(
+                    object,
+                    dict(
+                        collection_name="example_collection",
+                        content={
+                            "type": "text",
+                            "text": "Example Content",
+                        },
+                        path="my_document.txt",
+                    ),
+                ),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -736,12 +746,22 @@ class TestZeroentropy:
     @mock.patch("zeroentropy._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/status/get-status").mock(return_value=httpx.Response(500))
+        respx_mock.post("/documents/add-document").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
             self.client.post(
-                "/status/get-status",
-                body=cast(object, dict()),
+                "/documents/add-document",
+                body=cast(
+                    object,
+                    dict(
+                        collection_name="example_collection",
+                        content={
+                            "type": "text",
+                            "text": "Example Content",
+                        },
+                        path="my_document.txt",
+                    ),
+                ),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -772,9 +792,16 @@ class TestZeroentropy:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/status/get-status").mock(side_effect=retry_handler)
+        respx_mock.post("/documents/add-document").mock(side_effect=retry_handler)
 
-        response = client.status.with_raw_response.get_status()
+        response = client.documents.with_raw_response.add(
+            collection_name="collection_name",
+            content={
+                "text": "text",
+                "type": "text",
+            },
+            path="path",
+        )
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -796,9 +823,17 @@ class TestZeroentropy:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/status/get-status").mock(side_effect=retry_handler)
+        respx_mock.post("/documents/add-document").mock(side_effect=retry_handler)
 
-        response = client.status.with_raw_response.get_status(extra_headers={"x-stainless-retry-count": Omit()})
+        response = client.documents.with_raw_response.add(
+            collection_name="collection_name",
+            content={
+                "text": "text",
+                "type": "text",
+            },
+            path="path",
+            extra_headers={"x-stainless-retry-count": Omit()},
+        )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
@@ -819,9 +854,17 @@ class TestZeroentropy:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/status/get-status").mock(side_effect=retry_handler)
+        respx_mock.post("/documents/add-document").mock(side_effect=retry_handler)
 
-        response = client.status.with_raw_response.get_status(extra_headers={"x-stainless-retry-count": "42"})
+        response = client.documents.with_raw_response.add(
+            collection_name="collection_name",
+            content={
+                "text": "text",
+                "type": "text",
+            },
+            path="path",
+            extra_headers={"x-stainless-retry-count": "42"},
+        )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
@@ -1497,12 +1540,22 @@ class TestAsyncZeroentropy:
     @mock.patch("zeroentropy._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/status/get-status").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/documents/add-document").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
             await self.client.post(
-                "/status/get-status",
-                body=cast(object, dict()),
+                "/documents/add-document",
+                body=cast(
+                    object,
+                    dict(
+                        collection_name="example_collection",
+                        content={
+                            "type": "text",
+                            "text": "Example Content",
+                        },
+                        path="my_document.txt",
+                    ),
+                ),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1512,12 +1565,22 @@ class TestAsyncZeroentropy:
     @mock.patch("zeroentropy._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/status/get-status").mock(return_value=httpx.Response(500))
+        respx_mock.post("/documents/add-document").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
             await self.client.post(
-                "/status/get-status",
-                body=cast(object, dict()),
+                "/documents/add-document",
+                body=cast(
+                    object,
+                    dict(
+                        collection_name="example_collection",
+                        content={
+                            "type": "text",
+                            "text": "Example Content",
+                        },
+                        path="my_document.txt",
+                    ),
+                ),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1549,9 +1612,16 @@ class TestAsyncZeroentropy:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/status/get-status").mock(side_effect=retry_handler)
+        respx_mock.post("/documents/add-document").mock(side_effect=retry_handler)
 
-        response = await client.status.with_raw_response.get_status()
+        response = await client.documents.with_raw_response.add(
+            collection_name="collection_name",
+            content={
+                "text": "text",
+                "type": "text",
+            },
+            path="path",
+        )
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -1574,9 +1644,17 @@ class TestAsyncZeroentropy:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/status/get-status").mock(side_effect=retry_handler)
+        respx_mock.post("/documents/add-document").mock(side_effect=retry_handler)
 
-        response = await client.status.with_raw_response.get_status(extra_headers={"x-stainless-retry-count": Omit()})
+        response = await client.documents.with_raw_response.add(
+            collection_name="collection_name",
+            content={
+                "text": "text",
+                "type": "text",
+            },
+            path="path",
+            extra_headers={"x-stainless-retry-count": Omit()},
+        )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
@@ -1598,9 +1676,17 @@ class TestAsyncZeroentropy:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/status/get-status").mock(side_effect=retry_handler)
+        respx_mock.post("/documents/add-document").mock(side_effect=retry_handler)
 
-        response = await client.status.with_raw_response.get_status(extra_headers={"x-stainless-retry-count": "42"})
+        response = await client.documents.with_raw_response.add(
+            collection_name="collection_name",
+            content={
+                "text": "text",
+                "type": "text",
+            },
+            path="path",
+            extra_headers={"x-stainless-retry-count": "42"},
+        )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
