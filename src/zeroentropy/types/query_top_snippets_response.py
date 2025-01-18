@@ -14,7 +14,7 @@ class Result(BaseModel):
     end_index: int
     """The end index of this snippet."""
 
-    page_span: List[object]
+    page_span: List[int]
     """The range of page indices spanned by this snippet, as a 2-tuple of integers.
 
     Inclusive on the first page_index and exclusive on the second page_index.
