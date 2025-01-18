@@ -5,7 +5,7 @@ from typing_extensions import Literal
 
 from .._models import BaseModel
 
-__all__ = ["DocumentListInfoResponse", "Document"]
+__all__ = ["DocumentGetInfoListResponse", "Document"]
 
 
 class Document(BaseModel):
@@ -27,5 +27,5 @@ class Document(BaseModel):
     path: str
 
 
-class DocumentListInfoResponse(BaseModel):
+class DocumentGetInfoListResponse(BaseModel):
     documents: List[Document]

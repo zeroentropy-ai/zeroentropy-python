@@ -11,8 +11,8 @@ from tests.utils import assert_matches_type
 from zeroentropy import Zeroentropy, AsyncZeroentropy
 from zeroentropy.types import (
     DocumentGetInfoResponse,
-    DocumentListInfoResponse,
     DocumentAddDocumentResponse,
+    DocumentGetInfoListResponse,
     DocumentGetPageInfoResponse,
     DocumentDeleteDocumentResponse,
 )
@@ -161,6 +161,46 @@ class TestDocuments:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
+    def test_method_get_info_list(self, client: Zeroentropy) -> None:
+        document = client.documents.get_info_list(
+            collection_name="collection_name",
+        )
+        assert_matches_type(DocumentGetInfoListResponse, document, path=["response"])
+
+    @parametrize
+    def test_method_get_info_list_with_all_params(self, client: Zeroentropy) -> None:
+        document = client.documents.get_info_list(
+            collection_name="collection_name",
+            id_gt="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            limit=0,
+        )
+        assert_matches_type(DocumentGetInfoListResponse, document, path=["response"])
+
+    @parametrize
+    def test_raw_response_get_info_list(self, client: Zeroentropy) -> None:
+        response = client.documents.with_raw_response.get_info_list(
+            collection_name="collection_name",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = response.parse()
+        assert_matches_type(DocumentGetInfoListResponse, document, path=["response"])
+
+    @parametrize
+    def test_streaming_response_get_info_list(self, client: Zeroentropy) -> None:
+        with client.documents.with_streaming_response.get_info_list(
+            collection_name="collection_name",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = response.parse()
+            assert_matches_type(DocumentGetInfoListResponse, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
     def test_method_get_page_info(self, client: Zeroentropy) -> None:
         document = client.documents.get_page_info(
             collection_name="collection_name",
@@ -205,46 +245,6 @@ class TestDocuments:
 
             document = response.parse()
             assert_matches_type(DocumentGetPageInfoResponse, document, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @parametrize
-    def test_method_list_info(self, client: Zeroentropy) -> None:
-        document = client.documents.list_info(
-            collection_name="collection_name",
-        )
-        assert_matches_type(DocumentListInfoResponse, document, path=["response"])
-
-    @parametrize
-    def test_method_list_info_with_all_params(self, client: Zeroentropy) -> None:
-        document = client.documents.list_info(
-            collection_name="collection_name",
-            id_gt="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            limit=0,
-        )
-        assert_matches_type(DocumentListInfoResponse, document, path=["response"])
-
-    @parametrize
-    def test_raw_response_list_info(self, client: Zeroentropy) -> None:
-        response = client.documents.with_raw_response.list_info(
-            collection_name="collection_name",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        document = response.parse()
-        assert_matches_type(DocumentListInfoResponse, document, path=["response"])
-
-    @parametrize
-    def test_streaming_response_list_info(self, client: Zeroentropy) -> None:
-        with client.documents.with_streaming_response.list_info(
-            collection_name="collection_name",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            document = response.parse()
-            assert_matches_type(DocumentListInfoResponse, document, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -390,6 +390,46 @@ class TestAsyncDocuments:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
+    async def test_method_get_info_list(self, async_client: AsyncZeroentropy) -> None:
+        document = await async_client.documents.get_info_list(
+            collection_name="collection_name",
+        )
+        assert_matches_type(DocumentGetInfoListResponse, document, path=["response"])
+
+    @parametrize
+    async def test_method_get_info_list_with_all_params(self, async_client: AsyncZeroentropy) -> None:
+        document = await async_client.documents.get_info_list(
+            collection_name="collection_name",
+            id_gt="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            limit=0,
+        )
+        assert_matches_type(DocumentGetInfoListResponse, document, path=["response"])
+
+    @parametrize
+    async def test_raw_response_get_info_list(self, async_client: AsyncZeroentropy) -> None:
+        response = await async_client.documents.with_raw_response.get_info_list(
+            collection_name="collection_name",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = await response.parse()
+        assert_matches_type(DocumentGetInfoListResponse, document, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_get_info_list(self, async_client: AsyncZeroentropy) -> None:
+        async with async_client.documents.with_streaming_response.get_info_list(
+            collection_name="collection_name",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = await response.parse()
+            assert_matches_type(DocumentGetInfoListResponse, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
     async def test_method_get_page_info(self, async_client: AsyncZeroentropy) -> None:
         document = await async_client.documents.get_page_info(
             collection_name="collection_name",
@@ -434,45 +474,5 @@ class TestAsyncDocuments:
 
             document = await response.parse()
             assert_matches_type(DocumentGetPageInfoResponse, document, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @parametrize
-    async def test_method_list_info(self, async_client: AsyncZeroentropy) -> None:
-        document = await async_client.documents.list_info(
-            collection_name="collection_name",
-        )
-        assert_matches_type(DocumentListInfoResponse, document, path=["response"])
-
-    @parametrize
-    async def test_method_list_info_with_all_params(self, async_client: AsyncZeroentropy) -> None:
-        document = await async_client.documents.list_info(
-            collection_name="collection_name",
-            id_gt="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            limit=0,
-        )
-        assert_matches_type(DocumentListInfoResponse, document, path=["response"])
-
-    @parametrize
-    async def test_raw_response_list_info(self, async_client: AsyncZeroentropy) -> None:
-        response = await async_client.documents.with_raw_response.list_info(
-            collection_name="collection_name",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        document = await response.parse()
-        assert_matches_type(DocumentListInfoResponse, document, path=["response"])
-
-    @parametrize
-    async def test_streaming_response_list_info(self, async_client: AsyncZeroentropy) -> None:
-        async with async_client.documents.with_streaming_response.list_info(
-            collection_name="collection_name",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            document = await response.parse()
-            assert_matches_type(DocumentListInfoResponse, document, path=["response"])
 
         assert cast(Any, response.is_closed) is True

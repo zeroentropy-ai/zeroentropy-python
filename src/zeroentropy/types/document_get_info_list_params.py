@@ -5,10 +5,10 @@ from __future__ import annotations
 from typing import Optional
 from typing_extensions import Required, TypedDict
 
-__all__ = ["DocumentListInfoParams"]
+__all__ = ["DocumentGetInfoListParams"]
 
 
-class DocumentListInfoParams(TypedDict, total=False):
+class DocumentGetInfoListParams(TypedDict, total=False):
     collection_name: Required[str]
     """The name of the collection."""
 
