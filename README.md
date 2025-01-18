@@ -6,8 +6,6 @@ The Zeroentropy Python library provides convenient access to the Zeroentropy RES
 application. The library includes type definitions for all request params and response fields,
 and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
 
-It is generated with [Stainless](https://www.stainlessapi.com/).
-
 ## Documentation
 
 The REST API documentation can be found on [docs.zeroentropy.com](https://docs.zeroentropy.com). The full API of this library can be found in [api.md](api.md).
