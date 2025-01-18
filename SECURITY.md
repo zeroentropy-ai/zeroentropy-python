@@ -20,7 +20,7 @@ or products provided by Zeroentropy please follow the respective company's secur
 
 ### Zeroentropy Terms and Policies
 
-Please contact founders@zeroentropy.com for any questions or concerns regarding security of our services.
+Please contact founders@zeroentropy.dev for any questions or concerns regarding security of our services.
 
 ---
 
