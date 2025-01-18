@@ -31,7 +31,7 @@ class ParsersResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/ZeroEntropy-AI/zeroentropy-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/zeroentropy-ai/zeroentropy-python#accessing-raw-response-data-eg-headers
         """
         return ParsersResourceWithRawResponse(self)
 
@@ -40,7 +40,7 @@ class ParsersResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/ZeroEntropy-AI/zeroentropy-python#with_streaming_response
+        For more information, see https://www.github.com/zeroentropy-ai/zeroentropy-python#with_streaming_response
         """
         return ParsersResourceWithStreamingResponse(self)
 
@@ -93,7 +93,7 @@ class AsyncParsersResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/ZeroEntropy-AI/zeroentropy-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/zeroentropy-ai/zeroentropy-python#accessing-raw-response-data-eg-headers
         """
         return AsyncParsersResourceWithRawResponse(self)
 
@@ -102,7 +102,7 @@ class AsyncParsersResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/ZeroEntropy-AI/zeroentropy-python#with_streaming_response
+        For more information, see https://www.github.com/zeroentropy-ai/zeroentropy-python#with_streaming_response
         """
         return AsyncParsersResourceWithStreamingResponse(self)
 
