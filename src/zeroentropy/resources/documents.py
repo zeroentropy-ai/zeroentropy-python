@@ -26,7 +26,8 @@ from .._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .._base_client import make_request_options
+from ..pagination import SyncGetDocumentInfoListCursor, AsyncGetDocumentInfoListCursor
+from .._base_client import AsyncPaginator, make_request_options
 from ..types.document_add_response import DocumentAddResponse
 from ..types.document_delete_response import DocumentDeleteResponse
 from ..types.document_get_info_response import DocumentGetInfoResponse
@@ -250,7 +251,7 @@ class DocumentsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DocumentGetInfoListResponse:
+    ) -> SyncGetDocumentInfoListCursor[DocumentGetInfoListResponse]:
         """
         Retrives a list of document metadata information that matches the provided
         filters.
@@ -279,8 +280,9 @@ class DocumentsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._post(
+        return self._get_api_list(
             "/documents/get-document-info-list",
+            page=SyncGetDocumentInfoListCursor[DocumentGetInfoListResponse],
             body=maybe_transform(
                 {
                     "collection_name": collection_name,
@@ -292,7 +294,8 @@ class DocumentsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DocumentGetInfoListResponse,
+            model=DocumentGetInfoListResponse,
+            method="post",
         )
 
     def get_page_info(
@@ -570,7 +573,7 @@ class AsyncDocumentsResource(AsyncAPIResource):
             cast_to=DocumentGetInfoResponse,
         )
 
-    async def get_info_list(
+    def get_info_list(
         self,
         *,
         collection_name: str,
@@ -582,7 +585,7 @@ class AsyncDocumentsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DocumentGetInfoListResponse:
+    ) -> AsyncPaginator[DocumentGetInfoListResponse, AsyncGetDocumentInfoListCursor[DocumentGetInfoListResponse]]:
         """
         Retrives a list of document metadata information that matches the provided
         filters.
@@ -611,9 +614,10 @@ class AsyncDocumentsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._post(
+        return self._get_api_list(
             "/documents/get-document-info-list",
-            body=await async_maybe_transform(
+            page=AsyncGetDocumentInfoListCursor[DocumentGetInfoListResponse],
+            body=maybe_transform(
                 {
                     "collection_name": collection_name,
                     "id_gt": id_gt,
@@ -624,7 +628,8 @@ class AsyncDocumentsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DocumentGetInfoListResponse,
+            model=DocumentGetInfoListResponse,
+            method="post",
         )
 
     async def get_page_info(
