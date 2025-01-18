@@ -40,7 +40,7 @@ print(response.document)
 
 While you can provide a `bearer_token` keyword argument,
 we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
-to add `ZERO_ENTROPY_BEARER_TOKEN="My Bearer Token"` to your `.env` file
+to add `ZEROENTROPY_API_KEY="My Bearer Token"` to your `.env` file
 so that your Bearer Token is not stored in source control.
 
 ## Async usage
