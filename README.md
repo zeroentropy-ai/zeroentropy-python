@@ -1,14 +1,14 @@
-# Zeroentropy Python API library
+# ZeroEntropy Python API library
 
 [![PyPI version](https://img.shields.io/pypi/v/zeroentropy.svg)](https://pypi.org/project/zeroentropy/)
 
-The Zeroentropy Python library provides convenient access to the Zeroentropy REST API from any Python 3.8+
+The ZeroEntropy Python library provides convenient access to the ZeroEntropy REST API from any Python 3.8+
 application. The library includes type definitions for all request params and response fields,
 and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
 
 ## Documentation
 
-The REST API documentation can be found on [docs.zeroentropy.com](https://docs.zeroentropy.com). The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [docs.zeroentropy.dev](https://docs.zeroentropy.dev/api-reference). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 
@@ -23,17 +23,21 @@ The full API of this library can be found in [api.md](api.md).
 
 ```python
 import os
-from zeroentropy import Zeroentropy
+from zeroentropy import ZeroEntropy
 
-client = Zeroentropy(
+client = ZeroEntropy(
     api_key=os.environ.get("ZEROENTROPY_API_KEY"),  # This is the default and can be omitted
 )
 
-response = client.documents.get_info(
-    collection_name="collection_name",
-    path="path",
+response = client.documents.add(
+    collection_name="example_collection",
+    content={
+        "type": "text",
+        "text": "Example Content",
+    },
+    path="my_document.txt",
 )
-print(response.document)
+print(response.message)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -43,24 +47,28 @@ so that your API Key is not stored in source control.
 
 ## Async usage
 
-Simply import `AsyncZeroentropy` instead of `Zeroentropy` and use `await` with each API call:
+Simply import `AsyncZeroEntropy` instead of `ZeroEntropy` and use `await` with each API call:
 
 ```python
 import os
 import asyncio
-from zeroentropy import AsyncZeroentropy
+from zeroentropy import AsyncZeroEntropy
 
-client = AsyncZeroentropy(
+client = AsyncZeroEntropy(
     api_key=os.environ.get("ZEROENTROPY_API_KEY"),  # This is the default and can be omitted
 )
 
 
 async def main() -> None:
-    response = await client.documents.get_info(
-        collection_name="collection_name",
-        path="path",
+    response = await client.documents.add(
+        collection_name="example_collection",
+        content={
+            "type": "text",
+            "text": "Example Content",
+        },
+        path="my_document.txt",
     )
-    print(response.document)
+    print(response.message)
 
 
 asyncio.run(main())
@@ -77,6 +85,77 @@ Nested request parameters are [TypedDicts](https://docs.python.org/3/library/typ
 
 Typed requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.
 
+## Pagination
+
+List methods in the ZeroEntropy API are paginated.
+
+This library provides auto-paginating iterators with each list response, so you do not have to request successive pages manually:
+
+```python
+from zeroentropy import ZeroEntropy
+
+client = ZeroEntropy()
+
+all_documents = []
+# Automatically fetches more pages as needed.
+for document in client.documents.get_info_list(
+    collection_name="example_collection",
+):
+    # Do something with document here
+    all_documents.append(document)
+print(all_documents)
+```
+
+Or, asynchronously:
+
+```python
+import asyncio
+from zeroentropy import AsyncZeroEntropy
+
+client = AsyncZeroEntropy()
+
+
+async def main() -> None:
+    all_documents = []
+    # Iterate through items across all pages, issuing requests as needed.
+    async for document in client.documents.get_info_list(
+        collection_name="example_collection",
+    ):
+        all_documents.append(document)
+    print(all_documents)
+
+
+asyncio.run(main())
+```
+
+Alternatively, you can use the `.has_next_page()`, `.next_page_info()`, or `.get_next_page()` methods for more granular control working with pages:
+
+```python
+first_page = await client.documents.get_info_list(
+    collection_name="example_collection",
+)
+if first_page.has_next_page():
+    print(f"will fetch next page using these details: {first_page.next_page_info()}")
+    next_page = await first_page.get_next_page()
+    print(f"number of items we just fetched: {len(next_page.documents)}")
+
+# Remove `await` for non-async usage.
+```
+
+Or just work directly with the returned data:
+
+```python
+first_page = await client.documents.get_info_list(
+    collection_name="example_collection",
+)
+
+print(f"next page cursor: {first_page.id_gt}")  # => "next page cursor: ..."
+for document in first_page.documents:
+    print(document.id)
+
+# Remove `await` for non-async usage.
+```
+
 ## Handling errors
 
 When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `zeroentropy.APIConnectionError` is raised.
@@ -88,15 +167,12 @@ All errors inherit from `zeroentropy.APIError`.
 
 ```python
 import zeroentropy
-from zeroentropy import Zeroentropy
+from zeroentropy import ZeroEntropy
 
-client = Zeroentropy()
+client = ZeroEntropy()
 
 try:
-    client.documents.get_info(
-        collection_name="collection_name",
-        path="path",
-    )
+    client.status.get_status()
 except zeroentropy.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
@@ -130,19 +206,16 @@ Connection errors (for example, due to a network connectivity problem), 408 Requ
 You can use the `max_retries` option to configure or disable retry settings:
 
 ```python
-from zeroentropy import Zeroentropy
+from zeroentropy import ZeroEntropy
 
 # Configure the default for all requests:
-client = Zeroentropy(
+client = ZeroEntropy(
     # default is 2
     max_retries=0,
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).documents.get_info(
-    collection_name="collection_name",
-    path="path",
-)
+client.with_options(max_retries=5).status.get_status()
 ```
 
 ### Timeouts
@@ -151,24 +224,21 @@ By default requests time out after 1 minute. You can configure this with a `time
 which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/#fine-tuning-the-configuration) object:
 
 ```python
-from zeroentropy import Zeroentropy
+from zeroentropy import ZeroEntropy
 
 # Configure the default for all requests:
-client = Zeroentropy(
+client = ZeroEntropy(
     # 20 seconds (default is 1 minute)
     timeout=20.0,
 )
 
 # More granular control:
-client = Zeroentropy(
+client = ZeroEntropy(
     timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0),
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).documents.get_info(
-    collection_name="collection_name",
-    path="path",
-)
+client.with_options(timeout=5.0).status.get_status()
 ```
 
 On timeout, an `APITimeoutError` is thrown.
@@ -206,22 +276,19 @@ if response.my_field is None:
 The "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,
 
 ```py
-from zeroentropy import Zeroentropy
+from zeroentropy import ZeroEntropy
 
-client = Zeroentropy()
-response = client.documents.with_raw_response.get_info(
-    collection_name="collection_name",
-    path="path",
-)
+client = ZeroEntropy()
+response = client.status.with_raw_response.get_status()
 print(response.headers.get('X-My-Header'))
 
-document = response.parse()  # get the object that `documents.get_info()` would have returned
-print(document.document)
+status = response.parse()  # get the object that `status.get_status()` would have returned
+print(status.num_documents)
 ```
 
-These methods return an [`APIResponse`](https://github.com/ZeroEntropy-AI/zeroentropy-python/tree/main/src/zeroentropy/_response.py) object.
+These methods return an [`APIResponse`](https://github.com/zeroentropy-ai/zeroentropy-python/tree/main/src/zeroentropy/_response.py) object.
 
-The async client returns an [`AsyncAPIResponse`](https://github.com/ZeroEntropy-AI/zeroentropy-python/tree/main/src/zeroentropy/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
+The async client returns an [`AsyncAPIResponse`](https://github.com/zeroentropy-ai/zeroentropy-python/tree/main/src/zeroentropy/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
 
 #### `.with_streaming_response`
 
@@ -230,10 +297,7 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.documents.with_streaming_response.get_info(
-    collection_name="collection_name",
-    path="path",
-) as response:
+with client.status.with_streaming_response.get_status() as response:
     print(response.headers.get("X-My-Header"))
 
     for line in response.iter_lines():
@@ -286,9 +350,9 @@ You can directly override the [httpx client](https://www.python-httpx.org/api/#c
 
 ```python
 import httpx
-from zeroentropy import Zeroentropy, DefaultHttpxClient
+from zeroentropy import ZeroEntropy, DefaultHttpxClient
 
-client = Zeroentropy(
+client = ZeroEntropy(
     # Or use the `ZEROENTROPY_BASE_URL` env var
     base_url="http://my.test.server.example.com:8083",
     http_client=DefaultHttpxClient(
@@ -309,9 +373,9 @@ client.with_options(http_client=DefaultHttpxClient(...))
 By default the library closes underlying HTTP connections whenever the client is [garbage collected](https://docs.python.org/3/reference/datamodel.html#object.__del__). You can manually close the client using the `.close()` method if desired, or with a context manager that closes when exiting.
 
 ```py
-from zeroentropy import Zeroentropy
+from zeroentropy import ZeroEntropy
 
-with Zeroentropy() as client:
+with ZeroEntropy() as client:
   # make requests here
   ...
 
@@ -328,7 +392,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/ZeroEntropy-AI/zeroentropy-python/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/zeroentropy-ai/zeroentropy-python/issues) with questions, bugs, or suggestions.
 
 ### Determining the installed version
 

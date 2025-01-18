@@ -8,13 +8,13 @@ from typing import TYPE_CHECKING
 import anyio
 
 if TYPE_CHECKING:
-    from ._client import Zeroentropy, AsyncZeroentropy
+    from ._client import ZeroEntropy, AsyncZeroEntropy
 
 
 class SyncAPIResource:
-    _client: Zeroentropy
+    _client: ZeroEntropy
 
-    def __init__(self, client: Zeroentropy) -> None:
+    def __init__(self, client: ZeroEntropy) -> None:
         self._client = client
         self._get = client.get
         self._post = client.post
@@ -28,9 +28,9 @@ class SyncAPIResource:
 
 
 class AsyncAPIResource:
-    _client: AsyncZeroentropy
+    _client: AsyncZeroEntropy
 
-    def __init__(self, client: AsyncZeroentropy) -> None:
+    def __init__(self, client: AsyncZeroEntropy) -> None:
         self._client = client
         self._get = client.get
         self._post = client.post

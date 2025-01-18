@@ -20,11 +20,11 @@ import pytest
 from respx import MockRouter
 from pydantic import ValidationError
 
-from zeroentropy import Zeroentropy, AsyncZeroentropy, APIResponseValidationError
+from zeroentropy import ZeroEntropy, AsyncZeroEntropy, APIResponseValidationError
 from zeroentropy._types import Omit
 from zeroentropy._models import BaseModel, FinalRequestOptions
 from zeroentropy._constants import RAW_RESPONSE_HEADER
-from zeroentropy._exceptions import APIStatusError, APITimeoutError, ZeroentropyError, APIResponseValidationError
+from zeroentropy._exceptions import APIStatusError, APITimeoutError, ZeroEntropyError, APIResponseValidationError
 from zeroentropy._base_client import (
     DEFAULT_TIMEOUT,
     HTTPX_DEFAULT_TIMEOUT,
@@ -48,7 +48,7 @@ def _low_retry_timeout(*_args: Any, **_kwargs: Any) -> float:
     return 0.1
 
 
-def _get_open_connections(client: Zeroentropy | AsyncZeroentropy) -> int:
+def _get_open_connections(client: ZeroEntropy | AsyncZeroEntropy) -> int:
     transport = client._client._transport
     assert isinstance(transport, httpx.HTTPTransport) or isinstance(transport, httpx.AsyncHTTPTransport)
 
@@ -56,8 +56,8 @@ def _get_open_connections(client: Zeroentropy | AsyncZeroentropy) -> int:
     return len(pool._requests)
 
 
-class TestZeroentropy:
-    client = Zeroentropy(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+class TestZeroEntropy:
+    client = ZeroEntropy(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
     @pytest.mark.respx(base_url=base_url)
     def test_raw_response(self, respx_mock: MockRouter) -> None:
@@ -104,7 +104,7 @@ class TestZeroentropy:
         assert isinstance(self.client.timeout, httpx.Timeout)
 
     def test_copy_default_headers(self) -> None:
-        client = Zeroentropy(
+        client = ZeroEntropy(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
         )
         assert client.default_headers["X-Foo"] == "bar"
@@ -138,7 +138,7 @@ class TestZeroentropy:
             client.copy(set_default_headers={}, default_headers={"X-Foo": "Bar"})
 
     def test_copy_default_query(self) -> None:
-        client = Zeroentropy(
+        client = ZeroEntropy(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"foo": "bar"}
         )
         assert _get_params(client)["foo"] == "bar"
@@ -263,7 +263,7 @@ class TestZeroentropy:
         assert timeout == httpx.Timeout(100.0)
 
     def test_client_timeout_option(self) -> None:
-        client = Zeroentropy(
+        client = ZeroEntropy(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, timeout=httpx.Timeout(0)
         )
 
@@ -274,7 +274,7 @@ class TestZeroentropy:
     def test_http_client_timeout_option(self) -> None:
         # custom timeout given to the httpx client should be used
         with httpx.Client(timeout=None) as http_client:
-            client = Zeroentropy(
+            client = ZeroEntropy(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -284,7 +284,7 @@ class TestZeroentropy:
 
         # no timeout given to the httpx client should not use the httpx default
         with httpx.Client() as http_client:
-            client = Zeroentropy(
+            client = ZeroEntropy(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -294,7 +294,7 @@ class TestZeroentropy:
 
         # explicitly passing the default timeout currently results in it being ignored
         with httpx.Client(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
-            client = Zeroentropy(
+            client = ZeroEntropy(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -305,7 +305,7 @@ class TestZeroentropy:
     async def test_invalid_http_client(self) -> None:
         with pytest.raises(TypeError, match="Invalid `http_client` arg"):
             async with httpx.AsyncClient() as http_client:
-                Zeroentropy(
+                ZeroEntropy(
                     base_url=base_url,
                     api_key=api_key,
                     _strict_response_validation=True,
@@ -313,14 +313,14 @@ class TestZeroentropy:
                 )
 
     def test_default_headers_option(self) -> None:
-        client = Zeroentropy(
+        client = ZeroEntropy(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "bar"
         assert request.headers.get("x-stainless-lang") == "python"
 
-        client2 = Zeroentropy(
+        client2 = ZeroEntropy(
             base_url=base_url,
             api_key=api_key,
             _strict_response_validation=True,
@@ -334,17 +334,17 @@ class TestZeroentropy:
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
 
     def test_validate_headers(self) -> None:
-        client = Zeroentropy(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = ZeroEntropy(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("Authorization") == f"Bearer {api_key}"
 
-        with pytest.raises(ZeroentropyError):
+        with pytest.raises(ZeroEntropyError):
             with update_env(**{"ZEROENTROPY_API_KEY": Omit()}):
-                client2 = Zeroentropy(base_url=base_url, api_key=None, _strict_response_validation=True)
+                client2 = ZeroEntropy(base_url=base_url, api_key=None, _strict_response_validation=True)
             _ = client2
 
     def test_default_query_option(self) -> None:
-        client = Zeroentropy(
+        client = ZeroEntropy(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"query_param": "bar"}
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
@@ -458,7 +458,7 @@ class TestZeroentropy:
         params = dict(request.url.params)
         assert params == {"foo": "2"}
 
-    def test_multipart_repeating_array(self, client: Zeroentropy) -> None:
+    def test_multipart_repeating_array(self, client: ZeroEntropy) -> None:
         request = client._build_request(
             FinalRequestOptions.construct(
                 method="get",
@@ -545,7 +545,7 @@ class TestZeroentropy:
         assert response.foo == 2
 
     def test_base_url_setter(self) -> None:
-        client = Zeroentropy(
+        client = ZeroEntropy(
             base_url="https://example.com/from_init", api_key=api_key, _strict_response_validation=True
         )
         assert client.base_url == "https://example.com/from_init/"
@@ -556,16 +556,16 @@ class TestZeroentropy:
 
     def test_base_url_env(self) -> None:
         with update_env(ZEROENTROPY_BASE_URL="http://localhost:5000/from/env"):
-            client = Zeroentropy(api_key=api_key, _strict_response_validation=True)
+            client = ZeroEntropy(api_key=api_key, _strict_response_validation=True)
             assert client.base_url == "http://localhost:5000/from/env/"
 
     @pytest.mark.parametrize(
         "client",
         [
-            Zeroentropy(
+            ZeroEntropy(
                 base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True
             ),
-            Zeroentropy(
+            ZeroEntropy(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -574,7 +574,7 @@ class TestZeroentropy:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_trailing_slash(self, client: Zeroentropy) -> None:
+    def test_base_url_trailing_slash(self, client: ZeroEntropy) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -587,10 +587,10 @@ class TestZeroentropy:
     @pytest.mark.parametrize(
         "client",
         [
-            Zeroentropy(
+            ZeroEntropy(
                 base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True
             ),
-            Zeroentropy(
+            ZeroEntropy(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -599,7 +599,7 @@ class TestZeroentropy:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_no_trailing_slash(self, client: Zeroentropy) -> None:
+    def test_base_url_no_trailing_slash(self, client: ZeroEntropy) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -612,10 +612,10 @@ class TestZeroentropy:
     @pytest.mark.parametrize(
         "client",
         [
-            Zeroentropy(
+            ZeroEntropy(
                 base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True
             ),
-            Zeroentropy(
+            ZeroEntropy(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -624,7 +624,7 @@ class TestZeroentropy:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_absolute_request_url(self, client: Zeroentropy) -> None:
+    def test_absolute_request_url(self, client: ZeroEntropy) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -635,7 +635,7 @@ class TestZeroentropy:
         assert request.url == "https://myapi.com/foo"
 
     def test_copied_client_does_not_close_http(self) -> None:
-        client = Zeroentropy(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = ZeroEntropy(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         assert not client.is_closed()
 
         copied = client.copy()
@@ -646,7 +646,7 @@ class TestZeroentropy:
         assert not client.is_closed()
 
     def test_client_context_manager(self) -> None:
-        client = Zeroentropy(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = ZeroEntropy(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         with client as c2:
             assert c2 is client
             assert not c2.is_closed()
@@ -667,7 +667,7 @@ class TestZeroentropy:
 
     def test_client_max_retries_validation(self) -> None:
         with pytest.raises(TypeError, match=r"max_retries cannot be None"):
-            Zeroentropy(
+            ZeroEntropy(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, max_retries=cast(Any, None)
             )
 
@@ -678,12 +678,12 @@ class TestZeroentropy:
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
 
-        strict_client = Zeroentropy(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        strict_client = ZeroEntropy(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
         with pytest.raises(APIResponseValidationError):
             strict_client.get("/foo", cast_to=Model)
 
-        client = Zeroentropy(base_url=base_url, api_key=api_key, _strict_response_validation=False)
+        client = ZeroEntropy(base_url=base_url, api_key=api_key, _strict_response_validation=False)
 
         response = client.get("/foo", cast_to=Model)
         assert isinstance(response, str)  # type: ignore[unreachable]
@@ -711,7 +711,7 @@ class TestZeroentropy:
     )
     @mock.patch("time.time", mock.MagicMock(return_value=1696004797))
     def test_parse_retry_after_header(self, remaining_retries: int, retry_after: str, timeout: float) -> None:
-        client = Zeroentropy(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = ZeroEntropy(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
         headers = httpx.Headers({"retry-after": retry_after})
         options = FinalRequestOptions(method="get", url="/foo", max_retries=3)
@@ -721,12 +721,12 @@ class TestZeroentropy:
     @mock.patch("zeroentropy._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/documents/get-document-info").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/status/get-status").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
             self.client.post(
-                "/documents/get-document-info",
-                body=cast(object, dict(collection_name="collection_name", path="path")),
+                "/status/get-status",
+                body=cast(object, dict()),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -736,12 +736,12 @@ class TestZeroentropy:
     @mock.patch("zeroentropy._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/documents/get-document-info").mock(return_value=httpx.Response(500))
+        respx_mock.post("/status/get-status").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
             self.client.post(
-                "/documents/get-document-info",
-                body=cast(object, dict(collection_name="collection_name", path="path")),
+                "/status/get-status",
+                body=cast(object, dict()),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -754,7 +754,7 @@ class TestZeroentropy:
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
     def test_retries_taken(
         self,
-        client: Zeroentropy,
+        client: ZeroEntropy,
         failures_before_success: int,
         failure_mode: Literal["status", "exception"],
         respx_mock: MockRouter,
@@ -772,9 +772,9 @@ class TestZeroentropy:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/documents/get-document-info").mock(side_effect=retry_handler)
+        respx_mock.post("/status/get-status").mock(side_effect=retry_handler)
 
-        response = client.documents.with_raw_response.get_info(collection_name="collection_name", path="path")
+        response = client.status.with_raw_response.get_status()
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -783,7 +783,7 @@ class TestZeroentropy:
     @mock.patch("zeroentropy._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_omit_retry_count_header(
-        self, client: Zeroentropy, failures_before_success: int, respx_mock: MockRouter
+        self, client: ZeroEntropy, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = client.with_options(max_retries=4)
 
@@ -796,11 +796,9 @@ class TestZeroentropy:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/documents/get-document-info").mock(side_effect=retry_handler)
+        respx_mock.post("/status/get-status").mock(side_effect=retry_handler)
 
-        response = client.documents.with_raw_response.get_info(
-            collection_name="collection_name", path="path", extra_headers={"x-stainless-retry-count": Omit()}
-        )
+        response = client.status.with_raw_response.get_status(extra_headers={"x-stainless-retry-count": Omit()})
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
@@ -808,7 +806,7 @@ class TestZeroentropy:
     @mock.patch("zeroentropy._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_overwrite_retry_count_header(
-        self, client: Zeroentropy, failures_before_success: int, respx_mock: MockRouter
+        self, client: ZeroEntropy, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = client.with_options(max_retries=4)
 
@@ -821,17 +819,15 @@ class TestZeroentropy:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/documents/get-document-info").mock(side_effect=retry_handler)
+        respx_mock.post("/status/get-status").mock(side_effect=retry_handler)
 
-        response = client.documents.with_raw_response.get_info(
-            collection_name="collection_name", path="path", extra_headers={"x-stainless-retry-count": "42"}
-        )
+        response = client.status.with_raw_response.get_status(extra_headers={"x-stainless-retry-count": "42"})
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
 
-class TestAsyncZeroentropy:
-    client = AsyncZeroentropy(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+class TestAsyncZeroEntropy:
+    client = AsyncZeroEntropy(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
@@ -880,7 +876,7 @@ class TestAsyncZeroentropy:
         assert isinstance(self.client.timeout, httpx.Timeout)
 
     def test_copy_default_headers(self) -> None:
-        client = AsyncZeroentropy(
+        client = AsyncZeroEntropy(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
         )
         assert client.default_headers["X-Foo"] == "bar"
@@ -914,7 +910,7 @@ class TestAsyncZeroentropy:
             client.copy(set_default_headers={}, default_headers={"X-Foo": "Bar"})
 
     def test_copy_default_query(self) -> None:
-        client = AsyncZeroentropy(
+        client = AsyncZeroEntropy(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"foo": "bar"}
         )
         assert _get_params(client)["foo"] == "bar"
@@ -1039,7 +1035,7 @@ class TestAsyncZeroentropy:
         assert timeout == httpx.Timeout(100.0)
 
     async def test_client_timeout_option(self) -> None:
-        client = AsyncZeroentropy(
+        client = AsyncZeroEntropy(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, timeout=httpx.Timeout(0)
         )
 
@@ -1050,7 +1046,7 @@ class TestAsyncZeroentropy:
     async def test_http_client_timeout_option(self) -> None:
         # custom timeout given to the httpx client should be used
         async with httpx.AsyncClient(timeout=None) as http_client:
-            client = AsyncZeroentropy(
+            client = AsyncZeroEntropy(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -1060,7 +1056,7 @@ class TestAsyncZeroentropy:
 
         # no timeout given to the httpx client should not use the httpx default
         async with httpx.AsyncClient() as http_client:
-            client = AsyncZeroentropy(
+            client = AsyncZeroEntropy(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -1070,7 +1066,7 @@ class TestAsyncZeroentropy:
 
         # explicitly passing the default timeout currently results in it being ignored
         async with httpx.AsyncClient(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
-            client = AsyncZeroentropy(
+            client = AsyncZeroEntropy(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -1081,7 +1077,7 @@ class TestAsyncZeroentropy:
     def test_invalid_http_client(self) -> None:
         with pytest.raises(TypeError, match="Invalid `http_client` arg"):
             with httpx.Client() as http_client:
-                AsyncZeroentropy(
+                AsyncZeroEntropy(
                     base_url=base_url,
                     api_key=api_key,
                     _strict_response_validation=True,
@@ -1089,14 +1085,14 @@ class TestAsyncZeroentropy:
                 )
 
     def test_default_headers_option(self) -> None:
-        client = AsyncZeroentropy(
+        client = AsyncZeroEntropy(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "bar"
         assert request.headers.get("x-stainless-lang") == "python"
 
-        client2 = AsyncZeroentropy(
+        client2 = AsyncZeroEntropy(
             base_url=base_url,
             api_key=api_key,
             _strict_response_validation=True,
@@ -1110,17 +1106,17 @@ class TestAsyncZeroentropy:
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
 
     def test_validate_headers(self) -> None:
-        client = AsyncZeroentropy(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = AsyncZeroEntropy(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("Authorization") == f"Bearer {api_key}"
 
-        with pytest.raises(ZeroentropyError):
+        with pytest.raises(ZeroEntropyError):
             with update_env(**{"ZEROENTROPY_API_KEY": Omit()}):
-                client2 = AsyncZeroentropy(base_url=base_url, api_key=None, _strict_response_validation=True)
+                client2 = AsyncZeroEntropy(base_url=base_url, api_key=None, _strict_response_validation=True)
             _ = client2
 
     def test_default_query_option(self) -> None:
-        client = AsyncZeroentropy(
+        client = AsyncZeroEntropy(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"query_param": "bar"}
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
@@ -1234,7 +1230,7 @@ class TestAsyncZeroentropy:
         params = dict(request.url.params)
         assert params == {"foo": "2"}
 
-    def test_multipart_repeating_array(self, async_client: AsyncZeroentropy) -> None:
+    def test_multipart_repeating_array(self, async_client: AsyncZeroEntropy) -> None:
         request = async_client._build_request(
             FinalRequestOptions.construct(
                 method="get",
@@ -1321,7 +1317,7 @@ class TestAsyncZeroentropy:
         assert response.foo == 2
 
     def test_base_url_setter(self) -> None:
-        client = AsyncZeroentropy(
+        client = AsyncZeroEntropy(
             base_url="https://example.com/from_init", api_key=api_key, _strict_response_validation=True
         )
         assert client.base_url == "https://example.com/from_init/"
@@ -1332,16 +1328,16 @@ class TestAsyncZeroentropy:
 
     def test_base_url_env(self) -> None:
         with update_env(ZEROENTROPY_BASE_URL="http://localhost:5000/from/env"):
-            client = AsyncZeroentropy(api_key=api_key, _strict_response_validation=True)
+            client = AsyncZeroEntropy(api_key=api_key, _strict_response_validation=True)
             assert client.base_url == "http://localhost:5000/from/env/"
 
     @pytest.mark.parametrize(
         "client",
         [
-            AsyncZeroentropy(
+            AsyncZeroEntropy(
                 base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True
             ),
-            AsyncZeroentropy(
+            AsyncZeroEntropy(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -1350,7 +1346,7 @@ class TestAsyncZeroentropy:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_trailing_slash(self, client: AsyncZeroentropy) -> None:
+    def test_base_url_trailing_slash(self, client: AsyncZeroEntropy) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1363,10 +1359,10 @@ class TestAsyncZeroentropy:
     @pytest.mark.parametrize(
         "client",
         [
-            AsyncZeroentropy(
+            AsyncZeroEntropy(
                 base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True
             ),
-            AsyncZeroentropy(
+            AsyncZeroEntropy(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -1375,7 +1371,7 @@ class TestAsyncZeroentropy:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_no_trailing_slash(self, client: AsyncZeroentropy) -> None:
+    def test_base_url_no_trailing_slash(self, client: AsyncZeroEntropy) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1388,10 +1384,10 @@ class TestAsyncZeroentropy:
     @pytest.mark.parametrize(
         "client",
         [
-            AsyncZeroentropy(
+            AsyncZeroEntropy(
                 base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True
             ),
-            AsyncZeroentropy(
+            AsyncZeroEntropy(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -1400,7 +1396,7 @@ class TestAsyncZeroentropy:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_absolute_request_url(self, client: AsyncZeroentropy) -> None:
+    def test_absolute_request_url(self, client: AsyncZeroEntropy) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1411,7 +1407,7 @@ class TestAsyncZeroentropy:
         assert request.url == "https://myapi.com/foo"
 
     async def test_copied_client_does_not_close_http(self) -> None:
-        client = AsyncZeroentropy(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = AsyncZeroEntropy(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         assert not client.is_closed()
 
         copied = client.copy()
@@ -1423,7 +1419,7 @@ class TestAsyncZeroentropy:
         assert not client.is_closed()
 
     async def test_client_context_manager(self) -> None:
-        client = AsyncZeroentropy(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = AsyncZeroEntropy(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         async with client as c2:
             assert c2 is client
             assert not c2.is_closed()
@@ -1445,7 +1441,7 @@ class TestAsyncZeroentropy:
 
     async def test_client_max_retries_validation(self) -> None:
         with pytest.raises(TypeError, match=r"max_retries cannot be None"):
-            AsyncZeroentropy(
+            AsyncZeroEntropy(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, max_retries=cast(Any, None)
             )
 
@@ -1457,12 +1453,12 @@ class TestAsyncZeroentropy:
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
 
-        strict_client = AsyncZeroentropy(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        strict_client = AsyncZeroEntropy(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
         with pytest.raises(APIResponseValidationError):
             await strict_client.get("/foo", cast_to=Model)
 
-        client = AsyncZeroentropy(base_url=base_url, api_key=api_key, _strict_response_validation=False)
+        client = AsyncZeroEntropy(base_url=base_url, api_key=api_key, _strict_response_validation=False)
 
         response = await client.get("/foo", cast_to=Model)
         assert isinstance(response, str)  # type: ignore[unreachable]
@@ -1491,7 +1487,7 @@ class TestAsyncZeroentropy:
     @mock.patch("time.time", mock.MagicMock(return_value=1696004797))
     @pytest.mark.asyncio
     async def test_parse_retry_after_header(self, remaining_retries: int, retry_after: str, timeout: float) -> None:
-        client = AsyncZeroentropy(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = AsyncZeroEntropy(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
         headers = httpx.Headers({"retry-after": retry_after})
         options = FinalRequestOptions(method="get", url="/foo", max_retries=3)
@@ -1501,12 +1497,12 @@ class TestAsyncZeroentropy:
     @mock.patch("zeroentropy._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/documents/get-document-info").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/status/get-status").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
             await self.client.post(
-                "/documents/get-document-info",
-                body=cast(object, dict(collection_name="collection_name", path="path")),
+                "/status/get-status",
+                body=cast(object, dict()),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1516,12 +1512,12 @@ class TestAsyncZeroentropy:
     @mock.patch("zeroentropy._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/documents/get-document-info").mock(return_value=httpx.Response(500))
+        respx_mock.post("/status/get-status").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
             await self.client.post(
-                "/documents/get-document-info",
-                body=cast(object, dict(collection_name="collection_name", path="path")),
+                "/status/get-status",
+                body=cast(object, dict()),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1535,7 +1531,7 @@ class TestAsyncZeroentropy:
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
     async def test_retries_taken(
         self,
-        async_client: AsyncZeroentropy,
+        async_client: AsyncZeroEntropy,
         failures_before_success: int,
         failure_mode: Literal["status", "exception"],
         respx_mock: MockRouter,
@@ -1553,9 +1549,9 @@ class TestAsyncZeroentropy:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/documents/get-document-info").mock(side_effect=retry_handler)
+        respx_mock.post("/status/get-status").mock(side_effect=retry_handler)
 
-        response = await client.documents.with_raw_response.get_info(collection_name="collection_name", path="path")
+        response = await client.status.with_raw_response.get_status()
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -1565,7 +1561,7 @@ class TestAsyncZeroentropy:
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     async def test_omit_retry_count_header(
-        self, async_client: AsyncZeroentropy, failures_before_success: int, respx_mock: MockRouter
+        self, async_client: AsyncZeroEntropy, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = async_client.with_options(max_retries=4)
 
@@ -1578,11 +1574,9 @@ class TestAsyncZeroentropy:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/documents/get-document-info").mock(side_effect=retry_handler)
+        respx_mock.post("/status/get-status").mock(side_effect=retry_handler)
 
-        response = await client.documents.with_raw_response.get_info(
-            collection_name="collection_name", path="path", extra_headers={"x-stainless-retry-count": Omit()}
-        )
+        response = await client.status.with_raw_response.get_status(extra_headers={"x-stainless-retry-count": Omit()})
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
@@ -1591,7 +1585,7 @@ class TestAsyncZeroentropy:
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     async def test_overwrite_retry_count_header(
-        self, async_client: AsyncZeroentropy, failures_before_success: int, respx_mock: MockRouter
+        self, async_client: AsyncZeroEntropy, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = async_client.with_options(max_retries=4)
 
@@ -1604,11 +1598,9 @@ class TestAsyncZeroentropy:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/documents/get-document-info").mock(side_effect=retry_handler)
+        respx_mock.post("/status/get-status").mock(side_effect=retry_handler)
 
-        response = await client.documents.with_raw_response.get_info(
-            collection_name="collection_name", path="path", extra_headers={"x-stainless-retry-count": "42"}
-        )
+        response = await client.status.with_raw_response.get_status(extra_headers={"x-stainless-retry-count": "42"})
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 

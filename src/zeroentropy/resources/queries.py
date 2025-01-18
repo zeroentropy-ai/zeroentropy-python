@@ -2,15 +2,11 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import Dict, Optional
 
 import httpx
 
-from ..types import (
-    query_top_pages_params,
-    query_top_snippets_params,
-    query_top_documents_params,
-)
+from ..types import query_top_pages_params, query_top_snippets_params, query_top_documents_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from .._utils import (
     maybe_transform,
@@ -25,7 +21,6 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.str_json_param import StrJsonParam
 from ..types.query_top_pages_response import QueryTopPagesResponse
 from ..types.query_top_snippets_response import QueryTopSnippetsResponse
 from ..types.query_top_documents_response import QueryTopDocumentsResponse
@@ -40,7 +35,7 @@ class QueriesResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/ZeroEntropy-AI/zeroentropy-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/zeroentropy-ai/zeroentropy-python#accessing-raw-response-data-eg-headers
         """
         return QueriesResourceWithRawResponse(self)
 
@@ -49,7 +44,7 @@ class QueriesResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/ZeroEntropy-AI/zeroentropy-python#with_streaming_response
+        For more information, see https://www.github.com/zeroentropy-ai/zeroentropy-python#with_streaming_response
         """
         return QueriesResourceWithStreamingResponse(self)
 
@@ -59,7 +54,7 @@ class QueriesResource(SyncAPIResource):
         collection_name: str,
         k: int,
         query: str,
-        filter: Optional[StrJsonParam] | NotGiven = NOT_GIVEN,
+        filter: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
         include_metadata: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -119,7 +114,7 @@ class QueriesResource(SyncAPIResource):
         collection_name: str,
         k: int,
         query: str,
-        filter: Optional[StrJsonParam] | NotGiven = NOT_GIVEN,
+        filter: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
         include_content: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -178,7 +173,7 @@ class QueriesResource(SyncAPIResource):
         collection_name: str,
         k: int,
         query: str,
-        filter: Optional[StrJsonParam] | NotGiven = NOT_GIVEN,
+        filter: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
         precise_responses: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -246,7 +241,7 @@ class AsyncQueriesResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/ZeroEntropy-AI/zeroentropy-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/zeroentropy-ai/zeroentropy-python#accessing-raw-response-data-eg-headers
         """
         return AsyncQueriesResourceWithRawResponse(self)
 
@@ -255,7 +250,7 @@ class AsyncQueriesResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/ZeroEntropy-AI/zeroentropy-python#with_streaming_response
+        For more information, see https://www.github.com/zeroentropy-ai/zeroentropy-python#with_streaming_response
         """
         return AsyncQueriesResourceWithStreamingResponse(self)
 
@@ -265,7 +260,7 @@ class AsyncQueriesResource(AsyncAPIResource):
         collection_name: str,
         k: int,
         query: str,
-        filter: Optional[StrJsonParam] | NotGiven = NOT_GIVEN,
+        filter: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
         include_metadata: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -325,7 +320,7 @@ class AsyncQueriesResource(AsyncAPIResource):
         collection_name: str,
         k: int,
         query: str,
-        filter: Optional[StrJsonParam] | NotGiven = NOT_GIVEN,
+        filter: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
         include_content: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -384,7 +379,7 @@ class AsyncQueriesResource(AsyncAPIResource):
         collection_name: str,
         k: int,
         query: str,
-        filter: Optional[StrJsonParam] | NotGiven = NOT_GIVEN,
+        filter: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
         precise_responses: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.

@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.1.0-alpha.2 (2025-01-18)
+
+Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/zeroentropy-ai/zeroentropy-python/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)
+
+### Features
+
+* **api:** update via SDK Studio ([#10](https://github.com/zeroentropy-ai/zeroentropy-python/issues/10)) ([d61d43b](https://github.com/zeroentropy-ai/zeroentropy-python/commit/d61d43bc52d19325ef066fef6ceb461a253f4139))
+* **api:** update via SDK Studio ([#11](https://github.com/zeroentropy-ai/zeroentropy-python/issues/11)) ([0a8a11a](https://github.com/zeroentropy-ai/zeroentropy-python/commit/0a8a11a7e24b8dfbd64fdde2cb5a11edc0ce9791))
+* **api:** update via SDK Studio ([#12](https://github.com/zeroentropy-ai/zeroentropy-python/issues/12)) ([723864e](https://github.com/zeroentropy-ai/zeroentropy-python/commit/723864e726f857267c0c44705485ba9b7d165731))
+* **api:** update via SDK Studio ([#13](https://github.com/zeroentropy-ai/zeroentropy-python/issues/13)) ([5799893](https://github.com/zeroentropy-ai/zeroentropy-python/commit/57998931b1c6a68648a5bd124bd0649219237e8d))
+* **api:** update via SDK Studio ([#14](https://github.com/zeroentropy-ai/zeroentropy-python/issues/14)) ([03d17bb](https://github.com/zeroentropy-ai/zeroentropy-python/commit/03d17bb0694165401e27f1e7e7d4cd85155b25f2))
+* **api:** update via SDK Studio ([#5](https://github.com/zeroentropy-ai/zeroentropy-python/issues/5)) ([62aa3ad](https://github.com/zeroentropy-ai/zeroentropy-python/commit/62aa3ad1383b814d855947effdede5c6d1c90fd6))
+* **api:** update via SDK Studio ([#7](https://github.com/zeroentropy-ai/zeroentropy-python/issues/7)) ([0d38bcf](https://github.com/zeroentropy-ai/zeroentropy-python/commit/0d38bcf30e218fd7b4b6043a82b54a9aabff0f3e))
+* **api:** update via SDK Studio ([#8](https://github.com/zeroentropy-ai/zeroentropy-python/issues/8)) ([c10e665](https://github.com/zeroentropy-ai/zeroentropy-python/commit/c10e665d5c73669ddbf6a40fd76da2f91bb8c699))
+* **api:** update via SDK Studio ([#9](https://github.com/zeroentropy-ai/zeroentropy-python/issues/9)) ([3d9aa30](https://github.com/zeroentropy-ai/zeroentropy-python/commit/3d9aa30f732fbdda5f30c32f2f9c95163a556120))
+
+
+### Documentation
+
+* remove stainless citation ([2230305](https://github.com/zeroentropy-ai/zeroentropy-python/commit/22303055e83e1ee4cbaf9c148c627aaf198e38b8))
+
 ## 0.1.0-alpha.1 (2025-01-18)
 
 Full Changelog: [v0.0.1-alpha.0...v0.1.0-alpha.1](https://github.com/ZeroEntropy-AI/zeroentropy-python/compare/v0.0.1-alpha.0...v0.1.0-alpha.1)

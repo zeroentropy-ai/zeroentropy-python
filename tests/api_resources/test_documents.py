@@ -8,7 +8,7 @@ from typing import Any, cast
 import pytest
 
 from tests.utils import assert_matches_type
-from zeroentropy import Zeroentropy, AsyncZeroentropy
+from zeroentropy import ZeroEntropy, AsyncZeroEntropy
 from zeroentropy.types import (
     DocumentAddResponse,
     DocumentDeleteResponse,
@@ -25,7 +25,7 @@ class TestDocuments:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    def test_method_delete(self, client: Zeroentropy) -> None:
+    def test_method_delete(self, client: ZeroEntropy) -> None:
         document = client.documents.delete(
             collection_name="collection_name",
             path="path",
@@ -33,7 +33,7 @@ class TestDocuments:
         assert_matches_type(DocumentDeleteResponse, document, path=["response"])
 
     @parametrize
-    def test_raw_response_delete(self, client: Zeroentropy) -> None:
+    def test_raw_response_delete(self, client: ZeroEntropy) -> None:
         response = client.documents.with_raw_response.delete(
             collection_name="collection_name",
             path="path",
@@ -45,7 +45,7 @@ class TestDocuments:
         assert_matches_type(DocumentDeleteResponse, document, path=["response"])
 
     @parametrize
-    def test_streaming_response_delete(self, client: Zeroentropy) -> None:
+    def test_streaming_response_delete(self, client: ZeroEntropy) -> None:
         with client.documents.with_streaming_response.delete(
             collection_name="collection_name",
             path="path",
@@ -59,7 +59,7 @@ class TestDocuments:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_method_add(self, client: Zeroentropy) -> None:
+    def test_method_add(self, client: ZeroEntropy) -> None:
         document = client.documents.add(
             collection_name="collection_name",
             content={
@@ -71,7 +71,7 @@ class TestDocuments:
         assert_matches_type(DocumentAddResponse, document, path=["response"])
 
     @parametrize
-    def test_method_add_with_all_params(self, client: Zeroentropy) -> None:
+    def test_method_add_with_all_params(self, client: ZeroEntropy) -> None:
         document = client.documents.add(
             collection_name="collection_name",
             content={
@@ -85,7 +85,7 @@ class TestDocuments:
         assert_matches_type(DocumentAddResponse, document, path=["response"])
 
     @parametrize
-    def test_raw_response_add(self, client: Zeroentropy) -> None:
+    def test_raw_response_add(self, client: ZeroEntropy) -> None:
         response = client.documents.with_raw_response.add(
             collection_name="collection_name",
             content={
@@ -101,7 +101,7 @@ class TestDocuments:
         assert_matches_type(DocumentAddResponse, document, path=["response"])
 
     @parametrize
-    def test_streaming_response_add(self, client: Zeroentropy) -> None:
+    def test_streaming_response_add(self, client: ZeroEntropy) -> None:
         with client.documents.with_streaming_response.add(
             collection_name="collection_name",
             content={
@@ -119,7 +119,7 @@ class TestDocuments:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_method_get_info(self, client: Zeroentropy) -> None:
+    def test_method_get_info(self, client: ZeroEntropy) -> None:
         document = client.documents.get_info(
             collection_name="collection_name",
             path="path",
@@ -127,7 +127,7 @@ class TestDocuments:
         assert_matches_type(DocumentGetInfoResponse, document, path=["response"])
 
     @parametrize
-    def test_method_get_info_with_all_params(self, client: Zeroentropy) -> None:
+    def test_method_get_info_with_all_params(self, client: ZeroEntropy) -> None:
         document = client.documents.get_info(
             collection_name="collection_name",
             path="path",
@@ -136,7 +136,7 @@ class TestDocuments:
         assert_matches_type(DocumentGetInfoResponse, document, path=["response"])
 
     @parametrize
-    def test_raw_response_get_info(self, client: Zeroentropy) -> None:
+    def test_raw_response_get_info(self, client: ZeroEntropy) -> None:
         response = client.documents.with_raw_response.get_info(
             collection_name="collection_name",
             path="path",
@@ -148,7 +148,7 @@ class TestDocuments:
         assert_matches_type(DocumentGetInfoResponse, document, path=["response"])
 
     @parametrize
-    def test_streaming_response_get_info(self, client: Zeroentropy) -> None:
+    def test_streaming_response_get_info(self, client: ZeroEntropy) -> None:
         with client.documents.with_streaming_response.get_info(
             collection_name="collection_name",
             path="path",
@@ -162,14 +162,14 @@ class TestDocuments:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_method_get_info_list(self, client: Zeroentropy) -> None:
+    def test_method_get_info_list(self, client: ZeroEntropy) -> None:
         document = client.documents.get_info_list(
             collection_name="collection_name",
         )
         assert_matches_type(SyncGetDocumentInfoListCursor[DocumentGetInfoListResponse], document, path=["response"])
 
     @parametrize
-    def test_method_get_info_list_with_all_params(self, client: Zeroentropy) -> None:
+    def test_method_get_info_list_with_all_params(self, client: ZeroEntropy) -> None:
         document = client.documents.get_info_list(
             collection_name="collection_name",
             id_gt="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -178,7 +178,7 @@ class TestDocuments:
         assert_matches_type(SyncGetDocumentInfoListCursor[DocumentGetInfoListResponse], document, path=["response"])
 
     @parametrize
-    def test_raw_response_get_info_list(self, client: Zeroentropy) -> None:
+    def test_raw_response_get_info_list(self, client: ZeroEntropy) -> None:
         response = client.documents.with_raw_response.get_info_list(
             collection_name="collection_name",
         )
@@ -189,7 +189,7 @@ class TestDocuments:
         assert_matches_type(SyncGetDocumentInfoListCursor[DocumentGetInfoListResponse], document, path=["response"])
 
     @parametrize
-    def test_streaming_response_get_info_list(self, client: Zeroentropy) -> None:
+    def test_streaming_response_get_info_list(self, client: ZeroEntropy) -> None:
         with client.documents.with_streaming_response.get_info_list(
             collection_name="collection_name",
         ) as response:
@@ -202,7 +202,7 @@ class TestDocuments:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_method_get_page_info(self, client: Zeroentropy) -> None:
+    def test_method_get_page_info(self, client: ZeroEntropy) -> None:
         document = client.documents.get_page_info(
             collection_name="collection_name",
             page_index=0,
@@ -211,7 +211,7 @@ class TestDocuments:
         assert_matches_type(DocumentGetPageInfoResponse, document, path=["response"])
 
     @parametrize
-    def test_method_get_page_info_with_all_params(self, client: Zeroentropy) -> None:
+    def test_method_get_page_info_with_all_params(self, client: ZeroEntropy) -> None:
         document = client.documents.get_page_info(
             collection_name="collection_name",
             page_index=0,
@@ -222,7 +222,7 @@ class TestDocuments:
         assert_matches_type(DocumentGetPageInfoResponse, document, path=["response"])
 
     @parametrize
-    def test_raw_response_get_page_info(self, client: Zeroentropy) -> None:
+    def test_raw_response_get_page_info(self, client: ZeroEntropy) -> None:
         response = client.documents.with_raw_response.get_page_info(
             collection_name="collection_name",
             page_index=0,
@@ -235,7 +235,7 @@ class TestDocuments:
         assert_matches_type(DocumentGetPageInfoResponse, document, path=["response"])
 
     @parametrize
-    def test_streaming_response_get_page_info(self, client: Zeroentropy) -> None:
+    def test_streaming_response_get_page_info(self, client: ZeroEntropy) -> None:
         with client.documents.with_streaming_response.get_page_info(
             collection_name="collection_name",
             page_index=0,
@@ -254,7 +254,7 @@ class TestAsyncDocuments:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    async def test_method_delete(self, async_client: AsyncZeroentropy) -> None:
+    async def test_method_delete(self, async_client: AsyncZeroEntropy) -> None:
         document = await async_client.documents.delete(
             collection_name="collection_name",
             path="path",
@@ -262,7 +262,7 @@ class TestAsyncDocuments:
         assert_matches_type(DocumentDeleteResponse, document, path=["response"])
 
     @parametrize
-    async def test_raw_response_delete(self, async_client: AsyncZeroentropy) -> None:
+    async def test_raw_response_delete(self, async_client: AsyncZeroEntropy) -> None:
         response = await async_client.documents.with_raw_response.delete(
             collection_name="collection_name",
             path="path",
@@ -274,7 +274,7 @@ class TestAsyncDocuments:
         assert_matches_type(DocumentDeleteResponse, document, path=["response"])
 
     @parametrize
-    async def test_streaming_response_delete(self, async_client: AsyncZeroentropy) -> None:
+    async def test_streaming_response_delete(self, async_client: AsyncZeroEntropy) -> None:
         async with async_client.documents.with_streaming_response.delete(
             collection_name="collection_name",
             path="path",
@@ -288,7 +288,7 @@ class TestAsyncDocuments:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_method_add(self, async_client: AsyncZeroentropy) -> None:
+    async def test_method_add(self, async_client: AsyncZeroEntropy) -> None:
         document = await async_client.documents.add(
             collection_name="collection_name",
             content={
@@ -300,7 +300,7 @@ class TestAsyncDocuments:
         assert_matches_type(DocumentAddResponse, document, path=["response"])
 
     @parametrize
-    async def test_method_add_with_all_params(self, async_client: AsyncZeroentropy) -> None:
+    async def test_method_add_with_all_params(self, async_client: AsyncZeroEntropy) -> None:
         document = await async_client.documents.add(
             collection_name="collection_name",
             content={
@@ -314,7 +314,7 @@ class TestAsyncDocuments:
         assert_matches_type(DocumentAddResponse, document, path=["response"])
 
     @parametrize
-    async def test_raw_response_add(self, async_client: AsyncZeroentropy) -> None:
+    async def test_raw_response_add(self, async_client: AsyncZeroEntropy) -> None:
         response = await async_client.documents.with_raw_response.add(
             collection_name="collection_name",
             content={
@@ -330,7 +330,7 @@ class TestAsyncDocuments:
         assert_matches_type(DocumentAddResponse, document, path=["response"])
 
     @parametrize
-    async def test_streaming_response_add(self, async_client: AsyncZeroentropy) -> None:
+    async def test_streaming_response_add(self, async_client: AsyncZeroEntropy) -> None:
         async with async_client.documents.with_streaming_response.add(
             collection_name="collection_name",
             content={
@@ -348,7 +348,7 @@ class TestAsyncDocuments:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_method_get_info(self, async_client: AsyncZeroentropy) -> None:
+    async def test_method_get_info(self, async_client: AsyncZeroEntropy) -> None:
         document = await async_client.documents.get_info(
             collection_name="collection_name",
             path="path",
@@ -356,7 +356,7 @@ class TestAsyncDocuments:
         assert_matches_type(DocumentGetInfoResponse, document, path=["response"])
 
     @parametrize
-    async def test_method_get_info_with_all_params(self, async_client: AsyncZeroentropy) -> None:
+    async def test_method_get_info_with_all_params(self, async_client: AsyncZeroEntropy) -> None:
         document = await async_client.documents.get_info(
             collection_name="collection_name",
             path="path",
@@ -365,7 +365,7 @@ class TestAsyncDocuments:
         assert_matches_type(DocumentGetInfoResponse, document, path=["response"])
 
     @parametrize
-    async def test_raw_response_get_info(self, async_client: AsyncZeroentropy) -> None:
+    async def test_raw_response_get_info(self, async_client: AsyncZeroEntropy) -> None:
         response = await async_client.documents.with_raw_response.get_info(
             collection_name="collection_name",
             path="path",
@@ -377,7 +377,7 @@ class TestAsyncDocuments:
         assert_matches_type(DocumentGetInfoResponse, document, path=["response"])
 
     @parametrize
-    async def test_streaming_response_get_info(self, async_client: AsyncZeroentropy) -> None:
+    async def test_streaming_response_get_info(self, async_client: AsyncZeroEntropy) -> None:
         async with async_client.documents.with_streaming_response.get_info(
             collection_name="collection_name",
             path="path",
@@ -391,14 +391,14 @@ class TestAsyncDocuments:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_method_get_info_list(self, async_client: AsyncZeroentropy) -> None:
+    async def test_method_get_info_list(self, async_client: AsyncZeroEntropy) -> None:
         document = await async_client.documents.get_info_list(
             collection_name="collection_name",
         )
         assert_matches_type(AsyncGetDocumentInfoListCursor[DocumentGetInfoListResponse], document, path=["response"])
 
     @parametrize
-    async def test_method_get_info_list_with_all_params(self, async_client: AsyncZeroentropy) -> None:
+    async def test_method_get_info_list_with_all_params(self, async_client: AsyncZeroEntropy) -> None:
         document = await async_client.documents.get_info_list(
             collection_name="collection_name",
             id_gt="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -407,7 +407,7 @@ class TestAsyncDocuments:
         assert_matches_type(AsyncGetDocumentInfoListCursor[DocumentGetInfoListResponse], document, path=["response"])
 
     @parametrize
-    async def test_raw_response_get_info_list(self, async_client: AsyncZeroentropy) -> None:
+    async def test_raw_response_get_info_list(self, async_client: AsyncZeroEntropy) -> None:
         response = await async_client.documents.with_raw_response.get_info_list(
             collection_name="collection_name",
         )
@@ -418,7 +418,7 @@ class TestAsyncDocuments:
         assert_matches_type(AsyncGetDocumentInfoListCursor[DocumentGetInfoListResponse], document, path=["response"])
 
     @parametrize
-    async def test_streaming_response_get_info_list(self, async_client: AsyncZeroentropy) -> None:
+    async def test_streaming_response_get_info_list(self, async_client: AsyncZeroEntropy) -> None:
         async with async_client.documents.with_streaming_response.get_info_list(
             collection_name="collection_name",
         ) as response:
@@ -433,7 +433,7 @@ class TestAsyncDocuments:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_method_get_page_info(self, async_client: AsyncZeroentropy) -> None:
+    async def test_method_get_page_info(self, async_client: AsyncZeroEntropy) -> None:
         document = await async_client.documents.get_page_info(
             collection_name="collection_name",
             page_index=0,
@@ -442,7 +442,7 @@ class TestAsyncDocuments:
         assert_matches_type(DocumentGetPageInfoResponse, document, path=["response"])
 
     @parametrize
-    async def test_method_get_page_info_with_all_params(self, async_client: AsyncZeroentropy) -> None:
+    async def test_method_get_page_info_with_all_params(self, async_client: AsyncZeroEntropy) -> None:
         document = await async_client.documents.get_page_info(
             collection_name="collection_name",
             page_index=0,
@@ -453,7 +453,7 @@ class TestAsyncDocuments:
         assert_matches_type(DocumentGetPageInfoResponse, document, path=["response"])
 
     @parametrize
-    async def test_raw_response_get_page_info(self, async_client: AsyncZeroentropy) -> None:
+    async def test_raw_response_get_page_info(self, async_client: AsyncZeroEntropy) -> None:
         response = await async_client.documents.with_raw_response.get_page_info(
             collection_name="collection_name",
             page_index=0,
@@ -466,7 +466,7 @@ class TestAsyncDocuments:
         assert_matches_type(DocumentGetPageInfoResponse, document, path=["response"])
 
     @parametrize
-    async def test_streaming_response_get_page_info(self, async_client: AsyncZeroentropy) -> None:
+    async def test_streaming_response_get_page_info(self, async_client: AsyncZeroEntropy) -> None:
         async with async_client.documents.with_streaming_response.get_page_info(
             collection_name="collection_name",
             page_index=0,
