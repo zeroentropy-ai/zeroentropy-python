@@ -10,7 +10,7 @@ It is generated with [Stainless](https://www.stainlessapi.com/).
 
 ## Documentation
 
-The REST API documentation can be found on [docs.zeroentropy.dev](https://docs.zeroentropy.dev). The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [docs.zeroentropy.dev](https://docs.zeroentropy.dev/api-reference). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 
@@ -31,11 +31,15 @@ client = Zeroentropy(
     api_key=os.environ.get("ZEROENTROPY_API_KEY"),  # This is the default and can be omitted
 )
 
-response = client.documents.get_info(
-    collection_name="collection_name",
-    path="path",
+response = client.documents.add(
+    collection_name="example_collection",
+    content={
+        "type": "text",
+        "text": "Example Content",
+    },
+    path="my_document.txt",
 )
-print(response.document)
+print(response.message)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -58,11 +62,15 @@ client = AsyncZeroentropy(
 
 
 async def main() -> None:
-    response = await client.documents.get_info(
-        collection_name="collection_name",
-        path="path",
+    response = await client.documents.add(
+        collection_name="example_collection",
+        content={
+            "type": "text",
+            "text": "Example Content",
+        },
+        path="my_document.txt",
     )
-    print(response.document)
+    print(response.message)
 
 
 asyncio.run(main())
@@ -166,10 +174,7 @@ from zeroentropy import Zeroentropy
 client = Zeroentropy()
 
 try:
-    client.documents.get_info(
-        collection_name="collection_name",
-        path="path",
-    )
+    client.status.get_status()
 except zeroentropy.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
@@ -212,10 +217,7 @@ client = Zeroentropy(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).documents.get_info(
-    collection_name="collection_name",
-    path="path",
-)
+client.with_options(max_retries=5).status.get_status()
 ```
 
 ### Timeouts
@@ -238,10 +240,7 @@ client = Zeroentropy(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).documents.get_info(
-    collection_name="collection_name",
-    path="path",
-)
+client.with_options(timeout=5.0).status.get_status()
 ```
 
 On timeout, an `APITimeoutError` is thrown.
@@ -282,14 +281,11 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from zeroentropy import Zeroentropy
 
 client = Zeroentropy()
-response = client.documents.with_raw_response.get_info(
-    collection_name="collection_name",
-    path="path",
-)
+response = client.status.with_raw_response.get_status()
 print(response.headers.get('X-My-Header'))
 
-document = response.parse()  # get the object that `documents.get_info()` would have returned
-print(document.document)
+status = response.parse()  # get the object that `status.get_status()` would have returned
+print(status.num_documents)
 ```
 
 These methods return an [`APIResponse`](https://github.com/ZeroEntropy-AI/zeroentropy-python/tree/main/src/zeroentropy/_response.py) object.
@@ -303,10 +299,7 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.documents.with_streaming_response.get_info(
-    collection_name="collection_name",
-    path="path",
-) as response:
+with client.status.with_streaming_response.get_status() as response:
     print(response.headers.get("X-My-Header"))
 
     for line in response.iter_lines():
