@@ -82,13 +82,13 @@ class Zeroentropy(SyncAPIClient):
     ) -> None:
         """Construct a new synchronous zeroentropy client instance.
 
-        This automatically infers the `bearer_token` argument from the `ZERO_ENTROPY_BEARER_TOKEN` environment variable if it is not provided.
+        This automatically infers the `bearer_token` argument from the `ZEROENTROPY_API_KEY` environment variable if it is not provided.
         """
         if bearer_token is None:
-            bearer_token = os.environ.get("ZERO_ENTROPY_BEARER_TOKEN")
+            bearer_token = os.environ.get("ZEROENTROPY_API_KEY")
         if bearer_token is None:
             raise ZeroentropyError(
-                "The bearer_token client option must be set either by passing bearer_token to the client or by setting the ZERO_ENTROPY_BEARER_TOKEN environment variable"
+                "The bearer_token client option must be set either by passing bearer_token to the client or by setting the ZEROENTROPY_API_KEY environment variable"
             )
         self.bearer_token = bearer_token
 
@@ -258,13 +258,13 @@ class AsyncZeroentropy(AsyncAPIClient):
     ) -> None:
         """Construct a new async zeroentropy client instance.
 
-        This automatically infers the `bearer_token` argument from the `ZERO_ENTROPY_BEARER_TOKEN` environment variable if it is not provided.
+        This automatically infers the `bearer_token` argument from the `ZEROENTROPY_API_KEY` environment variable if it is not provided.
         """
         if bearer_token is None:
-            bearer_token = os.environ.get("ZERO_ENTROPY_BEARER_TOKEN")
+            bearer_token = os.environ.get("ZEROENTROPY_API_KEY")
         if bearer_token is None:
             raise ZeroentropyError(
-                "The bearer_token client option must be set either by passing bearer_token to the client or by setting the ZERO_ENTROPY_BEARER_TOKEN environment variable"
+                "The bearer_token client option must be set either by passing bearer_token to the client or by setting the ZEROENTROPY_API_KEY environment variable"
             )
         self.bearer_token = bearer_token
 
