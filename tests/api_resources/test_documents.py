@@ -12,6 +12,7 @@ from zeroentropy import ZeroEntropy, AsyncZeroEntropy
 from zeroentropy.types import (
     DocumentAddResponse,
     DocumentDeleteResponse,
+    DocumentUpdateResponse,
     DocumentGetInfoResponse,
     DocumentGetInfoListResponse,
     DocumentGetPageInfoResponse,
@@ -23,6 +24,49 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 class TestDocuments:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
+
+    @parametrize
+    def test_method_update(self, client: ZeroEntropy) -> None:
+        document = client.documents.update(
+            collection_name="collection_name",
+            path="path",
+        )
+        assert_matches_type(DocumentUpdateResponse, document, path=["response"])
+
+    @parametrize
+    def test_method_update_with_all_params(self, client: ZeroEntropy) -> None:
+        document = client.documents.update(
+            collection_name="collection_name",
+            path="path",
+            metadata={"foo": "string"},
+        )
+        assert_matches_type(DocumentUpdateResponse, document, path=["response"])
+
+    @parametrize
+    def test_raw_response_update(self, client: ZeroEntropy) -> None:
+        response = client.documents.with_raw_response.update(
+            collection_name="collection_name",
+            path="path",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = response.parse()
+        assert_matches_type(DocumentUpdateResponse, document, path=["response"])
+
+    @parametrize
+    def test_streaming_response_update(self, client: ZeroEntropy) -> None:
+        with client.documents.with_streaming_response.update(
+            collection_name="collection_name",
+            path="path",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = response.parse()
+            assert_matches_type(DocumentUpdateResponse, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
 
     @parametrize
     def test_method_delete(self, client: ZeroEntropy) -> None:
@@ -217,7 +261,6 @@ class TestDocuments:
             page_index=0,
             path="path",
             include_content=True,
-            include_image=True,
         )
         assert_matches_type(DocumentGetPageInfoResponse, document, path=["response"])
 
@@ -252,6 +295,49 @@ class TestDocuments:
 
 class TestAsyncDocuments:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
+
+    @parametrize
+    async def test_method_update(self, async_client: AsyncZeroEntropy) -> None:
+        document = await async_client.documents.update(
+            collection_name="collection_name",
+            path="path",
+        )
+        assert_matches_type(DocumentUpdateResponse, document, path=["response"])
+
+    @parametrize
+    async def test_method_update_with_all_params(self, async_client: AsyncZeroEntropy) -> None:
+        document = await async_client.documents.update(
+            collection_name="collection_name",
+            path="path",
+            metadata={"foo": "string"},
+        )
+        assert_matches_type(DocumentUpdateResponse, document, path=["response"])
+
+    @parametrize
+    async def test_raw_response_update(self, async_client: AsyncZeroEntropy) -> None:
+        response = await async_client.documents.with_raw_response.update(
+            collection_name="collection_name",
+            path="path",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = await response.parse()
+        assert_matches_type(DocumentUpdateResponse, document, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_update(self, async_client: AsyncZeroEntropy) -> None:
+        async with async_client.documents.with_streaming_response.update(
+            collection_name="collection_name",
+            path="path",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = await response.parse()
+            assert_matches_type(DocumentUpdateResponse, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
 
     @parametrize
     async def test_method_delete(self, async_client: AsyncZeroEntropy) -> None:
@@ -448,7 +534,6 @@ class TestAsyncDocuments:
             page_index=0,
             path="path",
             include_content=True,
-            include_image=True,
         )
         assert_matches_type(DocumentGetPageInfoResponse, document, path=["response"])
 

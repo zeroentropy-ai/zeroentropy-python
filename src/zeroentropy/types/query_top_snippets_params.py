@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import Dict, Optional
-from typing_extensions import Required, TypedDict
+from typing_extensions import Literal, Required, TypedDict
 
 __all__ = ["QueryTopSnippetsParams"]
 
@@ -31,6 +31,16 @@ class QueryTopSnippetsParams(TypedDict, total=False):
 
     Please read [Metadata Filtering](/metadata-filtering) for more information. If
     not provided, then all documents will be searched.
+    """
+
+    latency_mode: Literal["low"]
+    """Note that for Top K Snippets, only latency_mode "low" is available.
+
+    This option selects between our latency modes. The higher latency mode takes
+    longer, but can allow for more accurate responses. If desired, test both to
+    customize your search experience for your particular use-case, or use the
+    default of "low" and only swap if you need an additional improvement in search
+    result quality.
     """
 
     precise_responses: bool

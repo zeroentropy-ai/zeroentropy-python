@@ -9,6 +9,7 @@ import httpx
 from ..types import (
     document_add_params,
     document_delete_params,
+    document_update_params,
     document_get_info_params,
     document_get_info_list_params,
     document_get_page_info_params,
@@ -30,6 +31,7 @@ from ..pagination import SyncGetDocumentInfoListCursor, AsyncGetDocumentInfoList
 from .._base_client import AsyncPaginator, make_request_options
 from ..types.document_add_response import DocumentAddResponse
 from ..types.document_delete_response import DocumentDeleteResponse
+from ..types.document_update_response import DocumentUpdateResponse
 from ..types.document_get_info_response import DocumentGetInfoResponse
 from ..types.document_get_info_list_response import DocumentGetInfoListResponse
 from ..types.document_get_page_info_response import DocumentGetPageInfoResponse
@@ -41,7 +43,7 @@ class DocumentsResource(SyncAPIResource):
     @cached_property
     def with_raw_response(self) -> DocumentsResourceWithRawResponse:
         """
-        This property can be used as a prefix for any HTTP method call to return the
+        This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/zeroentropy-ai/zeroentropy-python#accessing-raw-response-data-eg-headers
@@ -56,6 +58,70 @@ class DocumentsResource(SyncAPIResource):
         For more information, see https://www.github.com/zeroentropy-ai/zeroentropy-python#with_streaming_response
         """
         return DocumentsResourceWithStreamingResponse(self)
+
+    def update(
+        self,
+        *,
+        collection_name: str,
+        path: str,
+        metadata: Optional[Dict[str, Union[str, List[str]]]] | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> DocumentUpdateResponse:
+        """Updates a document.
+
+        This endpoint is atomic.
+
+        The only attribute currently supported for update is `metadata`. This endpoint
+        can only be called with a non-null `metadata` if the document status is
+        `indexed`.
+
+        Sometimes, when updating a document, a new document ID will be assigned and the
+        previous will be deleted. For this reason, the previous and the new document ID
+        will both be returned in the response. If the document ID was not updated, then
+        these two IDs will be identical.
+
+        A `404 Not Found` status code will be returned, if the provided collection name
+        or document path does not exist.
+
+        Args:
+          collection_name: The name of the collection.
+
+          path: The filepath of the document that you are updating. A `404 Not Found` status
+              code will be returned if no document with this path was found.
+
+          metadata: If this field is provided, the given metadata json will replace the document's
+              existing metadata json. In other words, if you want to add a new field, you will
+              need to provide the entire metadata object (Both the original fields, and the
+              new field).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/documents/update-document",
+            body=maybe_transform(
+                {
+                    "collection_name": collection_name,
+                    "path": path,
+                    "metadata": metadata,
+                },
+                document_update_params.DocumentUpdateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=DocumentUpdateResponse,
+        )
 
     def delete(
         self,
@@ -305,7 +371,6 @@ class DocumentsResource(SyncAPIResource):
         page_index: int,
         path: str,
         include_content: bool | NotGiven = NOT_GIVEN,
-        include_image: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -336,14 +401,6 @@ class DocumentsResource(SyncAPIResource):
           include_content: If `true`, then the response will have the `content` attribute be a `string`,
               rather than `null`. This string will contain the full contents of the page.
 
-          include_image: If `true`, then the response will have the `image_base64_data` attribute be a
-              `string`\\**, rather than `null`. This string will contain the image data of the
-              document, as a base64-encoded string. Currently, this data is guaranteed to be a
-              JPEG-encoded image.
-
-              \\**Note that the response may still be `null`, if the page has no image data,
-              such as if the document was uploaded with raw text rather than as a PDF.
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -360,7 +417,6 @@ class DocumentsResource(SyncAPIResource):
                     "page_index": page_index,
                     "path": path,
                     "include_content": include_content,
-                    "include_image": include_image,
                 },
                 document_get_page_info_params.DocumentGetPageInfoParams,
             ),
@@ -375,7 +431,7 @@ class AsyncDocumentsResource(AsyncAPIResource):
     @cached_property
     def with_raw_response(self) -> AsyncDocumentsResourceWithRawResponse:
         """
-        This property can be used as a prefix for any HTTP method call to return the
+        This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/zeroentropy-ai/zeroentropy-python#accessing-raw-response-data-eg-headers
@@ -390,6 +446,70 @@ class AsyncDocumentsResource(AsyncAPIResource):
         For more information, see https://www.github.com/zeroentropy-ai/zeroentropy-python#with_streaming_response
         """
         return AsyncDocumentsResourceWithStreamingResponse(self)
+
+    async def update(
+        self,
+        *,
+        collection_name: str,
+        path: str,
+        metadata: Optional[Dict[str, Union[str, List[str]]]] | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> DocumentUpdateResponse:
+        """Updates a document.
+
+        This endpoint is atomic.
+
+        The only attribute currently supported for update is `metadata`. This endpoint
+        can only be called with a non-null `metadata` if the document status is
+        `indexed`.
+
+        Sometimes, when updating a document, a new document ID will be assigned and the
+        previous will be deleted. For this reason, the previous and the new document ID
+        will both be returned in the response. If the document ID was not updated, then
+        these two IDs will be identical.
+
+        A `404 Not Found` status code will be returned, if the provided collection name
+        or document path does not exist.
+
+        Args:
+          collection_name: The name of the collection.
+
+          path: The filepath of the document that you are updating. A `404 Not Found` status
+              code will be returned if no document with this path was found.
+
+          metadata: If this field is provided, the given metadata json will replace the document's
+              existing metadata json. In other words, if you want to add a new field, you will
+              need to provide the entire metadata object (Both the original fields, and the
+              new field).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/documents/update-document",
+            body=await async_maybe_transform(
+                {
+                    "collection_name": collection_name,
+                    "path": path,
+                    "metadata": metadata,
+                },
+                document_update_params.DocumentUpdateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=DocumentUpdateResponse,
+        )
 
     async def delete(
         self,
@@ -639,7 +759,6 @@ class AsyncDocumentsResource(AsyncAPIResource):
         page_index: int,
         path: str,
         include_content: bool | NotGiven = NOT_GIVEN,
-        include_image: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -670,14 +789,6 @@ class AsyncDocumentsResource(AsyncAPIResource):
           include_content: If `true`, then the response will have the `content` attribute be a `string`,
               rather than `null`. This string will contain the full contents of the page.
 
-          include_image: If `true`, then the response will have the `image_base64_data` attribute be a
-              `string`\\**, rather than `null`. This string will contain the image data of the
-              document, as a base64-encoded string. Currently, this data is guaranteed to be a
-              JPEG-encoded image.
-
-              \\**Note that the response may still be `null`, if the page has no image data,
-              such as if the document was uploaded with raw text rather than as a PDF.
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -694,7 +805,6 @@ class AsyncDocumentsResource(AsyncAPIResource):
                     "page_index": page_index,
                     "path": path,
                     "include_content": include_content,
-                    "include_image": include_image,
                 },
                 document_get_page_info_params.DocumentGetPageInfoParams,
             ),
@@ -709,6 +819,9 @@ class DocumentsResourceWithRawResponse:
     def __init__(self, documents: DocumentsResource) -> None:
         self._documents = documents
 
+        self.update = to_raw_response_wrapper(
+            documents.update,
+        )
         self.delete = to_raw_response_wrapper(
             documents.delete,
         )
@@ -730,6 +843,9 @@ class AsyncDocumentsResourceWithRawResponse:
     def __init__(self, documents: AsyncDocumentsResource) -> None:
         self._documents = documents
 
+        self.update = async_to_raw_response_wrapper(
+            documents.update,
+        )
         self.delete = async_to_raw_response_wrapper(
             documents.delete,
         )
@@ -751,6 +867,9 @@ class DocumentsResourceWithStreamingResponse:
     def __init__(self, documents: DocumentsResource) -> None:
         self._documents = documents
 
+        self.update = to_streamed_response_wrapper(
+            documents.update,
+        )
         self.delete = to_streamed_response_wrapper(
             documents.delete,
         )
@@ -772,6 +891,9 @@ class AsyncDocumentsResourceWithStreamingResponse:
     def __init__(self, documents: AsyncDocumentsResource) -> None:
         self._documents = documents
 
+        self.update = async_to_streamed_response_wrapper(
+            documents.update,
+        )
         self.delete = async_to_streamed_response_wrapper(
             documents.delete,
         )

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from typing import Dict, Optional
+from typing_extensions import Literal
 
 import httpx
 
@@ -32,7 +33,7 @@ class QueriesResource(SyncAPIResource):
     @cached_property
     def with_raw_response(self) -> QueriesResourceWithRawResponse:
         """
-        This property can be used as a prefix for any HTTP method call to return the
+        This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/zeroentropy-ai/zeroentropy-python#accessing-raw-response-data-eg-headers
@@ -56,6 +57,7 @@ class QueriesResource(SyncAPIResource):
         query: str,
         filter: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
         include_metadata: bool | NotGiven = NOT_GIVEN,
+        latency_mode: Literal["low", "high"] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -82,6 +84,12 @@ class QueriesResource(SyncAPIResource):
           include_metadata: Whether or not to include the metadata in the top documents response. If not
               provided, then the default will be `False`.
 
+          latency_mode: This option selects between our two latency modes. The higher latency mode takes
+              longer, but can allow for more accurate responses. If desired, test both to
+              customize your search experience for your particular use-case, or use the
+              default of "low" and only swap if you need an additional improvement in search
+              result quality.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -99,6 +107,7 @@ class QueriesResource(SyncAPIResource):
                     "query": query,
                     "filter": filter,
                     "include_metadata": include_metadata,
+                    "latency_mode": latency_mode,
                 },
                 query_top_documents_params.QueryTopDocumentsParams,
             ),
@@ -116,6 +125,7 @@ class QueriesResource(SyncAPIResource):
         query: str,
         filter: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
         include_content: bool | NotGiven = NOT_GIVEN,
+        latency_mode: Literal["low", "high"] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -141,6 +151,12 @@ class QueriesResource(SyncAPIResource):
 
           include_content: If set to true, then the content of all pages will be returned.
 
+          latency_mode: This option selects between our two latency modes. The higher latency mode takes
+              longer, but can allow for more accurate responses. If desired, test both to
+              customize your search experience for your particular use-case, or use the
+              default of "low" and only swap if you need an additional improvement in search
+              result quality.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -158,6 +174,7 @@ class QueriesResource(SyncAPIResource):
                     "query": query,
                     "filter": filter,
                     "include_content": include_content,
+                    "latency_mode": latency_mode,
                 },
                 query_top_pages_params.QueryTopPagesParams,
             ),
@@ -174,6 +191,7 @@ class QueriesResource(SyncAPIResource):
         k: int,
         query: str,
         filter: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
+        latency_mode: Literal["low"] | NotGiven = NOT_GIVEN,
         precise_responses: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -202,6 +220,12 @@ class QueriesResource(SyncAPIResource):
           filter: The query filter to apply. Please read [Metadata Filtering](/metadata-filtering)
               for more information. If not provided, then all documents will be searched.
 
+          latency_mode: Note that for Top K Snippets, only latency_mode "low" is available. This option
+              selects between our latency modes. The higher latency mode takes longer, but can
+              allow for more accurate responses. If desired, test both to customize your
+              search experience for your particular use-case, or use the default of "low" and
+              only swap if you need an additional improvement in search result quality.
+
           precise_responses: Enable precise responses. Precise responses will have higher latency, but
               provide much more precise snippets. When `precise_responses` is set to `true`,
               the responses will average 200 characters. If set to `false`, the responses will
@@ -223,6 +247,7 @@ class QueriesResource(SyncAPIResource):
                     "k": k,
                     "query": query,
                     "filter": filter,
+                    "latency_mode": latency_mode,
                     "precise_responses": precise_responses,
                 },
                 query_top_snippets_params.QueryTopSnippetsParams,
@@ -238,7 +263,7 @@ class AsyncQueriesResource(AsyncAPIResource):
     @cached_property
     def with_raw_response(self) -> AsyncQueriesResourceWithRawResponse:
         """
-        This property can be used as a prefix for any HTTP method call to return the
+        This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/zeroentropy-ai/zeroentropy-python#accessing-raw-response-data-eg-headers
@@ -262,6 +287,7 @@ class AsyncQueriesResource(AsyncAPIResource):
         query: str,
         filter: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
         include_metadata: bool | NotGiven = NOT_GIVEN,
+        latency_mode: Literal["low", "high"] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -288,6 +314,12 @@ class AsyncQueriesResource(AsyncAPIResource):
           include_metadata: Whether or not to include the metadata in the top documents response. If not
               provided, then the default will be `False`.
 
+          latency_mode: This option selects between our two latency modes. The higher latency mode takes
+              longer, but can allow for more accurate responses. If desired, test both to
+              customize your search experience for your particular use-case, or use the
+              default of "low" and only swap if you need an additional improvement in search
+              result quality.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -305,6 +337,7 @@ class AsyncQueriesResource(AsyncAPIResource):
                     "query": query,
                     "filter": filter,
                     "include_metadata": include_metadata,
+                    "latency_mode": latency_mode,
                 },
                 query_top_documents_params.QueryTopDocumentsParams,
             ),
@@ -322,6 +355,7 @@ class AsyncQueriesResource(AsyncAPIResource):
         query: str,
         filter: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
         include_content: bool | NotGiven = NOT_GIVEN,
+        latency_mode: Literal["low", "high"] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -347,6 +381,12 @@ class AsyncQueriesResource(AsyncAPIResource):
 
           include_content: If set to true, then the content of all pages will be returned.
 
+          latency_mode: This option selects between our two latency modes. The higher latency mode takes
+              longer, but can allow for more accurate responses. If desired, test both to
+              customize your search experience for your particular use-case, or use the
+              default of "low" and only swap if you need an additional improvement in search
+              result quality.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -364,6 +404,7 @@ class AsyncQueriesResource(AsyncAPIResource):
                     "query": query,
                     "filter": filter,
                     "include_content": include_content,
+                    "latency_mode": latency_mode,
                 },
                 query_top_pages_params.QueryTopPagesParams,
             ),
@@ -380,6 +421,7 @@ class AsyncQueriesResource(AsyncAPIResource):
         k: int,
         query: str,
         filter: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
+        latency_mode: Literal["low"] | NotGiven = NOT_GIVEN,
         precise_responses: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -408,6 +450,12 @@ class AsyncQueriesResource(AsyncAPIResource):
           filter: The query filter to apply. Please read [Metadata Filtering](/metadata-filtering)
               for more information. If not provided, then all documents will be searched.
 
+          latency_mode: Note that for Top K Snippets, only latency_mode "low" is available. This option
+              selects between our latency modes. The higher latency mode takes longer, but can
+              allow for more accurate responses. If desired, test both to customize your
+              search experience for your particular use-case, or use the default of "low" and
+              only swap if you need an additional improvement in search result quality.
+
           precise_responses: Enable precise responses. Precise responses will have higher latency, but
               provide much more precise snippets. When `precise_responses` is set to `true`,
               the responses will average 200 characters. If set to `false`, the responses will
@@ -429,6 +477,7 @@ class AsyncQueriesResource(AsyncAPIResource):
                     "k": k,
                     "query": query,
                     "filter": filter,
+                    "latency_mode": latency_mode,
                     "precise_responses": precise_responses,
                 },
                 query_top_snippets_params.QueryTopSnippetsParams,

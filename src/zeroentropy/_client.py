@@ -24,7 +24,7 @@ from ._utils import (
     get_async_library,
 )
 from ._version import __version__
-from .resources import status, parsers, queries, documents, collections
+from .resources import admin, status, parsers, queries, documents, collections
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError, ZeroEntropyError
 from ._base_client import (
@@ -46,6 +46,7 @@ __all__ = [
 
 
 class ZeroEntropy(SyncAPIClient):
+    admin: admin.AdminResource
     status: status.StatusResource
     collections: collections.CollectionsResource
     documents: documents.DocumentsResource
@@ -108,6 +109,7 @@ class ZeroEntropy(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
+        self.admin = admin.AdminResource(self)
         self.status = status.StatusResource(self)
         self.collections = collections.CollectionsResource(self)
         self.documents = documents.DocumentsResource(self)
@@ -222,6 +224,7 @@ class ZeroEntropy(SyncAPIClient):
 
 
 class AsyncZeroEntropy(AsyncAPIClient):
+    admin: admin.AsyncAdminResource
     status: status.AsyncStatusResource
     collections: collections.AsyncCollectionsResource
     documents: documents.AsyncDocumentsResource
@@ -284,6 +287,7 @@ class AsyncZeroEntropy(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
+        self.admin = admin.AsyncAdminResource(self)
         self.status = status.AsyncStatusResource(self)
         self.collections = collections.AsyncCollectionsResource(self)
         self.documents = documents.AsyncDocumentsResource(self)
@@ -399,6 +403,7 @@ class AsyncZeroEntropy(AsyncAPIClient):
 
 class ZeroEntropyWithRawResponse:
     def __init__(self, client: ZeroEntropy) -> None:
+        self.admin = admin.AdminResourceWithRawResponse(client.admin)
         self.status = status.StatusResourceWithRawResponse(client.status)
         self.collections = collections.CollectionsResourceWithRawResponse(client.collections)
         self.documents = documents.DocumentsResourceWithRawResponse(client.documents)
@@ -408,6 +413,7 @@ class ZeroEntropyWithRawResponse:
 
 class AsyncZeroEntropyWithRawResponse:
     def __init__(self, client: AsyncZeroEntropy) -> None:
+        self.admin = admin.AsyncAdminResourceWithRawResponse(client.admin)
         self.status = status.AsyncStatusResourceWithRawResponse(client.status)
         self.collections = collections.AsyncCollectionsResourceWithRawResponse(client.collections)
         self.documents = documents.AsyncDocumentsResourceWithRawResponse(client.documents)
@@ -417,6 +423,7 @@ class AsyncZeroEntropyWithRawResponse:
 
 class ZeroEntropyWithStreamedResponse:
     def __init__(self, client: ZeroEntropy) -> None:
+        self.admin = admin.AdminResourceWithStreamingResponse(client.admin)
         self.status = status.StatusResourceWithStreamingResponse(client.status)
         self.collections = collections.CollectionsResourceWithStreamingResponse(client.collections)
         self.documents = documents.DocumentsResourceWithStreamingResponse(client.documents)
@@ -426,6 +433,7 @@ class ZeroEntropyWithStreamedResponse:
 
 class AsyncZeroEntropyWithStreamedResponse:
     def __init__(self, client: AsyncZeroEntropy) -> None:
+        self.admin = admin.AsyncAdminResourceWithStreamingResponse(client.admin)
         self.status = status.AsyncStatusResourceWithStreamingResponse(client.status)
         self.collections = collections.AsyncCollectionsResourceWithStreamingResponse(client.collections)
         self.documents = documents.AsyncDocumentsResourceWithStreamingResponse(client.documents)
