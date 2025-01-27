@@ -13,6 +13,14 @@ class Page(BaseModel):
     collection_name: str
     """The name of the collection."""
 
+    image_url: Optional[str] = None
+    """A URL to an image of the page.
+
+    This field will only be provided if the document has finished parsing, and if it
+    is a filetype that is capable of producing images (e.g. PDF, DOCX, PPT, etc). In
+    all other cases, this field will be `null`.
+    """
+
     page_index: int
     """The specific page index of this page.
 
@@ -27,16 +35,6 @@ class Page(BaseModel):
 
     This field will only be provided if `include_content` was set to `true`, and the
     document has finished parsing. Otherwise, this field will be set to `null`.
-    """
-
-    image_base64_data: Optional[str] = None
-    """An image of the page.
-
-    This will be a base64-encoded string. Currently, this data is guaranteed to be a
-    JPEG-encoded image. This field will only be provided if `include_image` was set
-    to `true`, and the document has finished parsing. Also, the document must be a
-    datatype that supports images (PDF, DOCX, PPT, but not .txt). In all other
-    cases, this field will be `null`.
     """
 
 

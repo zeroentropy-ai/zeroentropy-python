@@ -1,3 +1,15 @@
+# Admin
+
+Types:
+
+```python
+from zeroentropy.types import AdminCreateOrganizationResponse
+```
+
+Methods:
+
+- <code title="post /admin/create-organization">client.admin.<a href="./src/zeroentropy/resources/admin.py">create_organization</a>(\*\*<a href="src/zeroentropy/types/admin_create_organization_params.py">params</a>) -> <a href="./src/zeroentropy/types/admin_create_organization_response.py">AdminCreateOrganizationResponse</a></code>
+
 # Status
 
 Types:
@@ -34,6 +46,7 @@ Types:
 
 ```python
 from zeroentropy.types import (
+    DocumentUpdateResponse,
     DocumentDeleteResponse,
     DocumentAddResponse,
     DocumentGetInfoResponse,
@@ -44,6 +57,7 @@ from zeroentropy.types import (
 
 Methods:
 
+- <code title="post /documents/update-document">client.documents.<a href="./src/zeroentropy/resources/documents.py">update</a>(\*\*<a href="src/zeroentropy/types/document_update_params.py">params</a>) -> <a href="./src/zeroentropy/types/document_update_response.py">DocumentUpdateResponse</a></code>
 - <code title="post /documents/delete-document">client.documents.<a href="./src/zeroentropy/resources/documents.py">delete</a>(\*\*<a href="src/zeroentropy/types/document_delete_params.py">params</a>) -> <a href="./src/zeroentropy/types/document_delete_response.py">DocumentDeleteResponse</a></code>
 - <code title="post /documents/add-document">client.documents.<a href="./src/zeroentropy/resources/documents.py">add</a>(\*\*<a href="src/zeroentropy/types/document_add_params.py">params</a>) -> <a href="./src/zeroentropy/types/document_add_response.py">DocumentAddResponse</a></code>
 - <code title="post /documents/get-document-info">client.documents.<a href="./src/zeroentropy/resources/documents.py">get_info</a>(\*\*<a href="src/zeroentropy/types/document_get_info_params.py">params</a>) -> <a href="./src/zeroentropy/types/document_get_info_response.py">DocumentGetInfoResponse</a></code>

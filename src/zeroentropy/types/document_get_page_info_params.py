@@ -32,14 +32,3 @@ class DocumentGetPageInfoParams(TypedDict, total=False):
     If `true`, then the response will have the `content` attribute be a `string`,
     rather than `null`. This string will contain the full contents of the page.
     """
-
-    include_image: bool
-    """
-    If `true`, then the response will have the `image_base64_data` attribute be a
-    `string`\\**, rather than `null`. This string will contain the image data of the
-    document, as a base64-encoded string. Currently, this data is guaranteed to be a
-    JPEG-encoded image.
-
-    \\**Note that the response may still be `null`, if the page has no image data,
-    such as if the document was uploaded with raw text rather than as a PDF.
-    """

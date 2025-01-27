@@ -38,6 +38,7 @@ class TestQueries:
             query="query",
             filter={"foo": "bar"},
             include_metadata=True,
+            latency_mode="low",
         )
         assert_matches_type(QueryTopDocumentsResponse, query, path=["response"])
 
@@ -86,6 +87,7 @@ class TestQueries:
             query="query",
             filter={"foo": "bar"},
             include_content=True,
+            latency_mode="low",
         )
         assert_matches_type(QueryTopPagesResponse, query, path=["response"])
 
@@ -133,6 +135,7 @@ class TestQueries:
             k=0,
             query="query",
             filter={"foo": "bar"},
+            latency_mode="low",
             precise_responses=True,
         )
         assert_matches_type(QueryTopSnippetsResponse, query, path=["response"])
@@ -186,6 +189,7 @@ class TestAsyncQueries:
             query="query",
             filter={"foo": "bar"},
             include_metadata=True,
+            latency_mode="low",
         )
         assert_matches_type(QueryTopDocumentsResponse, query, path=["response"])
 
@@ -234,6 +238,7 @@ class TestAsyncQueries:
             query="query",
             filter={"foo": "bar"},
             include_content=True,
+            latency_mode="low",
         )
         assert_matches_type(QueryTopPagesResponse, query, path=["response"])
 
@@ -281,6 +286,7 @@ class TestAsyncQueries:
             k=0,
             query="query",
             filter={"foo": "bar"},
+            latency_mode="low",
             precise_responses=True,
         )
         assert_matches_type(QueryTopSnippetsResponse, query, path=["response"])

@@ -15,6 +15,14 @@ class Result(BaseModel):
     `include_content` is `true`.
     """
 
+    image_url: Optional[str] = None
+    """A URL to an image of the page.
+
+    This field will only be provided if the document has finished parsing, and if it
+    is a filetype that is capable of producing images (e.g. PDF, DOCX, PPT, etc). In
+    all other cases, this field will be `null`.
+    """
+
     page_index: int
     """The index of this page in the document.
 
