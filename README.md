@@ -1,22 +1,23 @@
-# ZeroEntropy Python API library
+# ZeroEntropy Python SDK
 
 [![PyPI version](https://img.shields.io/pypi/v/zeroentropy.svg)](https://pypi.org/project/zeroentropy/)
 
-The ZeroEntropy Python library provides convenient access to the ZeroEntropy REST API from any Python 3.8+
-application. The library includes type definitions for all request params and response fields,
-and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
+The ZeroEntropy Python SDK provides convenient access to the [ZeroEntropy REST API](https://docs.zeroentropy.dev/api-reference/) from any Python 3.8+
+application.
 
-It is generated with [Stainless](https://www.stainlessapi.com/).
+In order to get an API Key, you can visit our [dashboard](https://dashboard.zeroentropy.dev/).
 
 ## Documentation
 
-The REST API documentation can be found on [docs.zeroentropy.dev](https://docs.zeroentropy.dev/api-reference). The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [docs.zeroentropy.dev](https://docs.zeroentropy.dev/api-reference). An introduction to how ZeroEntropy's API works can be found [here](https://docs.zeroentropy.dev/introduction).
+
+The full API of the SDK can be found in [api.md](api.md). The library includes type definitions for all request params and response fields, and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
 
 ## Installation
 
 ```sh
-# install from PyPI
-pip install --pre zeroentropy
+# Install from PyPI
+pip install zeroentropy
 ```
 
 ## Usage
