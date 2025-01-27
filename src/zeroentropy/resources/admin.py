@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import httpx
 
-from ..types import parser_parse_document_params
+from ..types import admin_create_organization_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from .._utils import (
     maybe_transform,
@@ -19,54 +19,52 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.parser_parse_document_response import ParserParseDocumentResponse
+from ..types.admin_create_organization_response import AdminCreateOrganizationResponse
 
-__all__ = ["ParsersResource", "AsyncParsersResource"]
+__all__ = ["AdminResource", "AsyncAdminResource"]
 
 
-class ParsersResource(SyncAPIResource):
+class AdminResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> ParsersResourceWithRawResponse:
+    def with_raw_response(self) -> AdminResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/zeroentropy-ai/zeroentropy-python#accessing-raw-response-data-eg-headers
         """
-        return ParsersResourceWithRawResponse(self)
+        return AdminResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> ParsersResourceWithStreamingResponse:
+    def with_streaming_response(self) -> AdminResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/zeroentropy-ai/zeroentropy-python#with_streaming_response
         """
-        return ParsersResourceWithStreamingResponse(self)
+        return AdminResourceWithStreamingResponse(self)
 
-    def parse_document(
+    def create_organization(
         self,
         *,
-        base64_data: str,
+        organization_name: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ParserParseDocumentResponse:
-        """This provides access to the parsers that we use for indexing.
+    ) -> AdminCreateOrganizationResponse:
+        """Creates or updates an organization with the provided organization name.
 
-        This endpoint will
-        not access any collection or search index, and the result will not be saved.
-        This will use the same parsing method as the `/documents/add-document` endpoint.
+        An API
+        Key will be returned.
 
-        A common use-case for this endpoint, is to use our parser in combination with
-        your own pre-processing step, before then uploading it to the search index using
-        the `text-pages` filetype.
+        Returns 201 if a new organization was created, 200 if an existing organization
+        was found.
 
         Args:
-          base64_data: The document's raw data, as a base64-encoded string
+          organization_name: The orgniazation name to create. Must be unique.
 
           extra_headers: Send extra headers
 
@@ -77,58 +75,58 @@ class ParsersResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._post(
-            "/parsers/parse-document",
-            body=maybe_transform({"base64_data": base64_data}, parser_parse_document_params.ParserParseDocumentParams),
+            "/admin/create-organization",
+            body=maybe_transform(
+                {"organization_name": organization_name}, admin_create_organization_params.AdminCreateOrganizationParams
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ParserParseDocumentResponse,
+            cast_to=AdminCreateOrganizationResponse,
         )
 
 
-class AsyncParsersResource(AsyncAPIResource):
+class AsyncAdminResource(AsyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AsyncParsersResourceWithRawResponse:
+    def with_raw_response(self) -> AsyncAdminResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/zeroentropy-ai/zeroentropy-python#accessing-raw-response-data-eg-headers
         """
-        return AsyncParsersResourceWithRawResponse(self)
+        return AsyncAdminResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncParsersResourceWithStreamingResponse:
+    def with_streaming_response(self) -> AsyncAdminResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/zeroentropy-ai/zeroentropy-python#with_streaming_response
         """
-        return AsyncParsersResourceWithStreamingResponse(self)
+        return AsyncAdminResourceWithStreamingResponse(self)
 
-    async def parse_document(
+    async def create_organization(
         self,
         *,
-        base64_data: str,
+        organization_name: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ParserParseDocumentResponse:
-        """This provides access to the parsers that we use for indexing.
+    ) -> AdminCreateOrganizationResponse:
+        """Creates or updates an organization with the provided organization name.
 
-        This endpoint will
-        not access any collection or search index, and the result will not be saved.
-        This will use the same parsing method as the `/documents/add-document` endpoint.
+        An API
+        Key will be returned.
 
-        A common use-case for this endpoint, is to use our parser in combination with
-        your own pre-processing step, before then uploading it to the search index using
-        the `text-pages` filetype.
+        Returns 201 if a new organization was created, 200 if an existing organization
+        was found.
 
         Args:
-          base64_data: The document's raw data, as a base64-encoded string
+          organization_name: The orgniazation name to create. Must be unique.
 
           extra_headers: Send extra headers
 
@@ -139,48 +137,48 @@ class AsyncParsersResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return await self._post(
-            "/parsers/parse-document",
+            "/admin/create-organization",
             body=await async_maybe_transform(
-                {"base64_data": base64_data}, parser_parse_document_params.ParserParseDocumentParams
+                {"organization_name": organization_name}, admin_create_organization_params.AdminCreateOrganizationParams
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ParserParseDocumentResponse,
+            cast_to=AdminCreateOrganizationResponse,
         )
 
 
-class ParsersResourceWithRawResponse:
-    def __init__(self, parsers: ParsersResource) -> None:
-        self._parsers = parsers
+class AdminResourceWithRawResponse:
+    def __init__(self, admin: AdminResource) -> None:
+        self._admin = admin
 
-        self.parse_document = to_raw_response_wrapper(
-            parsers.parse_document,
+        self.create_organization = to_raw_response_wrapper(
+            admin.create_organization,
         )
 
 
-class AsyncParsersResourceWithRawResponse:
-    def __init__(self, parsers: AsyncParsersResource) -> None:
-        self._parsers = parsers
+class AsyncAdminResourceWithRawResponse:
+    def __init__(self, admin: AsyncAdminResource) -> None:
+        self._admin = admin
 
-        self.parse_document = async_to_raw_response_wrapper(
-            parsers.parse_document,
+        self.create_organization = async_to_raw_response_wrapper(
+            admin.create_organization,
         )
 
 
-class ParsersResourceWithStreamingResponse:
-    def __init__(self, parsers: ParsersResource) -> None:
-        self._parsers = parsers
+class AdminResourceWithStreamingResponse:
+    def __init__(self, admin: AdminResource) -> None:
+        self._admin = admin
 
-        self.parse_document = to_streamed_response_wrapper(
-            parsers.parse_document,
+        self.create_organization = to_streamed_response_wrapper(
+            admin.create_organization,
         )
 
 
-class AsyncParsersResourceWithStreamingResponse:
-    def __init__(self, parsers: AsyncParsersResource) -> None:
-        self._parsers = parsers
+class AsyncAdminResourceWithStreamingResponse:
+    def __init__(self, admin: AsyncAdminResource) -> None:
+        self._admin = admin
 
-        self.parse_document = async_to_streamed_response_wrapper(
-            parsers.parse_document,
+        self.create_organization = async_to_streamed_response_wrapper(
+            admin.create_organization,
         )
