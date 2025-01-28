@@ -13,7 +13,9 @@ class Document(BaseModel):
 
     collection_name: str
 
-    index_status: Literal["parsing_failed", "not_parsed", "not_indexed", "indexing", "indexed"]
+    index_status: Literal[
+        "not_parsed", "parsing", "not_indexed", "indexing", "indexed", "parsing_failed", "indexing_failed"
+    ]
 
     metadata: Dict[str, Union[str, List[str]]]
 

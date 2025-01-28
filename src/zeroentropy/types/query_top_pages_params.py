@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import Dict, Optional
-from typing_extensions import Required, TypedDict
+from typing_extensions import Literal, Required, TypedDict
 
 __all__ = ["QueryTopPagesParams"]
 
@@ -35,3 +35,12 @@ class QueryTopPagesParams(TypedDict, total=False):
 
     include_content: bool
     """If set to true, then the content of all pages will be returned."""
+
+    latency_mode: Literal["low", "high"]
+    """This option selects between our two latency modes.
+
+    The higher latency mode takes longer, but can allow for more accurate responses.
+    If desired, test both to customize your search experience for your particular
+    use-case, or use the default of "low" and only swap if you need an additional
+    improvement in search result quality.
+    """
