@@ -1,6 +1,6 @@
 [project]
 name = "zeroentropy"
-version = "0.1.0-alpha.3"
+version = "0.1.0-alpha.4"
 description = "The official Python library for the ZeroEntropy API"
 dynamic = ["readme"]
 license = "Apache-2.0"
@@ -177,7 +177,7 @@ select = [
   "T201",
   "T203",
   # misuse of typing.TYPE_CHECKING
-  "TCH004",
+  "TC004",
   # import rules
   "TID251",
 ]

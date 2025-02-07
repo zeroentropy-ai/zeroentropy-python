@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.1.0-alpha.4 (2025-02-07)
+
+Full Changelog: [v0.1.0-alpha.3...v0.1.0-alpha.4](https://github.com/zeroentropy-ai/zeroentropy-python/compare/v0.1.0-alpha.3...v0.1.0-alpha.4)
+
+### Features
+
+* **client:** send `X-Stainless-Read-Timeout` header ([#27](https://github.com/zeroentropy-ai/zeroentropy-python/issues/27)) ([2b1bf5a](https://github.com/zeroentropy-ai/zeroentropy-python/commit/2b1bf5a3ede3b9184f95924a33152a12f7237fb0))
+
+
+### Chores
+
+* **internal:** bummp ruff dependency ([#26](https://github.com/zeroentropy-ai/zeroentropy-python/issues/26)) ([02a42b4](https://github.com/zeroentropy-ai/zeroentropy-python/commit/02a42b40a585d70fbaec2a28e3534ffa0f86968b))
+* **internal:** change default timeout to an int ([#25](https://github.com/zeroentropy-ai/zeroentropy-python/issues/25)) ([9a3559f](https://github.com/zeroentropy-ai/zeroentropy-python/commit/9a3559f3f98f1699fe89a03239a9426860c097ef))
+* **internal:** fix type traversing dictionary params ([#28](https://github.com/zeroentropy-ai/zeroentropy-python/issues/28)) ([298eed2](https://github.com/zeroentropy-ai/zeroentropy-python/commit/298eed24ae48668d7eea7d35a97917e8920656b9))
+* **internal:** minor type handling changes ([#29](https://github.com/zeroentropy-ai/zeroentropy-python/issues/29)) ([9921817](https://github.com/zeroentropy-ai/zeroentropy-python/commit/9921817d4c6c9cdb5487499cedff14a23542440c))
+* **internal:** version bump ([#22](https://github.com/zeroentropy-ai/zeroentropy-python/issues/22)) ([c4fbbe6](https://github.com/zeroentropy-ai/zeroentropy-python/commit/c4fbbe6af970317989f0f6d3d2d40a96f04976e4))
+
 ## 0.1.0-alpha.3 (2025-01-28)
 
 Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/zeroentropy-ai/zeroentropy-python/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
