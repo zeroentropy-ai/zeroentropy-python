@@ -729,7 +729,7 @@ class TestZeroEntropy:
         with pytest.raises(APITimeoutError):
             self.client.post(
                 "/status/get-status",
-                body=cast(object, maybe_transform(dict(), StatusGetStatusParams)),
+                body=cast(object, maybe_transform({}, StatusGetStatusParams)),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -744,7 +744,7 @@ class TestZeroEntropy:
         with pytest.raises(APIStatusError):
             self.client.post(
                 "/status/get-status",
-                body=cast(object, maybe_transform(dict(), StatusGetStatusParams)),
+                body=cast(object, maybe_transform({}, StatusGetStatusParams)),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1505,7 +1505,7 @@ class TestAsyncZeroEntropy:
         with pytest.raises(APITimeoutError):
             await self.client.post(
                 "/status/get-status",
-                body=cast(object, maybe_transform(dict(), StatusGetStatusParams)),
+                body=cast(object, maybe_transform({}, StatusGetStatusParams)),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1520,7 +1520,7 @@ class TestAsyncZeroEntropy:
         with pytest.raises(APIStatusError):
             await self.client.post(
                 "/status/get-status",
-                body=cast(object, maybe_transform(dict(), StatusGetStatusParams)),
+                body=cast(object, maybe_transform({}, StatusGetStatusParams)),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
