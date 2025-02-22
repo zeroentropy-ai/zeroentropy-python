@@ -23,6 +23,7 @@ from pydantic import ValidationError
 
 from zeroentropy import ZeroEntropy, AsyncZeroEntropy, APIResponseValidationError
 from zeroentropy._types import Omit
+from zeroentropy._utils import maybe_transform
 from zeroentropy._models import BaseModel, FinalRequestOptions
 from zeroentropy._constants import RAW_RESPONSE_HEADER
 from zeroentropy._exceptions import APIStatusError, APITimeoutError, ZeroEntropyError, APIResponseValidationError
@@ -32,6 +33,7 @@ from zeroentropy._base_client import (
     BaseClient,
     make_request_options,
 )
+from zeroentropy.types.status_get_status_params import StatusGetStatusParams
 
 from .utils import update_env
 
@@ -727,7 +729,7 @@ class TestZeroEntropy:
         with pytest.raises(APITimeoutError):
             self.client.post(
                 "/status/get-status",
-                body=cast(object, dict()),
+                body=cast(object, maybe_transform({}, StatusGetStatusParams)),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -742,7 +744,7 @@ class TestZeroEntropy:
         with pytest.raises(APIStatusError):
             self.client.post(
                 "/status/get-status",
-                body=cast(object, dict()),
+                body=cast(object, maybe_transform({}, StatusGetStatusParams)),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1503,7 +1505,7 @@ class TestAsyncZeroEntropy:
         with pytest.raises(APITimeoutError):
             await self.client.post(
                 "/status/get-status",
-                body=cast(object, dict()),
+                body=cast(object, maybe_transform({}, StatusGetStatusParams)),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1518,7 +1520,7 @@ class TestAsyncZeroEntropy:
         with pytest.raises(APIStatusError):
             await self.client.post(
                 "/status/get-status",
-                body=cast(object, dict()),
+                body=cast(object, maybe_transform({}, StatusGetStatusParams)),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
