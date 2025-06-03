@@ -33,6 +33,13 @@ class QueryTopSnippetsParams(TypedDict, total=False):
     not provided, then all documents will be searched.
     """
 
+    include_document_metadata: bool
+    """
+    If true, the `document_results` returns will additionally contain document
+    metadata. This is false by default, as returning metadata can add overhead if
+    the amount of data to return is large.
+    """
+
     latency_mode: Literal["low"]
     """Note that for Top K Snippets, only latency_mode "low" is available.
 

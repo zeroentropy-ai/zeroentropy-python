@@ -19,6 +19,9 @@ class Page(BaseModel):
     This field will only be provided if the document has finished parsing, and if it
     is a filetype that is capable of producing images (e.g. PDF, DOCX, PPT, etc). In
     all other cases, this field will be `null`.
+
+    NOTE: If a `/documents/update-document` call returned a new document id, then
+    this url will be invalidated and must be retrieved again.
     """
 
     page_index: int
