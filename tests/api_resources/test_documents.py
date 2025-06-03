@@ -17,6 +17,7 @@ from zeroentropy.types import (
     DocumentGetInfoListResponse,
     DocumentGetPageInfoResponse,
 )
+from zeroentropy.pagination import SyncGetDocumentInfoListCursor, AsyncGetDocumentInfoListCursor
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -209,7 +210,7 @@ class TestDocuments:
         document = client.documents.get_info_list(
             collection_name="collection_name",
         )
-        assert_matches_type(DocumentGetInfoListResponse, document, path=["response"])
+        assert_matches_type(SyncGetDocumentInfoListCursor[DocumentGetInfoListResponse], document, path=["response"])
 
     @parametrize
     def test_method_get_info_list_with_all_params(self, client: ZeroEntropy) -> None:
@@ -219,7 +220,7 @@ class TestDocuments:
             path_gt="path_gt",
             path_prefix="path_prefix",
         )
-        assert_matches_type(DocumentGetInfoListResponse, document, path=["response"])
+        assert_matches_type(SyncGetDocumentInfoListCursor[DocumentGetInfoListResponse], document, path=["response"])
 
     @parametrize
     def test_raw_response_get_info_list(self, client: ZeroEntropy) -> None:
@@ -230,7 +231,7 @@ class TestDocuments:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         document = response.parse()
-        assert_matches_type(DocumentGetInfoListResponse, document, path=["response"])
+        assert_matches_type(SyncGetDocumentInfoListCursor[DocumentGetInfoListResponse], document, path=["response"])
 
     @parametrize
     def test_streaming_response_get_info_list(self, client: ZeroEntropy) -> None:
@@ -241,7 +242,7 @@ class TestDocuments:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             document = response.parse()
-            assert_matches_type(DocumentGetInfoListResponse, document, path=["response"])
+            assert_matches_type(SyncGetDocumentInfoListCursor[DocumentGetInfoListResponse], document, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -481,7 +482,7 @@ class TestAsyncDocuments:
         document = await async_client.documents.get_info_list(
             collection_name="collection_name",
         )
-        assert_matches_type(DocumentGetInfoListResponse, document, path=["response"])
+        assert_matches_type(AsyncGetDocumentInfoListCursor[DocumentGetInfoListResponse], document, path=["response"])
 
     @parametrize
     async def test_method_get_info_list_with_all_params(self, async_client: AsyncZeroEntropy) -> None:
@@ -491,7 +492,7 @@ class TestAsyncDocuments:
             path_gt="path_gt",
             path_prefix="path_prefix",
         )
-        assert_matches_type(DocumentGetInfoListResponse, document, path=["response"])
+        assert_matches_type(AsyncGetDocumentInfoListCursor[DocumentGetInfoListResponse], document, path=["response"])
 
     @parametrize
     async def test_raw_response_get_info_list(self, async_client: AsyncZeroEntropy) -> None:
@@ -502,7 +503,7 @@ class TestAsyncDocuments:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         document = await response.parse()
-        assert_matches_type(DocumentGetInfoListResponse, document, path=["response"])
+        assert_matches_type(AsyncGetDocumentInfoListCursor[DocumentGetInfoListResponse], document, path=["response"])
 
     @parametrize
     async def test_streaming_response_get_info_list(self, async_client: AsyncZeroEntropy) -> None:
@@ -513,7 +514,9 @@ class TestAsyncDocuments:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             document = await response.parse()
-            assert_matches_type(DocumentGetInfoListResponse, document, path=["response"])
+            assert_matches_type(
+                AsyncGetDocumentInfoListCursor[DocumentGetInfoListResponse], document, path=["response"]
+            )
 
         assert cast(Any, response.is_closed) is True
 
