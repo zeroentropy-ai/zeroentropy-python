@@ -135,6 +135,7 @@ class TestQueries:
             k=0,
             query="query",
             filter={"foo": "bar"},
+            include_document_metadata=True,
             latency_mode="low",
             precise_responses=True,
         )
@@ -286,6 +287,7 @@ class TestAsyncQueries:
             k=0,
             query="query",
             filter={"foo": "bar"},
+            include_document_metadata=True,
             latency_mode="low",
             precise_responses=True,
         )

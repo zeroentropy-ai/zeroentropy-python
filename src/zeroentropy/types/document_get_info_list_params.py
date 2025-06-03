@@ -12,14 +12,22 @@ class DocumentGetInfoListParams(TypedDict, total=False):
     collection_name: Required[str]
     """The name of the collection."""
 
-    id_gt: Optional[str]
-    """All documents returned will have a UUID strictly greater than the provided UUID.
-
-    (Comparison will be on the binary representations of the UUIDs)
-    """
-
     limit: int
     """The maximum number of documents to return.
 
     This field is by default 1024, and cannot be set larger than 1024
+    """
+
+    path_gt: Optional[str]
+    """
+    All documents returned will have a path strictly greater than the provided
+    `path_gt` argument. (Comparison will be based on lexicographic comparison. It is
+    guaranteed that two strings are lexicographically equal if and only if they have
+    identical binary representations.).
+    """
+
+    path_prefix: Optional[str]
+    """
+    All documents returned will have a path that starts with the provided path
+    prefix.
     """

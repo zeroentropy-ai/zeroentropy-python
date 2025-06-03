@@ -13,6 +13,17 @@ class Document(BaseModel):
 
     collection_name: str
 
+    created_at: str
+
+    file_url: str
+    """
+    A URL to the document data, which can be used to download the raw document
+    content or to display the document in frontend applications.
+
+    NOTE: If a `/documents/update-document` call returned a new document id, then
+    this url will be invalidated and must be retrieved again.
+    """
+
     index_status: Literal[
         "not_parsed", "parsing", "not_indexed", "indexing", "indexed", "parsing_failed", "indexing_failed"
     ]
@@ -27,6 +38,9 @@ class Document(BaseModel):
     """
 
     path: str
+
+    size: int
+    """The total size of the raw document data, in bytes."""
 
 
 class DocumentGetInfoListResponse(BaseModel):

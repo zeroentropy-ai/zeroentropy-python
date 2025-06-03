@@ -19,7 +19,6 @@ from typing_extensions import (
 )
 
 import pydantic
-import pydantic.generics
 from pydantic.fields import FieldInfo
 
 from ._types import (
@@ -627,8 +626,8 @@ def _build_discriminated_union_meta(*, union: type, meta_annotations: tuple[Any,
                 # Note: if one variant defines an alias then they all should
                 discriminator_alias = field_info.alias
 
-                if field_info.annotation and is_literal_type(field_info.annotation):
-                    for entry in get_args(field_info.annotation):
+                if (annotation := getattr(field_info, "annotation", None)) and is_literal_type(annotation):
+                    for entry in get_args(annotation):
                         if isinstance(entry, str):
                             mapping[entry] = variant
 
@@ -738,6 +737,7 @@ class FinalRequestOptionsInput(TypedDict, total=False):
     idempotency_key: str
     json_data: Body
     extra_json: AnyMapping
+    follow_redirects: bool
 
 
 @final
@@ -751,6 +751,7 @@ class FinalRequestOptions(pydantic.BaseModel):
     files: Union[HttpxRequestFiles, None] = None
     idempotency_key: Union[str, None] = None
     post_parser: Union[Callable[[Any], Any], NotGiven] = NotGiven()
+    follow_redirects: Union[bool, None] = None
 
     # It should be noted that we cannot use `json` here as that would override
     # a BaseModel method in an incompatible fashion.
