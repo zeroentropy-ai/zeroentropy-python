@@ -12,7 +12,7 @@ _T = TypeVar("_T")
 
 @runtime_checkable
 class GetDocumentInfoListCursorItem(Protocol):
-    id: str
+    path: str
 
 
 class SyncGetDocumentInfoListCursor(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
@@ -32,11 +32,11 @@ class SyncGetDocumentInfoListCursor(BaseSyncPage[_T], BasePage[_T], Generic[_T])
             return None
 
         item = cast(Any, documents[-1])
-        if not isinstance(item, GetDocumentInfoListCursorItem) or item.id is None:  # pyright: ignore[reportUnnecessaryComparison]
+        if not isinstance(item, GetDocumentInfoListCursorItem) or item.path is None:  # pyright: ignore[reportUnnecessaryComparison]
             # TODO emit warning log
             return None
 
-        return PageInfo(json={"path_gt": item.id})
+        return PageInfo(json={"path_gt": item.path})
 
 
 class AsyncGetDocumentInfoListCursor(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
@@ -56,8 +56,8 @@ class AsyncGetDocumentInfoListCursor(BaseAsyncPage[_T], BasePage[_T], Generic[_T
             return None
 
         item = cast(Any, documents[-1])
-        if not isinstance(item, GetDocumentInfoListCursorItem) or item.id is None:  # pyright: ignore[reportUnnecessaryComparison]
+        if not isinstance(item, GetDocumentInfoListCursorItem) or item.path is None:  # pyright: ignore[reportUnnecessaryComparison]
             # TODO emit warning log
             return None
 
-        return PageInfo(json={"path_gt": item.id})
+        return PageInfo(json={"path_gt": item.path})
