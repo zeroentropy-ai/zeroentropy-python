@@ -8,6 +8,15 @@ __all__ = ["QueryTopDocumentsResponse", "Result"]
 
 
 class Result(BaseModel):
+    file_url: str
+    """
+    A URL to the document data, which can be used to download the raw document
+    content or to display the document in frontend applications.
+
+    NOTE: If a `/documents/update-document` call returned a new document id, then
+    this url will be invalidated and must be retrieved again.
+    """
+
     metadata: Optional[Dict[str, Union[str, List[str]]]] = None
     """The metadata for that document.
 

@@ -9,10 +9,7 @@ import httpx
 
 from ..types import query_top_pages_params, query_top_snippets_params, query_top_documents_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
-from .._utils import (
-    maybe_transform,
-    async_maybe_transform,
-)
+from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -191,6 +188,7 @@ class QueriesResource(SyncAPIResource):
         k: int,
         query: str,
         filter: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
+        include_document_metadata: bool | NotGiven = NOT_GIVEN,
         latency_mode: Literal["low"] | NotGiven = NOT_GIVEN,
         precise_responses: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -220,6 +218,10 @@ class QueriesResource(SyncAPIResource):
           filter: The query filter to apply. Please read [Metadata Filtering](/metadata-filtering)
               for more information. If not provided, then all documents will be searched.
 
+          include_document_metadata: If true, the `document_results` returns will additionally contain document
+              metadata. This is false by default, as returning metadata can add overhead if
+              the amount of data to return is large.
+
           latency_mode: Note that for Top K Snippets, only latency_mode "low" is available. This option
               selects between our latency modes. The higher latency mode takes longer, but can
               allow for more accurate responses. If desired, test both to customize your
@@ -247,6 +249,7 @@ class QueriesResource(SyncAPIResource):
                     "k": k,
                     "query": query,
                     "filter": filter,
+                    "include_document_metadata": include_document_metadata,
                     "latency_mode": latency_mode,
                     "precise_responses": precise_responses,
                 },
@@ -421,6 +424,7 @@ class AsyncQueriesResource(AsyncAPIResource):
         k: int,
         query: str,
         filter: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
+        include_document_metadata: bool | NotGiven = NOT_GIVEN,
         latency_mode: Literal["low"] | NotGiven = NOT_GIVEN,
         precise_responses: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -450,6 +454,10 @@ class AsyncQueriesResource(AsyncAPIResource):
           filter: The query filter to apply. Please read [Metadata Filtering](/metadata-filtering)
               for more information. If not provided, then all documents will be searched.
 
+          include_document_metadata: If true, the `document_results` returns will additionally contain document
+              metadata. This is false by default, as returning metadata can add overhead if
+              the amount of data to return is large.
+
           latency_mode: Note that for Top K Snippets, only latency_mode "low" is available. This option
               selects between our latency modes. The higher latency mode takes longer, but can
               allow for more accurate responses. If desired, test both to customize your
@@ -477,6 +485,7 @@ class AsyncQueriesResource(AsyncAPIResource):
                     "k": k,
                     "query": query,
                     "filter": filter,
+                    "include_document_metadata": include_document_metadata,
                     "latency_mode": latency_mode,
                     "precise_responses": precise_responses,
                 },

@@ -19,10 +19,7 @@ from ._types import (
     ProxiesTypes,
     RequestOptions,
 )
-from ._utils import (
-    is_given,
-    get_async_library,
-)
+from ._utils import is_given, get_async_library
 from ._version import __version__
 from .resources import admin, status, parsers, queries, documents, collections
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
@@ -81,7 +78,7 @@ class ZeroEntropy(SyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new synchronous zeroentropy client instance.
+        """Construct a new synchronous ZeroEntropy client instance.
 
         This automatically infers the `api_key` argument from the `ZEROENTROPY_API_KEY` environment variable if it is not provided.
         """
@@ -259,7 +256,7 @@ class AsyncZeroEntropy(AsyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new async zeroentropy client instance.
+        """Construct a new async AsyncZeroEntropy client instance.
 
         This automatically infers the `api_key` argument from the `ZEROENTROPY_API_KEY` environment variable if it is not provided.
         """

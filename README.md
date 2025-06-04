@@ -152,7 +152,7 @@ first_page = await client.documents.get_info_list(
     collection_name="example_collection",
 )
 
-print(f"next page cursor: {first_page.id_gt}")  # => "next page cursor: ..."
+print(f"next page cursor: {first_page.path_gt}")  # => "next page cursor: ..."
 for document in first_page.documents:
     print(document.id)
 

@@ -15,10 +15,7 @@ from ..types import (
     document_get_page_info_params,
 )
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
-from .._utils import (
-    maybe_transform,
-    async_maybe_transform,
-)
+from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -309,8 +306,9 @@ class DocumentsResource(SyncAPIResource):
         self,
         *,
         collection_name: str,
-        id_gt: Optional[str] | NotGiven = NOT_GIVEN,
         limit: int | NotGiven = NOT_GIVEN,
+        path_gt: Optional[str] | NotGiven = NOT_GIVEN,
+        path_prefix: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -322,9 +320,9 @@ class DocumentsResource(SyncAPIResource):
         Retrives a list of document metadata information that matches the provided
         filters.
 
-        The documents returned will be sorted by ID in ascending order. `id_gt` can be
-        used for pagination, and should be set to the ID of the last document returned
-        in the previous call.
+        The documents returned will be sorted by path in lexicographically ascending
+        order. `path_gt` can be used for pagination, and should be set to the path of
+        the last document returned in the previous call.
 
         A `404 Not Found` will be returned if either the collection name does not exist,
         or the document path does not exist within the provided collection.
@@ -332,11 +330,16 @@ class DocumentsResource(SyncAPIResource):
         Args:
           collection_name: The name of the collection.
 
-          id_gt: All documents returned will have a UUID strictly greater than the provided UUID.
-              (Comparison will be on the binary representations of the UUIDs)
-
           limit: The maximum number of documents to return. This field is by default 1024, and
               cannot be set larger than 1024
+
+          path_gt: All documents returned will have a path strictly greater than the provided
+              `path_gt` argument. (Comparison will be based on lexicographic comparison. It is
+              guaranteed that two strings are lexicographically equal if and only if they have
+              identical binary representations.).
+
+          path_prefix: All documents returned will have a path that starts with the provided path
+              prefix.
 
           extra_headers: Send extra headers
 
@@ -352,8 +355,9 @@ class DocumentsResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "collection_name": collection_name,
-                    "id_gt": id_gt,
                     "limit": limit,
+                    "path_gt": path_gt,
+                    "path_prefix": path_prefix,
                 },
                 document_get_info_list_params.DocumentGetInfoListParams,
             ),
@@ -697,8 +701,9 @@ class AsyncDocumentsResource(AsyncAPIResource):
         self,
         *,
         collection_name: str,
-        id_gt: Optional[str] | NotGiven = NOT_GIVEN,
         limit: int | NotGiven = NOT_GIVEN,
+        path_gt: Optional[str] | NotGiven = NOT_GIVEN,
+        path_prefix: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -710,9 +715,9 @@ class AsyncDocumentsResource(AsyncAPIResource):
         Retrives a list of document metadata information that matches the provided
         filters.
 
-        The documents returned will be sorted by ID in ascending order. `id_gt` can be
-        used for pagination, and should be set to the ID of the last document returned
-        in the previous call.
+        The documents returned will be sorted by path in lexicographically ascending
+        order. `path_gt` can be used for pagination, and should be set to the path of
+        the last document returned in the previous call.
 
         A `404 Not Found` will be returned if either the collection name does not exist,
         or the document path does not exist within the provided collection.
@@ -720,11 +725,16 @@ class AsyncDocumentsResource(AsyncAPIResource):
         Args:
           collection_name: The name of the collection.
 
-          id_gt: All documents returned will have a UUID strictly greater than the provided UUID.
-              (Comparison will be on the binary representations of the UUIDs)
-
           limit: The maximum number of documents to return. This field is by default 1024, and
               cannot be set larger than 1024
+
+          path_gt: All documents returned will have a path strictly greater than the provided
+              `path_gt` argument. (Comparison will be based on lexicographic comparison. It is
+              guaranteed that two strings are lexicographically equal if and only if they have
+              identical binary representations.).
+
+          path_prefix: All documents returned will have a path that starts with the provided path
+              prefix.
 
           extra_headers: Send extra headers
 
@@ -740,8 +750,9 @@ class AsyncDocumentsResource(AsyncAPIResource):
             body=maybe_transform(
                 {
                     "collection_name": collection_name,
-                    "id_gt": id_gt,
                     "limit": limit,
+                    "path_gt": path_gt,
+                    "path_prefix": path_prefix,
                 },
                 document_get_info_list_params.DocumentGetInfoListParams,
             ),

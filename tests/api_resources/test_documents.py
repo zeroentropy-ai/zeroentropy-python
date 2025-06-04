@@ -216,8 +216,9 @@ class TestDocuments:
     def test_method_get_info_list_with_all_params(self, client: ZeroEntropy) -> None:
         document = client.documents.get_info_list(
             collection_name="collection_name",
-            id_gt="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             limit=0,
+            path_gt="path_gt",
+            path_prefix="path_prefix",
         )
         assert_matches_type(SyncGetDocumentInfoListCursor[DocumentGetInfoListResponse], document, path=["response"])
 
@@ -487,8 +488,9 @@ class TestAsyncDocuments:
     async def test_method_get_info_list_with_all_params(self, async_client: AsyncZeroEntropy) -> None:
         document = await async_client.documents.get_info_list(
             collection_name="collection_name",
-            id_gt="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             limit=0,
+            path_gt="path_gt",
+            path_prefix="path_prefix",
         )
         assert_matches_type(AsyncGetDocumentInfoListCursor[DocumentGetInfoListResponse], document, path=["response"])
 

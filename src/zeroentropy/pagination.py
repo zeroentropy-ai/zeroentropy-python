@@ -36,7 +36,7 @@ class SyncGetDocumentInfoListCursor(BaseSyncPage[_T], BasePage[_T], Generic[_T])
             # TODO emit warning log
             return None
 
-        return PageInfo(params={"id_gt": item.id})
+        return PageInfo(json={"path_gt": item.id})
 
 
 class AsyncGetDocumentInfoListCursor(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
@@ -60,4 +60,4 @@ class AsyncGetDocumentInfoListCursor(BaseAsyncPage[_T], BasePage[_T], Generic[_T
             # TODO emit warning log
             return None
 
-        return PageInfo(params={"id_gt": item.id})
+        return PageInfo(json={"path_gt": item.id})
