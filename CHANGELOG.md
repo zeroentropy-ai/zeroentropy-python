@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.0-alpha.6 (2025-06-13)
+
+Full Changelog: [v0.1.0-alpha.5...v0.1.0-alpha.6](https://github.com/zeroentropy-ai/zeroentropy-python/compare/v0.1.0-alpha.5...v0.1.0-alpha.6)
+
+### Bug Fixes
+
+* **client:** correctly parse binary response | stream ([f7b7ef9](https://github.com/zeroentropy-ai/zeroentropy-python/commit/f7b7ef9f45ff779734d1b6ee48349943bf14fce2))
+
+
+### Chores
+
+* **tests:** run tests in parallel ([0261b3c](https://github.com/zeroentropy-ai/zeroentropy-python/commit/0261b3c5bb54b02fe84b42c2d0e41a5e43519adc))
+
 ## 0.1.0-alpha.5 (2025-06-04)
 
 Full Changelog: [v0.1.0-alpha.4...v0.1.0-alpha.5](https://github.com/zeroentropy-ai/zeroentropy-python/compare/v0.1.0-alpha.4...v0.1.0-alpha.5)
