@@ -23,9 +23,7 @@ from pydantic import ValidationError
 
 from zeroentropy import ZeroEntropy, AsyncZeroEntropy, APIResponseValidationError
 from zeroentropy._types import Omit
-from zeroentropy._utils import maybe_transform
 from zeroentropy._models import BaseModel, FinalRequestOptions
-from zeroentropy._constants import RAW_RESPONSE_HEADER
 from zeroentropy._exceptions import APIStatusError, APITimeoutError, ZeroEntropyError, APIResponseValidationError
 from zeroentropy._base_client import (
     DEFAULT_TIMEOUT,
@@ -35,7 +33,6 @@ from zeroentropy._base_client import (
     DefaultAsyncHttpxClient,
     make_request_options,
 )
-from zeroentropy.types.status_get_status_params import StatusGetStatusParams
 
 from .utils import update_env
 
@@ -725,32 +722,21 @@ class TestZeroEntropy:
 
     @mock.patch("zeroentropy._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
+    def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, client: ZeroEntropy) -> None:
         respx_mock.post("/status/get-status").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            self.client.post(
-                "/status/get-status",
-                body=cast(object, maybe_transform({}, StatusGetStatusParams)),
-                cast_to=httpx.Response,
-                options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
-            )
+            client.status.with_streaming_response.get_status().__enter__()
 
         assert _get_open_connections(self.client) == 0
 
     @mock.patch("zeroentropy._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
+    def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, client: ZeroEntropy) -> None:
         respx_mock.post("/status/get-status").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            self.client.post(
-                "/status/get-status",
-                body=cast(object, maybe_transform({}, StatusGetStatusParams)),
-                cast_to=httpx.Response,
-                options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
-            )
-
+            client.status.with_streaming_response.get_status().__enter__()
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
@@ -1550,32 +1536,25 @@ class TestAsyncZeroEntropy:
 
     @mock.patch("zeroentropy._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    async def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
+    async def test_retrying_timeout_errors_doesnt_leak(
+        self, respx_mock: MockRouter, async_client: AsyncZeroEntropy
+    ) -> None:
         respx_mock.post("/status/get-status").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            await self.client.post(
-                "/status/get-status",
-                body=cast(object, maybe_transform({}, StatusGetStatusParams)),
-                cast_to=httpx.Response,
-                options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
-            )
+            await async_client.status.with_streaming_response.get_status().__aenter__()
 
         assert _get_open_connections(self.client) == 0
 
     @mock.patch("zeroentropy._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
+    async def test_retrying_status_errors_doesnt_leak(
+        self, respx_mock: MockRouter, async_client: AsyncZeroEntropy
+    ) -> None:
         respx_mock.post("/status/get-status").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            await self.client.post(
-                "/status/get-status",
-                body=cast(object, maybe_transform({}, StatusGetStatusParams)),
-                cast_to=httpx.Response,
-                options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
-            )
-
+            await async_client.status.with_streaming_response.get_status().__aenter__()
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
