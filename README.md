@@ -1,6 +1,6 @@
 # ZeroEntropy Python SDK
 
-[![PyPI version](https://img.shields.io/pypi/v/zeroentropy.svg)](https://pypi.org/project/zeroentropy/)
+[![PyPI version](<https://img.shields.io/pypi/v/zeroentropy.svg?label=pypi%20(stable)>)](https://pypi.org/project/zeroentropy/)
 
 The ZeroEntropy Python SDK provides convenient access to the [ZeroEntropy REST API](https://docs.zeroentropy.dev/api-reference/) from any Python 3.8+
 application.
@@ -78,6 +78,45 @@ asyncio.run(main())
 ```
 
 Functionality between the synchronous and asynchronous clients is otherwise identical.
+
+### With aiohttp
+
+By default, the async client uses `httpx` for HTTP requests. However, for improved concurrency performance you may also use `aiohttp` as the HTTP backend.
+
+You can enable this by installing `aiohttp`:
+
+```sh
+# install from PyPI
+pip install --pre zeroentropy[aiohttp]
+```
+
+Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
+
+```python
+import os
+import asyncio
+from zeroentropy import DefaultAioHttpClient
+from zeroentropy import AsyncZeroEntropy
+
+
+async def main() -> None:
+    async with AsyncZeroEntropy(
+        api_key=os.environ.get("ZEROENTROPY_API_KEY"),  # This is the default and can be omitted
+        http_client=DefaultAioHttpClient(),
+    ) as client:
+        response = await client.documents.add(
+            collection_name="example_collection",
+            content={
+                "type": "text",
+                "text": "Example Content",
+            },
+            path="my_document.txt",
+        )
+        print(response.message)
+
+
+asyncio.run(main())
+```
 
 ## Using types
 
@@ -224,7 +263,7 @@ client.with_options(max_retries=5).status.get_status()
 ### Timeouts
 
 By default requests time out after 1 minute. You can configure this with a `timeout` option,
-which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/#fine-tuning-the-configuration) object:
+which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/timeouts/#fine-tuning-the-configuration) object:
 
 ```python
 from zeroentropy import ZeroEntropy
