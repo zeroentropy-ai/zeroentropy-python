@@ -70,14 +70,15 @@ Methods:
 - <code title="post /queries/top-pages">client.queries.<a href="./src/zeroentropy/resources/queries.py">top_pages</a>(\*\*<a href="src/zeroentropy/types/query_top_pages_params.py">params</a>) -> <a href="./src/zeroentropy/types/query_top_pages_response.py">QueryTopPagesResponse</a></code>
 - <code title="post /queries/top-snippets">client.queries.<a href="./src/zeroentropy/resources/queries.py">top_snippets</a>(\*\*<a href="src/zeroentropy/types/query_top_snippets_params.py">params</a>) -> <a href="./src/zeroentropy/types/query_top_snippets_response.py">QueryTopSnippetsResponse</a></code>
 
-# Parsers
+# Models
 
 Types:
 
 ```python
-from zeroentropy.types import ParserParseDocumentResponse
+from zeroentropy.types import ModelParseDocumentResponse, ModelRerankResponse
 ```
 
 Methods:
 
-- <code title="post /parsers/parse-document">client.parsers.<a href="./src/zeroentropy/resources/parsers.py">parse_document</a>(\*\*<a href="src/zeroentropy/types/parser_parse_document_params.py">params</a>) -> <a href="./src/zeroentropy/types/parser_parse_document_response.py">ParserParseDocumentResponse</a></code>
+- <code title="post /parsers/parse-document">client.models.<a href="./src/zeroentropy/resources/models.py">parse_document</a>(\*\*<a href="src/zeroentropy/types/model_parse_document_params.py">params</a>) -> <a href="./src/zeroentropy/types/model_parse_document_response.py">ModelParseDocumentResponse</a></code>
+- <code title="post /models/rerank">client.models.<a href="./src/zeroentropy/resources/models.py">rerank</a>(\*\*<a href="src/zeroentropy/types/model_rerank_params.py">params</a>) -> <a href="./src/zeroentropy/types/model_rerank_response.py">ModelRerankResponse</a></code>

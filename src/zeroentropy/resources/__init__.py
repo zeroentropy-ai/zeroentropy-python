@@ -1,5 +1,13 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+from .models import (
+    ModelsResource,
+    AsyncModelsResource,
+    ModelsResourceWithRawResponse,
+    AsyncModelsResourceWithRawResponse,
+    ModelsResourceWithStreamingResponse,
+    AsyncModelsResourceWithStreamingResponse,
+)
 from .status import (
     StatusResource,
     AsyncStatusResource,
@@ -7,14 +15,6 @@ from .status import (
     AsyncStatusResourceWithRawResponse,
     StatusResourceWithStreamingResponse,
     AsyncStatusResourceWithStreamingResponse,
-)
-from .parsers import (
-    ParsersResource,
-    AsyncParsersResource,
-    ParsersResourceWithRawResponse,
-    AsyncParsersResourceWithRawResponse,
-    ParsersResourceWithStreamingResponse,
-    AsyncParsersResourceWithStreamingResponse,
 )
 from .queries import (
     QueriesResource,
@@ -66,10 +66,10 @@ __all__ = [
     "AsyncQueriesResourceWithRawResponse",
     "QueriesResourceWithStreamingResponse",
     "AsyncQueriesResourceWithStreamingResponse",
-    "ParsersResource",
-    "AsyncParsersResource",
-    "ParsersResourceWithRawResponse",
-    "AsyncParsersResourceWithRawResponse",
-    "ParsersResourceWithStreamingResponse",
-    "AsyncParsersResourceWithStreamingResponse",
+    "ModelsResource",
+    "AsyncModelsResource",
+    "ModelsResourceWithRawResponse",
+    "AsyncModelsResourceWithRawResponse",
+    "ModelsResourceWithStreamingResponse",
+    "AsyncModelsResourceWithStreamingResponse",
 ]
