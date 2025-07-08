@@ -1,6 +1,7 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import Dict, List, Union, Optional
+from datetime import datetime
 from typing_extensions import Literal
 
 from .._models import BaseModel
@@ -13,7 +14,7 @@ class DocumentGetInfoListResponse(BaseModel):
 
     collection_name: str
 
-    created_at: str
+    created_at: datetime
 
     file_url: str
     """

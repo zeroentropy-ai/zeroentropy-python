@@ -16,15 +16,11 @@ class QueryTopPagesParams(TypedDict, total=False):
     """The number of pages to return.
 
     If there are not enough pages matching your filters, then fewer may be returned.
-    This number must be between 1 and 2048, inclusive.
+    This number must be between 1 and 1024, inclusive.
     """
 
     query: Required[str]
-    """The natural language query to search with.
-
-    This cannot exceed 4096 characters (A single UTF-8 codepoint, is considered to
-    be 1 character).
-    """
+    """The natural language query to search with. This cannot exceed 4096 UTF-8 bytes."""
 
     filter: Optional[Dict[str, object]]
     """The query filter to apply.

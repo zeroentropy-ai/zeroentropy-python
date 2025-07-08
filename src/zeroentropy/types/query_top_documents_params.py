@@ -20,11 +20,7 @@ class QueryTopDocumentsParams(TypedDict, total=False):
     """
 
     query: Required[str]
-    """The natural language query to search with.
-
-    This cannot exceed 4096 characters (A single UTF-8 codepoint, is considered to
-    be 1 character).
-    """
+    """The natural language query to search with. This cannot exceed 4096 UTF-8 bytes."""
 
     filter: Optional[Dict[str, object]]
     """The query filter to apply.
@@ -46,4 +42,11 @@ class QueryTopDocumentsParams(TypedDict, total=False):
     If desired, test both to customize your search experience for your particular
     use-case, or use the default of "low" and only swap if you need an additional
     improvement in search result quality.
+    """
+
+    reranker: Optional[str]
+    """The reranker to use after initial retrieval.
+
+    The default is `null`. You can find available model ids along with more
+    information at [/models/rerank](/api-reference/models/rerank).
     """

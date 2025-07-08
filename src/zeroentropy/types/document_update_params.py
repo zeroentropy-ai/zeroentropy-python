@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import Dict, List, Union, Optional
-from typing_extensions import Required, TypedDict
+from typing_extensions import Literal, Required, TypedDict
 
 __all__ = ["DocumentUpdateParams"]
 
@@ -17,6 +17,14 @@ class DocumentUpdateParams(TypedDict, total=False):
 
     A `404 Not Found` status code will be returned if no document with this path was
     found.
+    """
+
+    index_status: Optional[Literal["not_parsed", "not_indexed"]]
+    """
+    If the document is in the index_status of
+    `parsing_failed or `indexing_failed`, then this endpoint allows you to update the index status to `not_parsed`and`not_indexed`,
+    respectively. This allows the document to re-attempt to parse/index after
+    failure.
     """
 
     metadata: Optional[Dict[str, Union[str, List[str]]]]
