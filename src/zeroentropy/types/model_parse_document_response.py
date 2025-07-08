@@ -4,9 +4,9 @@ from typing import List
 
 from .._models import BaseModel
 
-__all__ = ["ParserParseDocumentResponse"]
+__all__ = ["ModelParseDocumentResponse"]
 
 
-class ParserParseDocumentResponse(BaseModel):
+class ModelParseDocumentResponse(BaseModel):
     pages: List[str]
     """The parsed pages. Each string will contain the full contents of a page."""
