@@ -31,8 +31,8 @@ class DocumentResult(BaseModel):
 
 
 class Result(BaseModel):
-    content: Optional[str] = None
-    """If requested, this contains the full string content of this snippet."""
+    content: str
+    """The full string content of this snippet."""
 
     end_index: int
     """The end index of this snippet."""

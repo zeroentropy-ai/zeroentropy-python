@@ -55,6 +55,7 @@ class QueriesResource(SyncAPIResource):
         filter: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
         include_metadata: bool | NotGiven = NOT_GIVEN,
         latency_mode: Literal["low", "high"] | NotGiven = NOT_GIVEN,
+        reranker: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -72,8 +73,7 @@ class QueriesResource(SyncAPIResource):
               your filters, then fewer may be returned. This number must be between 1 and
               2048, inclusive.
 
-          query: The natural language query to search with. This cannot exceed 4096 characters (A
-              single UTF-8 codepoint, is considered to be 1 character).
+          query: The natural language query to search with. This cannot exceed 4096 UTF-8 bytes.
 
           filter: The query filter to apply. Please read [Metadata Filtering](/metadata-filtering)
               for more information. If not provided, then all documents will be searched.
@@ -86,6 +86,10 @@ class QueriesResource(SyncAPIResource):
               customize your search experience for your particular use-case, or use the
               default of "low" and only swap if you need an additional improvement in search
               result quality.
+
+          reranker: The reranker to use after initial retrieval. The default is `null`. You can find
+              available model ids along with more information at
+              [/models/rerank](/api-reference/models/rerank).
 
           extra_headers: Send extra headers
 
@@ -105,6 +109,7 @@ class QueriesResource(SyncAPIResource):
                     "filter": filter,
                     "include_metadata": include_metadata,
                     "latency_mode": latency_mode,
+                    "reranker": reranker,
                 },
                 query_top_documents_params.QueryTopDocumentsParams,
             ),
@@ -137,11 +142,10 @@ class QueriesResource(SyncAPIResource):
           collection_name: The name of the collection.
 
           k: The number of pages to return. If there are not enough pages matching your
-              filters, then fewer may be returned. This number must be between 1 and 2048,
+              filters, then fewer may be returned. This number must be between 1 and 1024,
               inclusive.
 
-          query: The natural language query to search with. This cannot exceed 4096 characters (A
-              single UTF-8 codepoint, is considered to be 1 character).
+          query: The natural language query to search with. This cannot exceed 4096 UTF-8 bytes.
 
           filter: The query filter to apply. Please read [Metadata Filtering](/metadata-filtering)
               for more information. If not provided, then all documents will be searched.
@@ -189,8 +193,8 @@ class QueriesResource(SyncAPIResource):
         query: str,
         filter: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
         include_document_metadata: bool | NotGiven = NOT_GIVEN,
-        latency_mode: Literal["low"] | NotGiven = NOT_GIVEN,
         precise_responses: bool | NotGiven = NOT_GIVEN,
+        reranker: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -209,7 +213,7 @@ class QueriesResource(SyncAPIResource):
           collection_name: The name of the collection.
 
           k: The number of snippets to return. If there are not enough snippets matching your
-              filters, then fewer may be returned. This number must be between 1 and 2048,
+              filters, then fewer may be returned. This number must be between 1 and 128,
               inclusive.
 
           query: The natural language query to search with. This cannot exceed 4096 characters (A
@@ -222,16 +226,14 @@ class QueriesResource(SyncAPIResource):
               metadata. This is false by default, as returning metadata can add overhead if
               the amount of data to return is large.
 
-          latency_mode: Note that for Top K Snippets, only latency_mode "low" is available. This option
-              selects between our latency modes. The higher latency mode takes longer, but can
-              allow for more accurate responses. If desired, test both to customize your
-              search experience for your particular use-case, or use the default of "low" and
-              only swap if you need an additional improvement in search result quality.
-
           precise_responses: Enable precise responses. Precise responses will have higher latency, but
               provide much more precise snippets. When `precise_responses` is set to `true`,
               the responses will average 200 characters. If set to `false`, the responses will
               average 2000 characters. The default is `false`.
+
+          reranker: The reranker to use after initial retrieval. The default is `null`. You can find
+              available model ids, along with more information, at
+              [/models/rerank](/api-reference/models/rerank).
 
           extra_headers: Send extra headers
 
@@ -250,8 +252,8 @@ class QueriesResource(SyncAPIResource):
                     "query": query,
                     "filter": filter,
                     "include_document_metadata": include_document_metadata,
-                    "latency_mode": latency_mode,
                     "precise_responses": precise_responses,
+                    "reranker": reranker,
                 },
                 query_top_snippets_params.QueryTopSnippetsParams,
             ),
@@ -291,6 +293,7 @@ class AsyncQueriesResource(AsyncAPIResource):
         filter: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
         include_metadata: bool | NotGiven = NOT_GIVEN,
         latency_mode: Literal["low", "high"] | NotGiven = NOT_GIVEN,
+        reranker: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -308,8 +311,7 @@ class AsyncQueriesResource(AsyncAPIResource):
               your filters, then fewer may be returned. This number must be between 1 and
               2048, inclusive.
 
-          query: The natural language query to search with. This cannot exceed 4096 characters (A
-              single UTF-8 codepoint, is considered to be 1 character).
+          query: The natural language query to search with. This cannot exceed 4096 UTF-8 bytes.
 
           filter: The query filter to apply. Please read [Metadata Filtering](/metadata-filtering)
               for more information. If not provided, then all documents will be searched.
@@ -322,6 +324,10 @@ class AsyncQueriesResource(AsyncAPIResource):
               customize your search experience for your particular use-case, or use the
               default of "low" and only swap if you need an additional improvement in search
               result quality.
+
+          reranker: The reranker to use after initial retrieval. The default is `null`. You can find
+              available model ids along with more information at
+              [/models/rerank](/api-reference/models/rerank).
 
           extra_headers: Send extra headers
 
@@ -341,6 +347,7 @@ class AsyncQueriesResource(AsyncAPIResource):
                     "filter": filter,
                     "include_metadata": include_metadata,
                     "latency_mode": latency_mode,
+                    "reranker": reranker,
                 },
                 query_top_documents_params.QueryTopDocumentsParams,
             ),
@@ -373,11 +380,10 @@ class AsyncQueriesResource(AsyncAPIResource):
           collection_name: The name of the collection.
 
           k: The number of pages to return. If there are not enough pages matching your
-              filters, then fewer may be returned. This number must be between 1 and 2048,
+              filters, then fewer may be returned. This number must be between 1 and 1024,
               inclusive.
 
-          query: The natural language query to search with. This cannot exceed 4096 characters (A
-              single UTF-8 codepoint, is considered to be 1 character).
+          query: The natural language query to search with. This cannot exceed 4096 UTF-8 bytes.
 
           filter: The query filter to apply. Please read [Metadata Filtering](/metadata-filtering)
               for more information. If not provided, then all documents will be searched.
@@ -425,8 +431,8 @@ class AsyncQueriesResource(AsyncAPIResource):
         query: str,
         filter: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
         include_document_metadata: bool | NotGiven = NOT_GIVEN,
-        latency_mode: Literal["low"] | NotGiven = NOT_GIVEN,
         precise_responses: bool | NotGiven = NOT_GIVEN,
+        reranker: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -445,7 +451,7 @@ class AsyncQueriesResource(AsyncAPIResource):
           collection_name: The name of the collection.
 
           k: The number of snippets to return. If there are not enough snippets matching your
-              filters, then fewer may be returned. This number must be between 1 and 2048,
+              filters, then fewer may be returned. This number must be between 1 and 128,
               inclusive.
 
           query: The natural language query to search with. This cannot exceed 4096 characters (A
@@ -458,16 +464,14 @@ class AsyncQueriesResource(AsyncAPIResource):
               metadata. This is false by default, as returning metadata can add overhead if
               the amount of data to return is large.
 
-          latency_mode: Note that for Top K Snippets, only latency_mode "low" is available. This option
-              selects between our latency modes. The higher latency mode takes longer, but can
-              allow for more accurate responses. If desired, test both to customize your
-              search experience for your particular use-case, or use the default of "low" and
-              only swap if you need an additional improvement in search result quality.
-
           precise_responses: Enable precise responses. Precise responses will have higher latency, but
               provide much more precise snippets. When `precise_responses` is set to `true`,
               the responses will average 200 characters. If set to `false`, the responses will
               average 2000 characters. The default is `false`.
+
+          reranker: The reranker to use after initial retrieval. The default is `null`. You can find
+              available model ids, along with more information, at
+              [/models/rerank](/api-reference/models/rerank).
 
           extra_headers: Send extra headers
 
@@ -486,8 +490,8 @@ class AsyncQueriesResource(AsyncAPIResource):
                     "query": query,
                     "filter": filter,
                     "include_document_metadata": include_document_metadata,
-                    "latency_mode": latency_mode,
                     "precise_responses": precise_responses,
+                    "reranker": reranker,
                 },
                 query_top_snippets_params.QueryTopSnippetsParams,
             ),

@@ -1,12 +1,12 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from .admin import (
-    AdminResource,
-    AsyncAdminResource,
-    AdminResourceWithRawResponse,
-    AsyncAdminResourceWithRawResponse,
-    AdminResourceWithStreamingResponse,
-    AsyncAdminResourceWithStreamingResponse,
+from .models import (
+    ModelsResource,
+    AsyncModelsResource,
+    ModelsResourceWithRawResponse,
+    AsyncModelsResourceWithRawResponse,
+    ModelsResourceWithStreamingResponse,
+    AsyncModelsResourceWithStreamingResponse,
 )
 from .status import (
     StatusResource,
@@ -15,14 +15,6 @@ from .status import (
     AsyncStatusResourceWithRawResponse,
     StatusResourceWithStreamingResponse,
     AsyncStatusResourceWithStreamingResponse,
-)
-from .parsers import (
-    ParsersResource,
-    AsyncParsersResource,
-    ParsersResourceWithRawResponse,
-    AsyncParsersResourceWithRawResponse,
-    ParsersResourceWithStreamingResponse,
-    AsyncParsersResourceWithStreamingResponse,
 )
 from .queries import (
     QueriesResource,
@@ -50,12 +42,6 @@ from .collections import (
 )
 
 __all__ = [
-    "AdminResource",
-    "AsyncAdminResource",
-    "AdminResourceWithRawResponse",
-    "AsyncAdminResourceWithRawResponse",
-    "AdminResourceWithStreamingResponse",
-    "AsyncAdminResourceWithStreamingResponse",
     "StatusResource",
     "AsyncStatusResource",
     "StatusResourceWithRawResponse",
@@ -80,10 +66,10 @@ __all__ = [
     "AsyncQueriesResourceWithRawResponse",
     "QueriesResourceWithStreamingResponse",
     "AsyncQueriesResourceWithStreamingResponse",
-    "ParsersResource",
-    "AsyncParsersResource",
-    "ParsersResourceWithRawResponse",
-    "AsyncParsersResourceWithRawResponse",
-    "ParsersResourceWithStreamingResponse",
-    "AsyncParsersResourceWithStreamingResponse",
+    "ModelsResource",
+    "AsyncModelsResource",
+    "ModelsResourceWithRawResponse",
+    "AsyncModelsResourceWithRawResponse",
+    "ModelsResourceWithStreamingResponse",
+    "AsyncModelsResourceWithStreamingResponse",
 ]

@@ -38,6 +38,7 @@ class TestDocuments:
         document = client.documents.update(
             collection_name="collection_name",
             path="path",
+            index_status="not_parsed",
             metadata={"foo": "string"},
         )
         assert_matches_type(DocumentUpdateResponse, document, path=["response"])
@@ -295,7 +296,9 @@ class TestDocuments:
 
 
 class TestAsyncDocuments:
-    parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
+    parametrize = pytest.mark.parametrize(
+        "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
+    )
 
     @parametrize
     async def test_method_update(self, async_client: AsyncZeroEntropy) -> None:
@@ -310,6 +313,7 @@ class TestAsyncDocuments:
         document = await async_client.documents.update(
             collection_name="collection_name",
             path="path",
+            index_status="not_parsed",
             metadata={"foo": "string"},
         )
         assert_matches_type(DocumentUpdateResponse, document, path=["response"])

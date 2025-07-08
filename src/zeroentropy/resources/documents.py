@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from typing import Dict, List, Union, Optional
+from typing_extensions import Literal
 
 import httpx
 
@@ -61,6 +62,7 @@ class DocumentsResource(SyncAPIResource):
         *,
         collection_name: str,
         path: str,
+        index_status: Optional[Literal["not_parsed", "not_indexed"]] | NotGiven = NOT_GIVEN,
         metadata: Optional[Dict[str, Union[str, List[str]]]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -73,14 +75,15 @@ class DocumentsResource(SyncAPIResource):
 
         This endpoint is atomic.
 
-        The only attribute currently supported for update is `metadata`. This endpoint
-        can only be called with a non-null `metadata` if the document status is
-        `indexed`.
+        Currently both `metadata` and `index_status` are supported.
 
-        Sometimes, when updating a document, a new document ID will be assigned and the
-        previous will be deleted. For this reason, the previous and the new document ID
-        will both be returned in the response. If the document ID was not updated, then
-        these two IDs will be identical.
+        - When updating with a non-null `metadata`, the document must have
+          `index_status` of `indexed`. After this call, the document will have an
+          `index_status` of `not_indexed`, since the document will need to reindex with
+          the new metadata.
+        - When updating with a non-null `index_status`, setting it to
+          `not_parsed or `not_indexed`requires that the document must have`index_status`of`parsing_failed`or`indexing_failed`,
+          respectively.
 
         A `404 Not Found` status code will be returned, if the provided collection name
         or document path does not exist.
@@ -90,6 +93,11 @@ class DocumentsResource(SyncAPIResource):
 
           path: The filepath of the document that you are updating. A `404 Not Found` status
               code will be returned if no document with this path was found.
+
+          index_status: If the document is in the index_status of
+              `parsing_failed or `indexing_failed`, then this endpoint allows you to update the index status to `not_parsed`and`not_indexed`,
+              respectively. This allows the document to re-attempt to parse/index after
+              failure.
 
           metadata: If this field is provided, the given metadata json will replace the document's
               existing metadata json. In other words, if you want to add a new field, you will
@@ -110,6 +118,7 @@ class DocumentsResource(SyncAPIResource):
                 {
                     "collection_name": collection_name,
                     "path": path,
+                    "index_status": index_status,
                     "metadata": metadata,
                 },
                 document_update_params.DocumentUpdateParams,
@@ -456,6 +465,7 @@ class AsyncDocumentsResource(AsyncAPIResource):
         *,
         collection_name: str,
         path: str,
+        index_status: Optional[Literal["not_parsed", "not_indexed"]] | NotGiven = NOT_GIVEN,
         metadata: Optional[Dict[str, Union[str, List[str]]]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -468,14 +478,15 @@ class AsyncDocumentsResource(AsyncAPIResource):
 
         This endpoint is atomic.
 
-        The only attribute currently supported for update is `metadata`. This endpoint
-        can only be called with a non-null `metadata` if the document status is
-        `indexed`.
+        Currently both `metadata` and `index_status` are supported.
 
-        Sometimes, when updating a document, a new document ID will be assigned and the
-        previous will be deleted. For this reason, the previous and the new document ID
-        will both be returned in the response. If the document ID was not updated, then
-        these two IDs will be identical.
+        - When updating with a non-null `metadata`, the document must have
+          `index_status` of `indexed`. After this call, the document will have an
+          `index_status` of `not_indexed`, since the document will need to reindex with
+          the new metadata.
+        - When updating with a non-null `index_status`, setting it to
+          `not_parsed or `not_indexed`requires that the document must have`index_status`of`parsing_failed`or`indexing_failed`,
+          respectively.
 
         A `404 Not Found` status code will be returned, if the provided collection name
         or document path does not exist.
@@ -485,6 +496,11 @@ class AsyncDocumentsResource(AsyncAPIResource):
 
           path: The filepath of the document that you are updating. A `404 Not Found` status
               code will be returned if no document with this path was found.
+
+          index_status: If the document is in the index_status of
+              `parsing_failed or `indexing_failed`, then this endpoint allows you to update the index status to `not_parsed`and`not_indexed`,
+              respectively. This allows the document to re-attempt to parse/index after
+              failure.
 
           metadata: If this field is provided, the given metadata json will replace the document's
               existing metadata json. In other words, if you want to add a new field, you will
@@ -505,6 +521,7 @@ class AsyncDocumentsResource(AsyncAPIResource):
                 {
                     "collection_name": collection_name,
                     "path": path,
+                    "index_status": index_status,
                     "metadata": metadata,
                 },
                 document_update_params.DocumentUpdateParams,

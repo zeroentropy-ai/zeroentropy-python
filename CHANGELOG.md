@@ -1,5 +1,42 @@
 # Changelog
 
+## 0.1.0-alpha.6 (2025-07-08)
+
+Full Changelog: [v0.1.0-alpha.5...v0.1.0-alpha.6](https://github.com/zeroentropy-ai/zeroentropy-python/compare/v0.1.0-alpha.5...v0.1.0-alpha.6)
+
+### Features
+
+* **api:** manual updates ([b6616f5](https://github.com/zeroentropy-ai/zeroentropy-python/commit/b6616f523b9dd5a4a3f9142bf2a561b560767492))
+* **api:** manual updates ([8752560](https://github.com/zeroentropy-ai/zeroentropy-python/commit/875256098555c768cd90d459df84e7cdcb4244ce))
+* **api:** manual updates ([11c83ad](https://github.com/zeroentropy-ai/zeroentropy-python/commit/11c83ad2bc4942f703bd255301816eb3a99682b7))
+* **api:** manual updates ([801513a](https://github.com/zeroentropy-ai/zeroentropy-python/commit/801513aefc80ac3345bb8d9995d558e576d3c58e))
+* **client:** add support for aiohttp ([3aa7ee2](https://github.com/zeroentropy-ai/zeroentropy-python/commit/3aa7ee28445efc3285b1ce79d6b7959d18bf7425))
+
+
+### Bug Fixes
+
+* **ci:** correct conditional ([6ab3ba2](https://github.com/zeroentropy-ai/zeroentropy-python/commit/6ab3ba21090ea2c54dfd7b9aea8c1d86963cd046))
+* **ci:** release-doctor — report correct token name ([c9a55cb](https://github.com/zeroentropy-ai/zeroentropy-python/commit/c9a55cb8318c27c3acd8a84395cd295e348a05f9))
+* **client:** correctly parse binary response | stream ([f7b7ef9](https://github.com/zeroentropy-ai/zeroentropy-python/commit/f7b7ef9f45ff779734d1b6ee48349943bf14fce2))
+* **tests:** fix: tests which call HTTP endpoints directly with the example parameters ([027e535](https://github.com/zeroentropy-ai/zeroentropy-python/commit/027e535f70651ff5f6b0df8eb3a9786e31241896))
+
+
+### Chores
+
+* **ci:** change upload type ([cb76da7](https://github.com/zeroentropy-ai/zeroentropy-python/commit/cb76da7ab4ab322268bd7663f5371893ff851a05))
+* **ci:** enable for pull requests ([fb3b81d](https://github.com/zeroentropy-ai/zeroentropy-python/commit/fb3b81d7b36b9242b56ed8e5e928272857a82aac))
+* **ci:** only run for pushes and fork pull requests ([ff5c91d](https://github.com/zeroentropy-ai/zeroentropy-python/commit/ff5c91d9ebca88bad06e0b9b1c62cd013dcf1b9b))
+* **internal:** update conftest.py ([0ddbc5a](https://github.com/zeroentropy-ai/zeroentropy-python/commit/0ddbc5ac04d55067056a50b6ad38b9afc9be15c1))
+* **readme:** update badges ([e790eb4](https://github.com/zeroentropy-ai/zeroentropy-python/commit/e790eb48bfd89d6b384cd9382480574a83cee175))
+* **tests:** add tests for httpx client instantiation & proxies ([64a0a4c](https://github.com/zeroentropy-ai/zeroentropy-python/commit/64a0a4cb1b1c4f71b37174e748e91e0df7bcc2cc))
+* **tests:** run tests in parallel ([0261b3c](https://github.com/zeroentropy-ai/zeroentropy-python/commit/0261b3c5bb54b02fe84b42c2d0e41a5e43519adc))
+* **tests:** skip some failing tests on the latest python versions ([2cbe097](https://github.com/zeroentropy-ai/zeroentropy-python/commit/2cbe097a9ac15c6f87e7137788a44058bd966524))
+
+
+### Documentation
+
+* **client:** fix httpx.Timeout documentation reference ([3cd4296](https://github.com/zeroentropy-ai/zeroentropy-python/commit/3cd4296f8fe24f373dba2100dc1bc389f8e3b496))
+
 ## 0.1.0-alpha.5 (2025-06-04)
 
 Full Changelog: [v0.1.0-alpha.4...v0.1.0-alpha.5](https://github.com/zeroentropy-ai/zeroentropy-python/compare/v0.1.0-alpha.4...v0.1.0-alpha.5)

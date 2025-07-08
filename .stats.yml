@@ -1,4 +1,4 @@
-configured_endpoints: 15
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/zeroentropy%2Fzeroentropy-f06c49dfd4b38a4f9d5bcad56348156bbf641aa8b7968acfbf655ad6ceff2126.yml
-openapi_spec_hash: cac52dd65fbcb65ffa7a183e764b7f06
-config_hash: beba80a17ba64c5439712e85129ab5ad
+configured_endpoints: 14
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/zeroentropy%2Fzeroentropy-bd2f55f423e09b74f83cbad6034fb76f7052363308d02533a908b49543cff459.yml
+openapi_spec_hash: 6d7566ebda7fecac4069744949d547e0
+config_hash: e07cdee04c971e1db74e91a5a4cd981c

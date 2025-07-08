@@ -39,6 +39,7 @@ class TestQueries:
             filter={"foo": "bar"},
             include_metadata=True,
             latency_mode="low",
+            reranker="reranker",
         )
         assert_matches_type(QueryTopDocumentsResponse, query, path=["response"])
 
@@ -136,8 +137,8 @@ class TestQueries:
             query="query",
             filter={"foo": "bar"},
             include_document_metadata=True,
-            latency_mode="low",
             precise_responses=True,
+            reranker="reranker",
         )
         assert_matches_type(QueryTopSnippetsResponse, query, path=["response"])
 
@@ -171,7 +172,9 @@ class TestQueries:
 
 
 class TestAsyncQueries:
-    parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
+    parametrize = pytest.mark.parametrize(
+        "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
+    )
 
     @parametrize
     async def test_method_top_documents(self, async_client: AsyncZeroEntropy) -> None:
@@ -191,6 +194,7 @@ class TestAsyncQueries:
             filter={"foo": "bar"},
             include_metadata=True,
             latency_mode="low",
+            reranker="reranker",
         )
         assert_matches_type(QueryTopDocumentsResponse, query, path=["response"])
 
@@ -288,8 +292,8 @@ class TestAsyncQueries:
             query="query",
             filter={"foo": "bar"},
             include_document_metadata=True,
-            latency_mode="low",
             precise_responses=True,
+            reranker="reranker",
         )
         assert_matches_type(QueryTopSnippetsResponse, query, path=["response"])
 
