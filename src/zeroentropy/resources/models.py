@@ -6,7 +6,7 @@ from typing import List, Optional
 
 import httpx
 
-from ..types import model_rerank_params, model_parse_document_params
+from ..types import model_rerank_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -19,7 +19,6 @@ from .._response import (
 )
 from .._base_client import make_request_options
 from ..types.model_rerank_response import ModelRerankResponse
-from ..types.model_parse_document_response import ModelParseDocumentResponse
 
 __all__ = ["ModelsResource", "AsyncModelsResource"]
 
@@ -43,47 +42,6 @@ class ModelsResource(SyncAPIResource):
         For more information, see https://www.github.com/zeroentropy-ai/zeroentropy-python#with_streaming_response
         """
         return ModelsResourceWithStreamingResponse(self)
-
-    def parse_document(
-        self,
-        *,
-        base64_data: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ModelParseDocumentResponse:
-        """This provides access to the parsers that we use for indexing.
-
-        This endpoint will
-        not access any collection or search index, and the result will not be saved.
-        This will use the same parsing method as the `/documents/add-document` endpoint.
-
-        A common use-case for this endpoint, is to use our parser in combination with
-        your own pre-processing step, before then uploading it to the search index using
-        the `text-pages` filetype.
-
-        Args:
-          base64_data: The document's raw data, as a base64-encoded string
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._post(
-            "/parsers/parse-document",
-            body=maybe_transform({"base64_data": base64_data}, model_parse_document_params.ModelParseDocumentParams),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ModelParseDocumentResponse,
-        )
 
     def rerank(
         self,
@@ -165,49 +123,6 @@ class AsyncModelsResource(AsyncAPIResource):
         """
         return AsyncModelsResourceWithStreamingResponse(self)
 
-    async def parse_document(
-        self,
-        *,
-        base64_data: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ModelParseDocumentResponse:
-        """This provides access to the parsers that we use for indexing.
-
-        This endpoint will
-        not access any collection or search index, and the result will not be saved.
-        This will use the same parsing method as the `/documents/add-document` endpoint.
-
-        A common use-case for this endpoint, is to use our parser in combination with
-        your own pre-processing step, before then uploading it to the search index using
-        the `text-pages` filetype.
-
-        Args:
-          base64_data: The document's raw data, as a base64-encoded string
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._post(
-            "/parsers/parse-document",
-            body=await async_maybe_transform(
-                {"base64_data": base64_data}, model_parse_document_params.ModelParseDocumentParams
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ModelParseDocumentResponse,
-        )
-
     async def rerank(
         self,
         *,
@@ -272,9 +187,6 @@ class ModelsResourceWithRawResponse:
     def __init__(self, models: ModelsResource) -> None:
         self._models = models
 
-        self.parse_document = to_raw_response_wrapper(
-            models.parse_document,
-        )
         self.rerank = to_raw_response_wrapper(
             models.rerank,
         )
@@ -284,9 +196,6 @@ class AsyncModelsResourceWithRawResponse:
     def __init__(self, models: AsyncModelsResource) -> None:
         self._models = models
 
-        self.parse_document = async_to_raw_response_wrapper(
-            models.parse_document,
-        )
         self.rerank = async_to_raw_response_wrapper(
             models.rerank,
         )
@@ -296,9 +205,6 @@ class ModelsResourceWithStreamingResponse:
     def __init__(self, models: ModelsResource) -> None:
         self._models = models
 
-        self.parse_document = to_streamed_response_wrapper(
-            models.parse_document,
-        )
         self.rerank = to_streamed_response_wrapper(
             models.rerank,
         )
@@ -308,9 +214,6 @@ class AsyncModelsResourceWithStreamingResponse:
     def __init__(self, models: AsyncModelsResource) -> None:
         self._models = models
 
-        self.parse_document = async_to_streamed_response_wrapper(
-            models.parse_document,
-        )
         self.rerank = async_to_streamed_response_wrapper(
             models.rerank,
         )
