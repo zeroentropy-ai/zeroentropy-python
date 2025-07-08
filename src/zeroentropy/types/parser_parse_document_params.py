@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from typing_extensions import Required, TypedDict
 
-__all__ = ["ModelParseDocumentParams"]
+__all__ = ["ParserParseDocumentParams"]
 
 
-class ModelParseDocumentParams(TypedDict, total=False):
+class ParserParseDocumentParams(TypedDict, total=False):
     base64_data: Required[str]
     """The document's raw data, as a base64-encoded string"""
