@@ -21,7 +21,7 @@ from ._types import (
 )
 from ._utils import is_given, get_async_library
 from ._version import __version__
-from .resources import models, status, parsers, queries, documents, collections
+from .resources import models, status, queries, documents, collections
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError, ZeroEntropyError
 from ._base_client import (
@@ -48,7 +48,6 @@ class ZeroEntropy(SyncAPIClient):
     documents: documents.DocumentsResource
     queries: queries.QueriesResource
     models: models.ModelsResource
-    parsers: parsers.ParsersResource
     with_raw_response: ZeroEntropyWithRawResponse
     with_streaming_response: ZeroEntropyWithStreamedResponse
 
@@ -111,7 +110,6 @@ class ZeroEntropy(SyncAPIClient):
         self.documents = documents.DocumentsResource(self)
         self.queries = queries.QueriesResource(self)
         self.models = models.ModelsResource(self)
-        self.parsers = parsers.ParsersResource(self)
         self.with_raw_response = ZeroEntropyWithRawResponse(self)
         self.with_streaming_response = ZeroEntropyWithStreamedResponse(self)
 
@@ -226,7 +224,6 @@ class AsyncZeroEntropy(AsyncAPIClient):
     documents: documents.AsyncDocumentsResource
     queries: queries.AsyncQueriesResource
     models: models.AsyncModelsResource
-    parsers: parsers.AsyncParsersResource
     with_raw_response: AsyncZeroEntropyWithRawResponse
     with_streaming_response: AsyncZeroEntropyWithStreamedResponse
 
@@ -289,7 +286,6 @@ class AsyncZeroEntropy(AsyncAPIClient):
         self.documents = documents.AsyncDocumentsResource(self)
         self.queries = queries.AsyncQueriesResource(self)
         self.models = models.AsyncModelsResource(self)
-        self.parsers = parsers.AsyncParsersResource(self)
         self.with_raw_response = AsyncZeroEntropyWithRawResponse(self)
         self.with_streaming_response = AsyncZeroEntropyWithStreamedResponse(self)
 
@@ -405,7 +401,6 @@ class ZeroEntropyWithRawResponse:
         self.documents = documents.DocumentsResourceWithRawResponse(client.documents)
         self.queries = queries.QueriesResourceWithRawResponse(client.queries)
         self.models = models.ModelsResourceWithRawResponse(client.models)
-        self.parsers = parsers.ParsersResourceWithRawResponse(client.parsers)
 
 
 class AsyncZeroEntropyWithRawResponse:
@@ -415,7 +410,6 @@ class AsyncZeroEntropyWithRawResponse:
         self.documents = documents.AsyncDocumentsResourceWithRawResponse(client.documents)
         self.queries = queries.AsyncQueriesResourceWithRawResponse(client.queries)
         self.models = models.AsyncModelsResourceWithRawResponse(client.models)
-        self.parsers = parsers.AsyncParsersResourceWithRawResponse(client.parsers)
 
 
 class ZeroEntropyWithStreamedResponse:
@@ -425,7 +419,6 @@ class ZeroEntropyWithStreamedResponse:
         self.documents = documents.DocumentsResourceWithStreamingResponse(client.documents)
         self.queries = queries.QueriesResourceWithStreamingResponse(client.queries)
         self.models = models.ModelsResourceWithStreamingResponse(client.models)
-        self.parsers = parsers.ParsersResourceWithStreamingResponse(client.parsers)
 
 
 class AsyncZeroEntropyWithStreamedResponse:
@@ -435,7 +428,6 @@ class AsyncZeroEntropyWithStreamedResponse:
         self.documents = documents.AsyncDocumentsResourceWithStreamingResponse(client.documents)
         self.queries = queries.AsyncQueriesResourceWithStreamingResponse(client.queries)
         self.models = models.AsyncModelsResourceWithStreamingResponse(client.models)
-        self.parsers = parsers.AsyncParsersResourceWithStreamingResponse(client.parsers)
 
 
 Client = ZeroEntropy
