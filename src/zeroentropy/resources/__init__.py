@@ -16,14 +16,6 @@ from .status import (
     StatusResourceWithStreamingResponse,
     AsyncStatusResourceWithStreamingResponse,
 )
-from .parsers import (
-    ParsersResource,
-    AsyncParsersResource,
-    ParsersResourceWithRawResponse,
-    AsyncParsersResourceWithRawResponse,
-    ParsersResourceWithStreamingResponse,
-    AsyncParsersResourceWithStreamingResponse,
-)
 from .queries import (
     QueriesResource,
     AsyncQueriesResource,
@@ -80,10 +72,4 @@ __all__ = [
     "AsyncModelsResourceWithRawResponse",
     "ModelsResourceWithStreamingResponse",
     "AsyncModelsResourceWithStreamingResponse",
-    "ParsersResource",
-    "AsyncParsersResource",
-    "ParsersResourceWithRawResponse",
-    "AsyncParsersResourceWithRawResponse",
-    "ParsersResourceWithStreamingResponse",
-    "AsyncParsersResourceWithStreamingResponse",
 ]

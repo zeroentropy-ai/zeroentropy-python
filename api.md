@@ -81,15 +81,3 @@ from zeroentropy.types import ModelRerankResponse
 Methods:
 
 - <code title="post /models/rerank">client.models.<a href="./src/zeroentropy/resources/models.py">rerank</a>(\*\*<a href="src/zeroentropy/types/model_rerank_params.py">params</a>) -> <a href="./src/zeroentropy/types/model_rerank_response.py">ModelRerankResponse</a></code>
-
-# Parsers
-
-Types:
-
-```python
-from zeroentropy.types import ParserParseDocumentResponse
-```
-
-Methods:
-
-- <code title="post /parsers/parse-document">client.parsers.<a href="./src/zeroentropy/resources/parsers.py">parse_document</a>(\*\*<a href="src/zeroentropy/types/parser_parse_document_params.py">params</a>) -> <a href="./src/zeroentropy/types/parser_parse_document_response.py">ParserParseDocumentResponse</a></code>
