@@ -1,15 +1,3 @@
-# Admin
-
-Types:
-
-```python
-from zeroentropy.types import AdminCreateOrganizationResponse
-```
-
-Methods:
-
-- <code title="post /admin/create-organization">client.admin.<a href="./src/zeroentropy/resources/admin.py">create_organization</a>(\*\*<a href="src/zeroentropy/types/admin_create_organization_params.py">params</a>) -> <a href="./src/zeroentropy/types/admin_create_organization_response.py">AdminCreateOrganizationResponse</a></code>
-
 # Status
 
 Types:
