@@ -1,6 +1,7 @@
 # ZeroEntropy Python SDK
 
-[![PyPI version](<https://img.shields.io/pypi/v/zeroentropy.svg?label=pypi%20(stable)>)](https://pypi.org/project/zeroentropy/)
+<!-- prettier-ignore -->
+[![PyPI version](https://img.shields.io/pypi/v/zeroentropy.svg?label=pypi%20(stable))](https://pypi.org/project/zeroentropy/)
 
 The ZeroEntropy Python SDK provides convenient access to the [ZeroEntropy REST API](https://docs.zeroentropy.dev/api-reference/) from any Python 3.8+
 application.

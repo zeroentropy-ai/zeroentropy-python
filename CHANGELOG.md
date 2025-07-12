@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.1.0-alpha.7 (2025-07-12)
+
+Full Changelog: [v0.1.0-alpha.6...v0.1.0-alpha.7](https://github.com/zeroentropy-ai/zeroentropy-python/compare/v0.1.0-alpha.6...v0.1.0-alpha.7)
+
+### Bug Fixes
+
+* **client:** don't send Content-Type header on GET requests ([dfd4e86](https://github.com/zeroentropy-ai/zeroentropy-python/commit/dfd4e866616c9c7e9fa6ffa3b757abf6d8cd9ebc))
+* **parsing:** correctly handle nested discriminated unions ([79004f8](https://github.com/zeroentropy-ai/zeroentropy-python/commit/79004f855735cc872d0050f781bf8b84d04fd592))
+
+
+### Chores
+
+* **internal:** bump pinned h11 dep ([b9e057f](https://github.com/zeroentropy-ai/zeroentropy-python/commit/b9e057f0827b8ed5851ec7e7a8b9ed622019f065))
+* **package:** mark python 3.13 as supported ([144f8ca](https://github.com/zeroentropy-ai/zeroentropy-python/commit/144f8ca076c92c7e68403d6a0a49ce1caeee69b9))
+* **readme:** fix version rendering on pypi ([3ccc314](https://github.com/zeroentropy-ai/zeroentropy-python/commit/3ccc314b021100775fe854d7225405c63b299599))
+
 ## 0.1.0-alpha.6 (2025-07-08)
 
 Full Changelog: [v0.1.0-alpha.5...v0.1.0-alpha.6](https://github.com/zeroentropy-ai/zeroentropy-python/compare/v0.1.0-alpha.5...v0.1.0-alpha.6)
