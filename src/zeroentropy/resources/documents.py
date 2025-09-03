@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, List, Union, Optional
+from typing import Dict, Union, Optional
 from typing_extensions import Literal
 
 import httpx
@@ -15,7 +15,7 @@ from ..types import (
     document_get_info_list_params,
     document_get_page_info_params,
 )
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven, SequenceNotStr
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -63,7 +63,7 @@ class DocumentsResource(SyncAPIResource):
         collection_name: str,
         path: str,
         index_status: Optional[Literal["not_parsed", "not_indexed"]] | NotGiven = NOT_GIVEN,
-        metadata: Optional[Dict[str, Union[str, List[str]]]] | NotGiven = NOT_GIVEN,
+        metadata: Optional[Dict[str, Union[str, SequenceNotStr[str]]]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -182,7 +182,7 @@ class DocumentsResource(SyncAPIResource):
         collection_name: str,
         content: document_add_params.Content,
         path: str,
-        metadata: Dict[str, Union[str, List[str]]] | NotGiven = NOT_GIVEN,
+        metadata: Dict[str, Union[str, SequenceNotStr[str]]] | NotGiven = NOT_GIVEN,
         overwrite: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -466,7 +466,7 @@ class AsyncDocumentsResource(AsyncAPIResource):
         collection_name: str,
         path: str,
         index_status: Optional[Literal["not_parsed", "not_indexed"]] | NotGiven = NOT_GIVEN,
-        metadata: Optional[Dict[str, Union[str, List[str]]]] | NotGiven = NOT_GIVEN,
+        metadata: Optional[Dict[str, Union[str, SequenceNotStr[str]]]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -585,7 +585,7 @@ class AsyncDocumentsResource(AsyncAPIResource):
         collection_name: str,
         content: document_add_params.Content,
         path: str,
-        metadata: Dict[str, Union[str, List[str]]] | NotGiven = NOT_GIVEN,
+        metadata: Dict[str, Union[str, SequenceNotStr[str]]] | NotGiven = NOT_GIVEN,
         overwrite: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.

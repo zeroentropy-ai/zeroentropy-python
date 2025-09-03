@@ -2,14 +2,16 @@
 
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Optional
 from typing_extensions import Required, TypedDict
+
+from .._types import SequenceNotStr
 
 __all__ = ["ModelRerankParams"]
 
 
 class ModelRerankParams(TypedDict, total=False):
-    documents: Required[List[str]]
+    documents: Required[SequenceNotStr[str]]
     """The list of documents to rerank. Each document is a string."""
 
     query: Required[str]

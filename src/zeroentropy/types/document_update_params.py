@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
-from typing import Dict, List, Union, Optional
+from typing import Dict, Union, Optional
 from typing_extensions import Literal, Required, TypedDict
+
+from .._types import SequenceNotStr
 
 __all__ = ["DocumentUpdateParams"]
 
@@ -27,7 +29,7 @@ class DocumentUpdateParams(TypedDict, total=False):
     failure.
     """
 
-    metadata: Optional[Dict[str, Union[str, List[str]]]]
+    metadata: Optional[Dict[str, Union[str, SequenceNotStr[str]]]]
     """
     If this field is provided, the given metadata json will replace the document's
     existing metadata json. In other words, if you want to add a new field, you will
