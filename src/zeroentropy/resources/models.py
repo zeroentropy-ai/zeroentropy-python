@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Optional
 
 import httpx
 
 from ..types import model_rerank_params
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven, SequenceNotStr
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -46,7 +46,7 @@ class ModelsResource(SyncAPIResource):
     def rerank(
         self,
         *,
-        documents: List[str],
+        documents: SequenceNotStr[str],
         query: str,
         model: str | NotGiven = NOT_GIVEN,
         top_n: Optional[int] | NotGiven = NOT_GIVEN,
@@ -126,7 +126,7 @@ class AsyncModelsResource(AsyncAPIResource):
     async def rerank(
         self,
         *,
-        documents: List[str],
+        documents: SequenceNotStr[str],
         query: str,
         model: str | NotGiven = NOT_GIVEN,
         top_n: Optional[int] | NotGiven = NOT_GIVEN,
