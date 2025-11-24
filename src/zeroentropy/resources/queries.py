@@ -8,7 +8,7 @@ from typing_extensions import Literal
 import httpx
 
 from ..types import query_top_pages_params, query_top_snippets_params, query_top_documents_params
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -51,17 +51,17 @@ class QueriesResource(SyncAPIResource):
         *,
         collection_name: str,
         k: int,
-        query: str,
-        filter: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        include_metadata: bool | NotGiven = NOT_GIVEN,
-        latency_mode: Literal["low", "high"] | NotGiven = NOT_GIVEN,
-        reranker: Optional[str] | NotGiven = NOT_GIVEN,
+        query: Optional[str],
+        filter: Optional[Dict[str, object]] | Omit = omit,
+        include_metadata: bool | Omit = omit,
+        latency_mode: Literal["low", "high"] | Omit = omit,
+        reranker: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> QueryTopDocumentsResponse:
         """
         Get the top K documents that match the given query
@@ -74,6 +74,9 @@ class QueriesResource(SyncAPIResource):
               2048, inclusive.
 
           query: The natural language query to search with. This cannot exceed 4096 UTF-8 bytes.
+              If `null`, then the sort will be undefined. The purpose of `null` is to do
+              faster metadata filter searches without care for relevancy. Cost per query is
+              unchanged.
 
           filter: The query filter to apply. Please read [Metadata Filtering](/metadata-filtering)
               for more information. If not provided, then all documents will be searched.
@@ -125,15 +128,15 @@ class QueriesResource(SyncAPIResource):
         collection_name: str,
         k: int,
         query: str,
-        filter: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        include_content: bool | NotGiven = NOT_GIVEN,
-        latency_mode: Literal["low", "high"] | NotGiven = NOT_GIVEN,
+        filter: Optional[Dict[str, object]] | Omit = omit,
+        include_content: bool | Omit = omit,
+        latency_mode: Literal["low", "high"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> QueryTopPagesResponse:
         """
         Get the top K pages that match the given query
@@ -191,16 +194,16 @@ class QueriesResource(SyncAPIResource):
         collection_name: str,
         k: int,
         query: str,
-        filter: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        include_document_metadata: bool | NotGiven = NOT_GIVEN,
-        precise_responses: bool | NotGiven = NOT_GIVEN,
-        reranker: Optional[str] | NotGiven = NOT_GIVEN,
+        filter: Optional[Dict[str, object]] | Omit = omit,
+        include_document_metadata: bool | Omit = omit,
+        precise_responses: bool | Omit = omit,
+        reranker: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> QueryTopSnippetsResponse:
         """
         Get the top K snippets that match the given query.
@@ -289,17 +292,17 @@ class AsyncQueriesResource(AsyncAPIResource):
         *,
         collection_name: str,
         k: int,
-        query: str,
-        filter: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        include_metadata: bool | NotGiven = NOT_GIVEN,
-        latency_mode: Literal["low", "high"] | NotGiven = NOT_GIVEN,
-        reranker: Optional[str] | NotGiven = NOT_GIVEN,
+        query: Optional[str],
+        filter: Optional[Dict[str, object]] | Omit = omit,
+        include_metadata: bool | Omit = omit,
+        latency_mode: Literal["low", "high"] | Omit = omit,
+        reranker: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> QueryTopDocumentsResponse:
         """
         Get the top K documents that match the given query
@@ -312,6 +315,9 @@ class AsyncQueriesResource(AsyncAPIResource):
               2048, inclusive.
 
           query: The natural language query to search with. This cannot exceed 4096 UTF-8 bytes.
+              If `null`, then the sort will be undefined. The purpose of `null` is to do
+              faster metadata filter searches without care for relevancy. Cost per query is
+              unchanged.
 
           filter: The query filter to apply. Please read [Metadata Filtering](/metadata-filtering)
               for more information. If not provided, then all documents will be searched.
@@ -363,15 +369,15 @@ class AsyncQueriesResource(AsyncAPIResource):
         collection_name: str,
         k: int,
         query: str,
-        filter: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        include_content: bool | NotGiven = NOT_GIVEN,
-        latency_mode: Literal["low", "high"] | NotGiven = NOT_GIVEN,
+        filter: Optional[Dict[str, object]] | Omit = omit,
+        include_content: bool | Omit = omit,
+        latency_mode: Literal["low", "high"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> QueryTopPagesResponse:
         """
         Get the top K pages that match the given query
@@ -429,16 +435,16 @@ class AsyncQueriesResource(AsyncAPIResource):
         collection_name: str,
         k: int,
         query: str,
-        filter: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        include_document_metadata: bool | NotGiven = NOT_GIVEN,
-        precise_responses: bool | NotGiven = NOT_GIVEN,
-        reranker: Optional[str] | NotGiven = NOT_GIVEN,
+        filter: Optional[Dict[str, object]] | Omit = omit,
+        include_document_metadata: bool | Omit = omit,
+        precise_responses: bool | Omit = omit,
+        reranker: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> QueryTopSnippetsResponse:
         """
         Get the top K snippets that match the given query.

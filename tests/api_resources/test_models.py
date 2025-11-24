@@ -21,6 +21,7 @@ class TestModels:
     def test_method_rerank(self, client: ZeroEntropy) -> None:
         model = client.models.rerank(
             documents=["string"],
+            model="model",
             query="query",
         )
         assert_matches_type(ModelRerankResponse, model, path=["response"])
@@ -29,8 +30,9 @@ class TestModels:
     def test_method_rerank_with_all_params(self, client: ZeroEntropy) -> None:
         model = client.models.rerank(
             documents=["string"],
-            query="query",
             model="model",
+            query="query",
+            latency="fast",
             top_n=0,
         )
         assert_matches_type(ModelRerankResponse, model, path=["response"])
@@ -39,6 +41,7 @@ class TestModels:
     def test_raw_response_rerank(self, client: ZeroEntropy) -> None:
         response = client.models.with_raw_response.rerank(
             documents=["string"],
+            model="model",
             query="query",
         )
 
@@ -51,6 +54,7 @@ class TestModels:
     def test_streaming_response_rerank(self, client: ZeroEntropy) -> None:
         with client.models.with_streaming_response.rerank(
             documents=["string"],
+            model="model",
             query="query",
         ) as response:
             assert not response.is_closed
@@ -71,6 +75,7 @@ class TestAsyncModels:
     async def test_method_rerank(self, async_client: AsyncZeroEntropy) -> None:
         model = await async_client.models.rerank(
             documents=["string"],
+            model="model",
             query="query",
         )
         assert_matches_type(ModelRerankResponse, model, path=["response"])
@@ -79,8 +84,9 @@ class TestAsyncModels:
     async def test_method_rerank_with_all_params(self, async_client: AsyncZeroEntropy) -> None:
         model = await async_client.models.rerank(
             documents=["string"],
-            query="query",
             model="model",
+            query="query",
+            latency="fast",
             top_n=0,
         )
         assert_matches_type(ModelRerankResponse, model, path=["response"])
@@ -89,6 +95,7 @@ class TestAsyncModels:
     async def test_raw_response_rerank(self, async_client: AsyncZeroEntropy) -> None:
         response = await async_client.models.with_raw_response.rerank(
             documents=["string"],
+            model="model",
             query="query",
         )
 
@@ -101,6 +108,7 @@ class TestAsyncModels:
     async def test_streaming_response_rerank(self, async_client: AsyncZeroEntropy) -> None:
         async with async_client.models.with_streaming_response.rerank(
             documents=["string"],
+            model="model",
             query="query",
         ) as response:
             assert not response.is_closed
