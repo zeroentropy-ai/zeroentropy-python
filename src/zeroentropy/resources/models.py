@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Optional
+from typing_extensions import Literal
 
 import httpx
 
 from ..types import model_rerank_params
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -46,16 +47,17 @@ class ModelsResource(SyncAPIResource):
     def rerank(
         self,
         *,
-        documents: List[str],
+        documents: SequenceNotStr[str],
+        model: str,
         query: str,
-        model: str | NotGiven = NOT_GIVEN,
-        top_n: Optional[int] | NotGiven = NOT_GIVEN,
+        latency: Optional[Literal["fast", "slow"]] | Omit = omit,
+        top_n: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ModelRerankResponse:
         """
         Reranks the provided documents, according to the provided query.
@@ -63,19 +65,34 @@ class ModelsResource(SyncAPIResource):
         The results will be sorted by descending order of relevance. For each document,
         the index and the score will be returned. The index is relative to the documents
         array that was passed in. The score is the query-document relevancy determined
-        by the reranker model. The value will be returned in descending order to
+        by the reranker model. The results will be returned in descending order of
         relevance.
+
+        Organizations will, by default, have a ratelimit of `2,500,000`
+        bytes-per-minute. If this is exceeded, requests will be throttled into
+        `latency: "slow"` mode, up to `10,000,000` bytes-per-minute. If even this is
+        exceeded, you will get a `429` error. To request higher ratelimits, please
+        contact [founders@zeroentropy.dev](mailto:founders@zeroentropy.dev) or message
+        us on [Discord](https://go.zeroentropy.dev/discord) or
+        [Slack](https://go.zeroentropy.dev/slack)!
 
         Args:
           documents: The list of documents to rerank. Each document is a string.
 
-          query: The query to rerank the documents by. Results will be in descending order of
-              relevance.
+          model: The model ID to use for reranking. Options are: ["zerank-2", "zerank-1",
+              "zerank-1-small"]
 
-          model: The model ID to use for reranking. Options are: ["zerank-1-large"]
+          query: The query to rerank the documents by.
+
+          latency: Whether the call will be inferenced "fast" or "slow". RateLimits for slow API
+              calls are orders of magnitude higher, but you can expect >10 second latency.
+              Fast inferences are guaranteed subsecond, but rate limits are lower. If not
+              specified, first a "fast" call will be attempted, but if you have exceeded your
+              fast rate limit, then a slow call will be executed. If explicitly set to "fast",
+              then 429 will be returned if it cannot be executed fast.
 
           top_n: If provided, then only the top `n` documents will be returned in the results
-              array.
+              array. Otherwise, `n` will be the length of the provided documents array.
 
           extra_headers: Send extra headers
 
@@ -90,8 +107,9 @@ class ModelsResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "documents": documents,
-                    "query": query,
                     "model": model,
+                    "query": query,
+                    "latency": latency,
                     "top_n": top_n,
                 },
                 model_rerank_params.ModelRerankParams,
@@ -126,16 +144,17 @@ class AsyncModelsResource(AsyncAPIResource):
     async def rerank(
         self,
         *,
-        documents: List[str],
+        documents: SequenceNotStr[str],
+        model: str,
         query: str,
-        model: str | NotGiven = NOT_GIVEN,
-        top_n: Optional[int] | NotGiven = NOT_GIVEN,
+        latency: Optional[Literal["fast", "slow"]] | Omit = omit,
+        top_n: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ModelRerankResponse:
         """
         Reranks the provided documents, according to the provided query.
@@ -143,19 +162,34 @@ class AsyncModelsResource(AsyncAPIResource):
         The results will be sorted by descending order of relevance. For each document,
         the index and the score will be returned. The index is relative to the documents
         array that was passed in. The score is the query-document relevancy determined
-        by the reranker model. The value will be returned in descending order to
+        by the reranker model. The results will be returned in descending order of
         relevance.
+
+        Organizations will, by default, have a ratelimit of `2,500,000`
+        bytes-per-minute. If this is exceeded, requests will be throttled into
+        `latency: "slow"` mode, up to `10,000,000` bytes-per-minute. If even this is
+        exceeded, you will get a `429` error. To request higher ratelimits, please
+        contact [founders@zeroentropy.dev](mailto:founders@zeroentropy.dev) or message
+        us on [Discord](https://go.zeroentropy.dev/discord) or
+        [Slack](https://go.zeroentropy.dev/slack)!
 
         Args:
           documents: The list of documents to rerank. Each document is a string.
 
-          query: The query to rerank the documents by. Results will be in descending order of
-              relevance.
+          model: The model ID to use for reranking. Options are: ["zerank-2", "zerank-1",
+              "zerank-1-small"]
 
-          model: The model ID to use for reranking. Options are: ["zerank-1-large"]
+          query: The query to rerank the documents by.
+
+          latency: Whether the call will be inferenced "fast" or "slow". RateLimits for slow API
+              calls are orders of magnitude higher, but you can expect >10 second latency.
+              Fast inferences are guaranteed subsecond, but rate limits are lower. If not
+              specified, first a "fast" call will be attempted, but if you have exceeded your
+              fast rate limit, then a slow call will be executed. If explicitly set to "fast",
+              then 429 will be returned if it cannot be executed fast.
 
           top_n: If provided, then only the top `n` documents will be returned in the results
-              array.
+              array. Otherwise, `n` will be the length of the provided documents array.
 
           extra_headers: Send extra headers
 
@@ -170,8 +204,9 @@ class AsyncModelsResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "documents": documents,
-                    "query": query,
                     "model": model,
+                    "query": query,
+                    "latency": latency,
                     "top_n": top_n,
                 },
                 model_rerank_params.ModelRerankParams,

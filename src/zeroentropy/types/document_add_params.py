@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
-from typing import Dict, List, Union
+from typing import Dict, Union
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
+
+from .._types import SequenceNotStr
 
 __all__ = [
     "DocumentAddParams",
@@ -37,7 +39,7 @@ class DocumentAddParams(TypedDict, total=False):
     unless `overwrite` is set to `true`.
     """
 
-    metadata: Dict[str, Union[str, List[str]]]
+    metadata: Dict[str, Union[str, SequenceNotStr[str]]]
     """
     This is a metadata JSON object that can be used to assign various metadata
     attributes to your document. The provided object must match the type
@@ -65,7 +67,7 @@ class ContentAPITextDocument(TypedDict, total=False):
 
 
 class ContentAPITextPagesDocument(TypedDict, total=False):
-    pages: Required[List[str]]
+    pages: Required[SequenceNotStr[str]]
     """The content of this document, as an array of strings.
 
     Each string will be the content of a full page, and can be retrieved using the
@@ -73,8 +75,13 @@ class ContentAPITextPagesDocument(TypedDict, total=False):
     the second string has index 1.
     """
 
-    type: Required[Literal["text-pages"]]
-    """This field must be `text-pages`"""
+    type: Required[Literal["text-pages", "text-pages-unordered"]]
+    """This field must be `text-pages` or `text-pages-unordered`.
+
+    When `unordered` is provided, it is assumed that consecutive pages aren't meant
+    to be read one after another. For example, PDFs are ordered, and CSVs are
+    unordered.
+    """
 
 
 class ContentAPIBinaryDocument(TypedDict, total=False):

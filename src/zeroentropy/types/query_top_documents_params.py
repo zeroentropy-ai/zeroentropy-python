@@ -19,8 +19,13 @@ class QueryTopDocumentsParams(TypedDict, total=False):
     returned. This number must be between 1 and 2048, inclusive.
     """
 
-    query: Required[str]
-    """The natural language query to search with. This cannot exceed 4096 UTF-8 bytes."""
+    query: Required[Optional[str]]
+    """The natural language query to search with.
+
+    This cannot exceed 4096 UTF-8 bytes. If `null`, then the sort will be undefined.
+    The purpose of `null` is to do faster metadata filter searches without care for
+    relevancy. Cost per query is unchanged.
+    """
 
     filter: Optional[Dict[str, object]]
     """The query filter to apply.

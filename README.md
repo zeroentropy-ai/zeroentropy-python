@@ -1,9 +1,9 @@
 # ZeroEntropy Python SDK
 
-[![PyPI version](<https://img.shields.io/pypi/v/zeroentropy.svg?label=pypi%20(stable)>)](https://pypi.org/project/zeroentropy/)
+<!-- prettier-ignore -->
+[![PyPI version](https://img.shields.io/pypi/v/zeroentropy.svg?label=pypi%20(stable))](https://pypi.org/project/zeroentropy/)
 
-The ZeroEntropy Python SDK provides convenient access to the [ZeroEntropy REST API](https://docs.zeroentropy.dev/api-reference/) from any Python 3.8+
-application.
+The ZeroEntropy Python SDK provides convenient type-safe access to the [ZeroEntropy REST API](https://docs.zeroentropy.dev/api-reference/) from any Python 3.9+ application.
 
 In order to get an API Key, you can visit our [dashboard](https://dashboard.zeroentropy.dev/).
 
@@ -93,7 +93,6 @@ pip install --pre zeroentropy[aiohttp]
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
 
 ```python
-import os
 import asyncio
 from zeroentropy import DefaultAioHttpClient
 from zeroentropy import AsyncZeroEntropy
@@ -101,7 +100,7 @@ from zeroentropy import AsyncZeroEntropy
 
 async def main() -> None:
     async with AsyncZeroEntropy(
-        api_key=os.environ.get("ZEROENTROPY_API_KEY"),  # This is the default and can be omitted
+        api_key="My API Key",
         http_client=DefaultAioHttpClient(),
     ) as client:
         response = await client.documents.add(
@@ -449,7 +448,7 @@ print(zeroentropy.__version__)
 
 ## Requirements
 
-Python 3.8 or higher.
+Python 3.9 or higher.
 
 ## Contributing
 

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, List, Union, Optional
+from typing import Dict, Union, Optional
 from typing_extensions import Literal
 
 import httpx
@@ -15,7 +15,7 @@ from ..types import (
     document_get_info_list_params,
     document_get_page_info_params,
 )
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -62,14 +62,14 @@ class DocumentsResource(SyncAPIResource):
         *,
         collection_name: str,
         path: str,
-        index_status: Optional[Literal["not_parsed", "not_indexed"]] | NotGiven = NOT_GIVEN,
-        metadata: Optional[Dict[str, Union[str, List[str]]]] | NotGiven = NOT_GIVEN,
+        index_status: Optional[Literal["not_parsed", "not_indexed"]] | Omit = omit,
+        metadata: Optional[Dict[str, Union[str, SequenceNotStr[str]]]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocumentUpdateResponse:
         """Updates a document.
 
@@ -81,9 +81,9 @@ class DocumentsResource(SyncAPIResource):
           `index_status` of `indexed`. After this call, the document will have an
           `index_status` of `not_indexed`, since the document will need to reindex with
           the new metadata.
-        - When updating with a non-null `index_status`, setting it to
-          `not_parsed or `not_indexed`requires that the document must have`index_status`of`parsing_failed`or`indexing_failed`,
-          respectively.
+        - When updating with a non-null `index_status`, setting it to `not_parsed` or
+          `not_indexed` requires that the document must have `index_status` of
+          `parsing_failed` or `indexing_failed`, respectively.
 
         A `404 Not Found` status code will be returned, if the provided collection name
         or document path does not exist.
@@ -139,7 +139,7 @@ class DocumentsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocumentDeleteResponse:
         """
         Deletes a document
@@ -182,14 +182,14 @@ class DocumentsResource(SyncAPIResource):
         collection_name: str,
         content: document_add_params.Content,
         path: str,
-        metadata: Dict[str, Union[str, List[str]]] | NotGiven = NOT_GIVEN,
-        overwrite: bool | NotGiven = NOT_GIVEN,
+        metadata: Dict[str, Union[str, SequenceNotStr[str]]] | Omit = omit,
+        overwrite: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocumentAddResponse:
         """
         Adds a document to a given collection.
@@ -261,13 +261,13 @@ class DocumentsResource(SyncAPIResource):
         *,
         collection_name: str,
         path: str,
-        include_content: bool | NotGiven = NOT_GIVEN,
+        include_content: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocumentGetInfoResponse:
         """Retrieves information about a specific document.
 
@@ -315,15 +315,15 @@ class DocumentsResource(SyncAPIResource):
         self,
         *,
         collection_name: str,
-        limit: int | NotGiven = NOT_GIVEN,
-        path_gt: Optional[str] | NotGiven = NOT_GIVEN,
-        path_prefix: Optional[str] | NotGiven = NOT_GIVEN,
+        limit: int | Omit = omit,
+        path_gt: Optional[str] | Omit = omit,
+        path_prefix: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncGetDocumentInfoListCursor[DocumentGetInfoListResponse]:
         """
         Retrives a list of document metadata information that matches the provided
@@ -383,13 +383,13 @@ class DocumentsResource(SyncAPIResource):
         collection_name: str,
         page_index: int,
         path: str,
-        include_content: bool | NotGiven = NOT_GIVEN,
+        include_content: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocumentGetPageInfoResponse:
         """Retrieves information about a specific page.
 
@@ -465,14 +465,14 @@ class AsyncDocumentsResource(AsyncAPIResource):
         *,
         collection_name: str,
         path: str,
-        index_status: Optional[Literal["not_parsed", "not_indexed"]] | NotGiven = NOT_GIVEN,
-        metadata: Optional[Dict[str, Union[str, List[str]]]] | NotGiven = NOT_GIVEN,
+        index_status: Optional[Literal["not_parsed", "not_indexed"]] | Omit = omit,
+        metadata: Optional[Dict[str, Union[str, SequenceNotStr[str]]]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocumentUpdateResponse:
         """Updates a document.
 
@@ -484,9 +484,9 @@ class AsyncDocumentsResource(AsyncAPIResource):
           `index_status` of `indexed`. After this call, the document will have an
           `index_status` of `not_indexed`, since the document will need to reindex with
           the new metadata.
-        - When updating with a non-null `index_status`, setting it to
-          `not_parsed or `not_indexed`requires that the document must have`index_status`of`parsing_failed`or`indexing_failed`,
-          respectively.
+        - When updating with a non-null `index_status`, setting it to `not_parsed` or
+          `not_indexed` requires that the document must have `index_status` of
+          `parsing_failed` or `indexing_failed`, respectively.
 
         A `404 Not Found` status code will be returned, if the provided collection name
         or document path does not exist.
@@ -542,7 +542,7 @@ class AsyncDocumentsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocumentDeleteResponse:
         """
         Deletes a document
@@ -585,14 +585,14 @@ class AsyncDocumentsResource(AsyncAPIResource):
         collection_name: str,
         content: document_add_params.Content,
         path: str,
-        metadata: Dict[str, Union[str, List[str]]] | NotGiven = NOT_GIVEN,
-        overwrite: bool | NotGiven = NOT_GIVEN,
+        metadata: Dict[str, Union[str, SequenceNotStr[str]]] | Omit = omit,
+        overwrite: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocumentAddResponse:
         """
         Adds a document to a given collection.
@@ -664,13 +664,13 @@ class AsyncDocumentsResource(AsyncAPIResource):
         *,
         collection_name: str,
         path: str,
-        include_content: bool | NotGiven = NOT_GIVEN,
+        include_content: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocumentGetInfoResponse:
         """Retrieves information about a specific document.
 
@@ -718,15 +718,15 @@ class AsyncDocumentsResource(AsyncAPIResource):
         self,
         *,
         collection_name: str,
-        limit: int | NotGiven = NOT_GIVEN,
-        path_gt: Optional[str] | NotGiven = NOT_GIVEN,
-        path_prefix: Optional[str] | NotGiven = NOT_GIVEN,
+        limit: int | Omit = omit,
+        path_gt: Optional[str] | Omit = omit,
+        path_prefix: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[DocumentGetInfoListResponse, AsyncGetDocumentInfoListCursor[DocumentGetInfoListResponse]]:
         """
         Retrives a list of document metadata information that matches the provided
@@ -786,13 +786,13 @@ class AsyncDocumentsResource(AsyncAPIResource):
         collection_name: str,
         page_index: int,
         path: str,
-        include_content: bool | NotGiven = NOT_GIVEN,
+        include_content: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocumentGetPageInfoResponse:
         """Retrieves information about a specific page.
 

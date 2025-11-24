@@ -1,5 +1,43 @@
 # Changelog
 
+## 0.1.0-alpha.7 (2025-11-24)
+
+Full Changelog: [v0.1.0-alpha.6...v0.1.0-alpha.7](https://github.com/zeroentropy-ai/zeroentropy-python/compare/v0.1.0-alpha.6...v0.1.0-alpha.7)
+
+### Features
+
+* **api:** manual updates ([7b6f1c5](https://github.com/zeroentropy-ai/zeroentropy-python/commit/7b6f1c52caff5579b0f42534ae393bf2bd634e2b))
+* clean up environment call outs ([de35b9d](https://github.com/zeroentropy-ai/zeroentropy-python/commit/de35b9dc8c136eeaa0909076488f152a5f885398))
+* **client:** support file upload requests ([4e03611](https://github.com/zeroentropy-ai/zeroentropy-python/commit/4e036110dec2d075f4de4cf44691c131dfa545b7))
+* improve future compat with pydantic v3 ([372675f](https://github.com/zeroentropy-ai/zeroentropy-python/commit/372675f01b9fd520b0f49749b85314a3333dfa2a))
+* **types:** replace List[str] with SequenceNotStr in params ([37625fd](https://github.com/zeroentropy-ai/zeroentropy-python/commit/37625fd6bb4efb5a4926e565eaa7b25852d75f51))
+
+
+### Bug Fixes
+
+* avoid newer type syntax ([8f77952](https://github.com/zeroentropy-ai/zeroentropy-python/commit/8f7795235684015a6cd419e2bab68b99ecf63b23))
+* **client:** don't send Content-Type header on GET requests ([dfd4e86](https://github.com/zeroentropy-ai/zeroentropy-python/commit/dfd4e866616c9c7e9fa6ffa3b757abf6d8cd9ebc))
+* **parsing:** correctly handle nested discriminated unions ([79004f8](https://github.com/zeroentropy-ai/zeroentropy-python/commit/79004f855735cc872d0050f781bf8b84d04fd592))
+* **parsing:** ignore empty metadata ([a8b35a8](https://github.com/zeroentropy-ai/zeroentropy-python/commit/a8b35a89d5b113eb662bd3113c9433dc5f1382f9))
+* **parsing:** parse extra field types ([5530ece](https://github.com/zeroentropy-ai/zeroentropy-python/commit/5530ece04b51a3300c4202b66d4e50101c374a60))
+
+
+### Chores
+
+* **internal:** add Sequence related utils ([856feb3](https://github.com/zeroentropy-ai/zeroentropy-python/commit/856feb326411abd1fc736eee5a64401f526285ca))
+* **internal:** bump pinned h11 dep ([b9e057f](https://github.com/zeroentropy-ai/zeroentropy-python/commit/b9e057f0827b8ed5851ec7e7a8b9ed622019f065))
+* **internal:** change ci workflow machines ([bb0ac37](https://github.com/zeroentropy-ai/zeroentropy-python/commit/bb0ac37c96cf27acdcc4e578e9419cbe4a457e18))
+* **internal:** fix ruff target version ([80e5aae](https://github.com/zeroentropy-ai/zeroentropy-python/commit/80e5aae0af40e80b5962b0dbf2d5351d9df4432e))
+* **internal:** move mypy configurations to `pyproject.toml` file ([97977db](https://github.com/zeroentropy-ai/zeroentropy-python/commit/97977db20f3f27cb1b01f4be6e3538796c0a5414))
+* **internal:** update comment in script ([e5a7e0f](https://github.com/zeroentropy-ai/zeroentropy-python/commit/e5a7e0f1592dcfe868064dcdea1446b358662461))
+* **internal:** update pyright exclude list ([0c89992](https://github.com/zeroentropy-ai/zeroentropy-python/commit/0c89992ab3ef88427c150b72fe510e26a202db43))
+* **package:** mark python 3.13 as supported ([144f8ca](https://github.com/zeroentropy-ai/zeroentropy-python/commit/144f8ca076c92c7e68403d6a0a49ce1caeee69b9))
+* **project:** add settings file for vscode ([c4f8607](https://github.com/zeroentropy-ai/zeroentropy-python/commit/c4f86076c0b09422a445ffa91e6880a085fabacd))
+* **readme:** fix version rendering on pypi ([3ccc314](https://github.com/zeroentropy-ai/zeroentropy-python/commit/3ccc314b021100775fe854d7225405c63b299599))
+* **tests:** simplify `get_platform` test ([ae111a6](https://github.com/zeroentropy-ai/zeroentropy-python/commit/ae111a642a1da930f319ce62f1a28f203881cfe5))
+* update @stainless-api/prism-cli to v5.15.0 ([0deb0ff](https://github.com/zeroentropy-ai/zeroentropy-python/commit/0deb0ff394e034254520520675869023912cecc1))
+* update github action ([7e76e08](https://github.com/zeroentropy-ai/zeroentropy-python/commit/7e76e087f68489a4a24ac990d48dd665d81f7181))
+
 ## 0.1.0-alpha.6 (2025-07-08)
 
 Full Changelog: [v0.1.0-alpha.5...v0.1.0-alpha.6](https://github.com/zeroentropy-ai/zeroentropy-python/compare/v0.1.0-alpha.5...v0.1.0-alpha.6)

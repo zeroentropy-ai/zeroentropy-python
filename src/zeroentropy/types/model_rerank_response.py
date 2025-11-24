@@ -19,7 +19,8 @@ class Result(BaseModel):
 
     This number will range between 0.0 and 1.0. This score is dependent on only the
     query and the scored document; other documents do not affect this score. This
-    value is deterministic, but may vary slightly due to floating point error.
+    value is intended to be deterministic, but it may vary slightly due to floating
+    point error.
     """
 
 

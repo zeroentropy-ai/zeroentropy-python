@@ -5,7 +5,7 @@ from __future__ import annotations
 import httpx
 
 from ..types import collection_add_params, collection_delete_params
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -52,7 +52,7 @@ class CollectionsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CollectionDeleteResponse:
         """
         Deletes a collection.
@@ -84,12 +84,13 @@ class CollectionsResource(SyncAPIResource):
         self,
         *,
         collection_name: str,
+        num_shards: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CollectionAddResponse:
         """
         Adds a collection.
@@ -101,6 +102,12 @@ class CollectionsResource(SyncAPIResource):
               characters. If special characters are used, then the UTF-8 encoded string cannot
               exceed 1024 bytes.
 
+          num_shards: [ADVANCED] The number of shards to use for this collection. By using K shards,
+              your documents can index with K times more throughput. However, queries will be
+              automatically sent to all K shards and then aggregated. For large collections,
+              this can make queries faster. But for small collections, this will make queries
+              slower. `num_shards` must be one of [1, 8, 16, 32, 64]. The default is 1.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -111,7 +118,13 @@ class CollectionsResource(SyncAPIResource):
         """
         return self._post(
             "/collections/add-collection",
-            body=maybe_transform({"collection_name": collection_name}, collection_add_params.CollectionAddParams),
+            body=maybe_transform(
+                {
+                    "collection_name": collection_name,
+                    "num_shards": num_shards,
+                },
+                collection_add_params.CollectionAddParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -126,7 +139,7 @@ class CollectionsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CollectionGetListResponse:
         """Gets a complete list of all of your collections."""
         return self._post(
@@ -167,7 +180,7 @@ class AsyncCollectionsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CollectionDeleteResponse:
         """
         Deletes a collection.
@@ -201,12 +214,13 @@ class AsyncCollectionsResource(AsyncAPIResource):
         self,
         *,
         collection_name: str,
+        num_shards: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CollectionAddResponse:
         """
         Adds a collection.
@@ -217,6 +231,12 @@ class AsyncCollectionsResource(AsyncAPIResource):
           collection_name: The name of the collection to add. The maximum length of this string is 1024
               characters. If special characters are used, then the UTF-8 encoded string cannot
               exceed 1024 bytes.
+
+          num_shards: [ADVANCED] The number of shards to use for this collection. By using K shards,
+              your documents can index with K times more throughput. However, queries will be
+              automatically sent to all K shards and then aggregated. For large collections,
+              this can make queries faster. But for small collections, this will make queries
+              slower. `num_shards` must be one of [1, 8, 16, 32, 64]. The default is 1.
 
           extra_headers: Send extra headers
 
@@ -229,7 +249,11 @@ class AsyncCollectionsResource(AsyncAPIResource):
         return await self._post(
             "/collections/add-collection",
             body=await async_maybe_transform(
-                {"collection_name": collection_name}, collection_add_params.CollectionAddParams
+                {
+                    "collection_name": collection_name,
+                    "num_shards": num_shards,
+                },
+                collection_add_params.CollectionAddParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -245,7 +269,7 @@ class AsyncCollectionsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CollectionGetListResponse:
         """Gets a complete list of all of your collections."""
         return await self._post(
