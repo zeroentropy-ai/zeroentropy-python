@@ -60,6 +60,14 @@ class TestCollections:
         assert_matches_type(CollectionAddResponse, collection, path=["response"])
 
     @parametrize
+    def test_method_add_with_all_params(self, client: ZeroEntropy) -> None:
+        collection = client.collections.add(
+            collection_name="collection_name",
+            num_shards=0,
+        )
+        assert_matches_type(CollectionAddResponse, collection, path=["response"])
+
+    @parametrize
     def test_raw_response_add(self, client: ZeroEntropy) -> None:
         response = client.collections.with_raw_response.add(
             collection_name="collection_name",
@@ -149,6 +157,14 @@ class TestAsyncCollections:
     async def test_method_add(self, async_client: AsyncZeroEntropy) -> None:
         collection = await async_client.collections.add(
             collection_name="collection_name",
+        )
+        assert_matches_type(CollectionAddResponse, collection, path=["response"])
+
+    @parametrize
+    async def test_method_add_with_all_params(self, async_client: AsyncZeroEntropy) -> None:
+        collection = await async_client.collections.add(
+            collection_name="collection_name",
+            num_shards=0,
         )
         assert_matches_type(CollectionAddResponse, collection, path=["response"])
 

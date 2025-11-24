@@ -75,8 +75,13 @@ class ContentAPITextPagesDocument(TypedDict, total=False):
     the second string has index 1.
     """
 
-    type: Required[Literal["text-pages"]]
-    """This field must be `text-pages`"""
+    type: Required[Literal["text-pages", "text-pages-unordered"]]
+    """This field must be `text-pages` or `text-pages-unordered`.
+
+    When `unordered` is provided, it is assumed that consecutive pages aren't meant
+    to be read one after another. For example, PDFs are ordered, and CSVs are
+    unordered.
+    """
 
 
 class ContentAPIBinaryDocument(TypedDict, total=False):

@@ -3,8 +3,7 @@
 <!-- prettier-ignore -->
 [![PyPI version](https://img.shields.io/pypi/v/zeroentropy.svg?label=pypi%20(stable))](https://pypi.org/project/zeroentropy/)
 
-The ZeroEntropy Python SDK provides convenient access to the [ZeroEntropy REST API](https://docs.zeroentropy.dev/api-reference/) from any Python 3.8+
-application.
+The ZeroEntropy Python SDK provides convenient type-safe access to the [ZeroEntropy REST API](https://docs.zeroentropy.dev/api-reference/) from any Python 3.9+ application.
 
 In order to get an API Key, you can visit our [dashboard](https://dashboard.zeroentropy.dev/).
 
@@ -449,7 +448,7 @@ print(zeroentropy.__version__)
 
 ## Requirements
 
-Python 3.8 or higher.
+Python 3.9 or higher.
 
 ## Contributing
 
