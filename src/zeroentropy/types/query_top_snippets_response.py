@@ -31,6 +31,11 @@ class DocumentResult(BaseModel):
 
 
 class Result(BaseModel):
+    """This is a Snippet.
+
+    A snippet refers to a particular document path, and index range. Note that all documents, regardless of filetype, are converted into `UTF-8`-encoded strings. The `start_index` and `end_index` refer to the range of characters in that string, that have been matched by this snippet.
+    """
+
     content: str
     """The full string content of this snippet."""
 

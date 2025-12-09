@@ -8,6 +8,8 @@ __all__ = ["QueryTopPagesResponse", "Result"]
 
 
 class Result(BaseModel):
+    """A Page's metadata."""
+
     content: Optional[str] = None
     """The contents of this page.
 
