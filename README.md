@@ -17,7 +17,7 @@ The REST API documentation can be found on [docs.zeroentropy.dev](https://docs.z
 
 ```sh
 # install from PyPI
-pip install --pre zeroentropy
+pip install '--pre zeroentropy'
 ```
 
 ## Usage
@@ -87,7 +87,7 @@ You can enable this by installing `aiohttp`:
 
 ```sh
 # install from PyPI
-pip install --pre zeroentropy[aiohttp]
+pip install '--pre zeroentropy[aiohttp]'
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
