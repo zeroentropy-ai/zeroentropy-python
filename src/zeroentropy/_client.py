@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os
-from typing import Any, Mapping
+from typing import TYPE_CHECKING, Any, Mapping
 from typing_extensions import Self, override
 
 import httpx
@@ -20,8 +20,8 @@ from ._types import (
     not_given,
 )
 from ._utils import is_given, get_async_library
+from ._compat import cached_property
 from ._version import __version__
-from .resources import models, status, queries, documents, collections
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError, ZeroEntropyError
 from ._base_client import (
@@ -29,6 +29,14 @@ from ._base_client import (
     SyncAPIClient,
     AsyncAPIClient,
 )
+
+if TYPE_CHECKING:
+    from .resources import models, status, queries, documents, collections
+    from .resources.models import ModelsResource, AsyncModelsResource
+    from .resources.status import StatusResource, AsyncStatusResource
+    from .resources.queries import QueriesResource, AsyncQueriesResource
+    from .resources.documents import DocumentsResource, AsyncDocumentsResource
+    from .resources.collections import CollectionsResource, AsyncCollectionsResource
 
 __all__ = [
     "Timeout",
@@ -43,14 +51,6 @@ __all__ = [
 
 
 class ZeroEntropy(SyncAPIClient):
-    status: status.StatusResource
-    collections: collections.CollectionsResource
-    documents: documents.DocumentsResource
-    queries: queries.QueriesResource
-    models: models.ModelsResource
-    with_raw_response: ZeroEntropyWithRawResponse
-    with_streaming_response: ZeroEntropyWithStreamedResponse
-
     # client options
     api_key: str
 
@@ -105,13 +105,43 @@ class ZeroEntropy(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.status = status.StatusResource(self)
-        self.collections = collections.CollectionsResource(self)
-        self.documents = documents.DocumentsResource(self)
-        self.queries = queries.QueriesResource(self)
-        self.models = models.ModelsResource(self)
-        self.with_raw_response = ZeroEntropyWithRawResponse(self)
-        self.with_streaming_response = ZeroEntropyWithStreamedResponse(self)
+    @cached_property
+    def status(self) -> StatusResource:
+        from .resources.status import StatusResource
+
+        return StatusResource(self)
+
+    @cached_property
+    def collections(self) -> CollectionsResource:
+        from .resources.collections import CollectionsResource
+
+        return CollectionsResource(self)
+
+    @cached_property
+    def documents(self) -> DocumentsResource:
+        from .resources.documents import DocumentsResource
+
+        return DocumentsResource(self)
+
+    @cached_property
+    def queries(self) -> QueriesResource:
+        from .resources.queries import QueriesResource
+
+        return QueriesResource(self)
+
+    @cached_property
+    def models(self) -> ModelsResource:
+        from .resources.models import ModelsResource
+
+        return ModelsResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> ZeroEntropyWithRawResponse:
+        return ZeroEntropyWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> ZeroEntropyWithStreamedResponse:
+        return ZeroEntropyWithStreamedResponse(self)
 
     @property
     @override
@@ -219,14 +249,6 @@ class ZeroEntropy(SyncAPIClient):
 
 
 class AsyncZeroEntropy(AsyncAPIClient):
-    status: status.AsyncStatusResource
-    collections: collections.AsyncCollectionsResource
-    documents: documents.AsyncDocumentsResource
-    queries: queries.AsyncQueriesResource
-    models: models.AsyncModelsResource
-    with_raw_response: AsyncZeroEntropyWithRawResponse
-    with_streaming_response: AsyncZeroEntropyWithStreamedResponse
-
     # client options
     api_key: str
 
@@ -281,13 +303,43 @@ class AsyncZeroEntropy(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.status = status.AsyncStatusResource(self)
-        self.collections = collections.AsyncCollectionsResource(self)
-        self.documents = documents.AsyncDocumentsResource(self)
-        self.queries = queries.AsyncQueriesResource(self)
-        self.models = models.AsyncModelsResource(self)
-        self.with_raw_response = AsyncZeroEntropyWithRawResponse(self)
-        self.with_streaming_response = AsyncZeroEntropyWithStreamedResponse(self)
+    @cached_property
+    def status(self) -> AsyncStatusResource:
+        from .resources.status import AsyncStatusResource
+
+        return AsyncStatusResource(self)
+
+    @cached_property
+    def collections(self) -> AsyncCollectionsResource:
+        from .resources.collections import AsyncCollectionsResource
+
+        return AsyncCollectionsResource(self)
+
+    @cached_property
+    def documents(self) -> AsyncDocumentsResource:
+        from .resources.documents import AsyncDocumentsResource
+
+        return AsyncDocumentsResource(self)
+
+    @cached_property
+    def queries(self) -> AsyncQueriesResource:
+        from .resources.queries import AsyncQueriesResource
+
+        return AsyncQueriesResource(self)
+
+    @cached_property
+    def models(self) -> AsyncModelsResource:
+        from .resources.models import AsyncModelsResource
+
+        return AsyncModelsResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> AsyncZeroEntropyWithRawResponse:
+        return AsyncZeroEntropyWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> AsyncZeroEntropyWithStreamedResponse:
+        return AsyncZeroEntropyWithStreamedResponse(self)
 
     @property
     @override
@@ -395,39 +447,151 @@ class AsyncZeroEntropy(AsyncAPIClient):
 
 
 class ZeroEntropyWithRawResponse:
+    _client: ZeroEntropy
+
     def __init__(self, client: ZeroEntropy) -> None:
-        self.status = status.StatusResourceWithRawResponse(client.status)
-        self.collections = collections.CollectionsResourceWithRawResponse(client.collections)
-        self.documents = documents.DocumentsResourceWithRawResponse(client.documents)
-        self.queries = queries.QueriesResourceWithRawResponse(client.queries)
-        self.models = models.ModelsResourceWithRawResponse(client.models)
+        self._client = client
+
+    @cached_property
+    def status(self) -> status.StatusResourceWithRawResponse:
+        from .resources.status import StatusResourceWithRawResponse
+
+        return StatusResourceWithRawResponse(self._client.status)
+
+    @cached_property
+    def collections(self) -> collections.CollectionsResourceWithRawResponse:
+        from .resources.collections import CollectionsResourceWithRawResponse
+
+        return CollectionsResourceWithRawResponse(self._client.collections)
+
+    @cached_property
+    def documents(self) -> documents.DocumentsResourceWithRawResponse:
+        from .resources.documents import DocumentsResourceWithRawResponse
+
+        return DocumentsResourceWithRawResponse(self._client.documents)
+
+    @cached_property
+    def queries(self) -> queries.QueriesResourceWithRawResponse:
+        from .resources.queries import QueriesResourceWithRawResponse
+
+        return QueriesResourceWithRawResponse(self._client.queries)
+
+    @cached_property
+    def models(self) -> models.ModelsResourceWithRawResponse:
+        from .resources.models import ModelsResourceWithRawResponse
+
+        return ModelsResourceWithRawResponse(self._client.models)
 
 
 class AsyncZeroEntropyWithRawResponse:
+    _client: AsyncZeroEntropy
+
     def __init__(self, client: AsyncZeroEntropy) -> None:
-        self.status = status.AsyncStatusResourceWithRawResponse(client.status)
-        self.collections = collections.AsyncCollectionsResourceWithRawResponse(client.collections)
-        self.documents = documents.AsyncDocumentsResourceWithRawResponse(client.documents)
-        self.queries = queries.AsyncQueriesResourceWithRawResponse(client.queries)
-        self.models = models.AsyncModelsResourceWithRawResponse(client.models)
+        self._client = client
+
+    @cached_property
+    def status(self) -> status.AsyncStatusResourceWithRawResponse:
+        from .resources.status import AsyncStatusResourceWithRawResponse
+
+        return AsyncStatusResourceWithRawResponse(self._client.status)
+
+    @cached_property
+    def collections(self) -> collections.AsyncCollectionsResourceWithRawResponse:
+        from .resources.collections import AsyncCollectionsResourceWithRawResponse
+
+        return AsyncCollectionsResourceWithRawResponse(self._client.collections)
+
+    @cached_property
+    def documents(self) -> documents.AsyncDocumentsResourceWithRawResponse:
+        from .resources.documents import AsyncDocumentsResourceWithRawResponse
+
+        return AsyncDocumentsResourceWithRawResponse(self._client.documents)
+
+    @cached_property
+    def queries(self) -> queries.AsyncQueriesResourceWithRawResponse:
+        from .resources.queries import AsyncQueriesResourceWithRawResponse
+
+        return AsyncQueriesResourceWithRawResponse(self._client.queries)
+
+    @cached_property
+    def models(self) -> models.AsyncModelsResourceWithRawResponse:
+        from .resources.models import AsyncModelsResourceWithRawResponse
+
+        return AsyncModelsResourceWithRawResponse(self._client.models)
 
 
 class ZeroEntropyWithStreamedResponse:
+    _client: ZeroEntropy
+
     def __init__(self, client: ZeroEntropy) -> None:
-        self.status = status.StatusResourceWithStreamingResponse(client.status)
-        self.collections = collections.CollectionsResourceWithStreamingResponse(client.collections)
-        self.documents = documents.DocumentsResourceWithStreamingResponse(client.documents)
-        self.queries = queries.QueriesResourceWithStreamingResponse(client.queries)
-        self.models = models.ModelsResourceWithStreamingResponse(client.models)
+        self._client = client
+
+    @cached_property
+    def status(self) -> status.StatusResourceWithStreamingResponse:
+        from .resources.status import StatusResourceWithStreamingResponse
+
+        return StatusResourceWithStreamingResponse(self._client.status)
+
+    @cached_property
+    def collections(self) -> collections.CollectionsResourceWithStreamingResponse:
+        from .resources.collections import CollectionsResourceWithStreamingResponse
+
+        return CollectionsResourceWithStreamingResponse(self._client.collections)
+
+    @cached_property
+    def documents(self) -> documents.DocumentsResourceWithStreamingResponse:
+        from .resources.documents import DocumentsResourceWithStreamingResponse
+
+        return DocumentsResourceWithStreamingResponse(self._client.documents)
+
+    @cached_property
+    def queries(self) -> queries.QueriesResourceWithStreamingResponse:
+        from .resources.queries import QueriesResourceWithStreamingResponse
+
+        return QueriesResourceWithStreamingResponse(self._client.queries)
+
+    @cached_property
+    def models(self) -> models.ModelsResourceWithStreamingResponse:
+        from .resources.models import ModelsResourceWithStreamingResponse
+
+        return ModelsResourceWithStreamingResponse(self._client.models)
 
 
 class AsyncZeroEntropyWithStreamedResponse:
+    _client: AsyncZeroEntropy
+
     def __init__(self, client: AsyncZeroEntropy) -> None:
-        self.status = status.AsyncStatusResourceWithStreamingResponse(client.status)
-        self.collections = collections.AsyncCollectionsResourceWithStreamingResponse(client.collections)
-        self.documents = documents.AsyncDocumentsResourceWithStreamingResponse(client.documents)
-        self.queries = queries.AsyncQueriesResourceWithStreamingResponse(client.queries)
-        self.models = models.AsyncModelsResourceWithStreamingResponse(client.models)
+        self._client = client
+
+    @cached_property
+    def status(self) -> status.AsyncStatusResourceWithStreamingResponse:
+        from .resources.status import AsyncStatusResourceWithStreamingResponse
+
+        return AsyncStatusResourceWithStreamingResponse(self._client.status)
+
+    @cached_property
+    def collections(self) -> collections.AsyncCollectionsResourceWithStreamingResponse:
+        from .resources.collections import AsyncCollectionsResourceWithStreamingResponse
+
+        return AsyncCollectionsResourceWithStreamingResponse(self._client.collections)
+
+    @cached_property
+    def documents(self) -> documents.AsyncDocumentsResourceWithStreamingResponse:
+        from .resources.documents import AsyncDocumentsResourceWithStreamingResponse
+
+        return AsyncDocumentsResourceWithStreamingResponse(self._client.documents)
+
+    @cached_property
+    def queries(self) -> queries.AsyncQueriesResourceWithStreamingResponse:
+        from .resources.queries import AsyncQueriesResourceWithStreamingResponse
+
+        return AsyncQueriesResourceWithStreamingResponse(self._client.queries)
+
+    @cached_property
+    def models(self) -> models.AsyncModelsResourceWithStreamingResponse:
+        from .resources.models import AsyncModelsResourceWithStreamingResponse
+
+        return AsyncModelsResourceWithStreamingResponse(self._client.models)
 
 
 Client = ZeroEntropy

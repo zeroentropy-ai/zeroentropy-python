@@ -70,7 +70,7 @@ class ModelsResource(SyncAPIResource):
 
         Organizations will, by default, have a ratelimit of `2,500,000`
         bytes-per-minute. If this is exceeded, requests will be throttled into
-        `latency: "slow"` mode, up to `10,000,000` bytes-per-minute. If even this is
+        `latency: "slow"` mode, up to `20,000,000` bytes-per-minute. If even this is
         exceeded, you will get a `429` error. To request higher ratelimits, please
         contact [founders@zeroentropy.dev](mailto:founders@zeroentropy.dev) or message
         us on [Discord](https://go.zeroentropy.dev/discord) or
@@ -167,7 +167,7 @@ class AsyncModelsResource(AsyncAPIResource):
 
         Organizations will, by default, have a ratelimit of `2,500,000`
         bytes-per-minute. If this is exceeded, requests will be throttled into
-        `latency: "slow"` mode, up to `10,000,000` bytes-per-minute. If even this is
+        `latency: "slow"` mode, up to `20,000,000` bytes-per-minute. If even this is
         exceeded, you will get a `429` error. To request higher ratelimits, please
         contact [founders@zeroentropy.dev](mailto:founders@zeroentropy.dev) or message
         us on [Discord](https://go.zeroentropy.dev/discord) or

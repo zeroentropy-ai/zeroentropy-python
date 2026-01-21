@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Optional
+from typing import List
 
 from .._models import BaseModel
 
@@ -8,5 +8,4 @@ __all__ = ["DocumentDeleteResponse"]
 
 
 class DocumentDeleteResponse(BaseModel):
-    message: Optional[str] = None
-    """This string will always be "Success!". This may change in the future."""
+    deleted_paths: List[str]

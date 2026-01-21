@@ -87,12 +87,13 @@ You can enable this by installing `aiohttp`:
 
 ```sh
 # install from PyPI
-pip install --pre zeroentropy[aiohttp]
+pip install '--pre zeroentropy[aiohttp]'
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
 
 ```python
+import os
 import asyncio
 from zeroentropy import DefaultAioHttpClient
 from zeroentropy import AsyncZeroEntropy
@@ -100,7 +101,7 @@ from zeroentropy import AsyncZeroEntropy
 
 async def main() -> None:
     async with AsyncZeroEntropy(
-        api_key="My API Key",
+        api_key=os.environ.get("ZEROENTROPY_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
         response = await client.documents.add(

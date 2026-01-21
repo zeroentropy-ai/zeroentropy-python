@@ -1,20 +1,22 @@
 [project]
 name = "zeroentropy"
-version = "0.1.0-alpha.7"
+version = "0.1.0-alpha.8"
 description = "The official Python library for the ZeroEntropy API"
 dynamic = ["readme"]
 license = "Apache-2.0"
 authors = [
 { name = "ZeroEntropy", email = "founders@zeroentropy.dev" },
 ]
+
 dependencies = [
-    "httpx>=0.23.0, <1",
-    "pydantic>=1.9.0, <3",
-    "typing-extensions>=4.10, <5",
-    "anyio>=3.5.0, <5",
-    "distro>=1.7.0, <2",
-    "sniffio",
+  "httpx>=0.23.0, <1",
+  "pydantic>=1.9.0, <3",
+  "typing-extensions>=4.10, <5",
+  "anyio>=3.5.0, <5",
+  "distro>=1.7.0, <2",
+  "sniffio",
 ]
+
 requires-python = ">= 3.9"
 classifiers = [
   "Typing :: Typed",
@@ -46,7 +48,7 @@ managed = true
 # version pins are in requirements-dev.lock
 dev-dependencies = [
     "pyright==1.1.399",
-    "mypy",
+    "mypy==1.17",
     "respx",
     "pytest",
     "pytest-asyncio",
