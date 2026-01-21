@@ -1,5 +1,35 @@
 # Changelog
 
+## 0.1.0-alpha.8 (2026-01-21)
+
+Full Changelog: [v0.1.0-alpha.7...v0.1.0-alpha.8](https://github.com/zeroentropy-ai/zeroentropy-python/compare/v0.1.0-alpha.7...v0.1.0-alpha.8)
+
+### Features
+
+* **api:** manual updates ([dbd1650](https://github.com/zeroentropy-ai/zeroentropy-python/commit/dbd1650daad7af66a53f12fc7b10db1814893483))
+* **client:** add support for binary request streaming ([b06f1c2](https://github.com/zeroentropy-ai/zeroentropy-python/commit/b06f1c2a4e00ed0a0ab9b3584c61fc487824ae63))
+
+
+### Bug Fixes
+
+* ensure streams are always closed ([c253ead](https://github.com/zeroentropy-ai/zeroentropy-python/commit/c253ead4750b611c5c650bbbcb3f26d7b9c68905))
+* **types:** allow pyright to infer TypedDict types within SequenceNotStr ([75191f8](https://github.com/zeroentropy-ai/zeroentropy-python/commit/75191f8c6094f4a4560eb7ce3c156fc1b742df73))
+* use async_to_httpx_files in patch method ([80e7b4e](https://github.com/zeroentropy-ai/zeroentropy-python/commit/80e7b4e3f5456134a521d24056f47d8f501d8e5b))
+
+
+### Chores
+
+* add missing docstrings ([ae8ed92](https://github.com/zeroentropy-ai/zeroentropy-python/commit/ae8ed924d17668c0452d957d50722e09866606e4))
+* **deps:** mypy 1.18.1 has a regression, pin to 1.17 ([2b44852](https://github.com/zeroentropy-ai/zeroentropy-python/commit/2b44852cac52b0b51c0159582ec4f185e666e012))
+* **docs:** use environment variables for authentication in code snippets ([b328198](https://github.com/zeroentropy-ai/zeroentropy-python/commit/b3281987cab77990b3d83155308872f848c930d0))
+* **internal:** add `--fix` argument to lint script ([cc848fe](https://github.com/zeroentropy-ai/zeroentropy-python/commit/cc848fe86aa35af50041babacb33920adf3dd90b))
+* **internal:** add missing files argument to base client ([4848858](https://github.com/zeroentropy-ai/zeroentropy-python/commit/48488580f4d52661a9facbad07ffa2ae5a82cc31))
+* **internal:** codegen related update ([63df3e7](https://github.com/zeroentropy-ai/zeroentropy-python/commit/63df3e7b3af67b1dc7cd1d9a91ef9b109e209e75))
+* **internal:** codegen related update ([3084586](https://github.com/zeroentropy-ai/zeroentropy-python/commit/3084586d9d839b9d56172a9c020d5d8adb6f02de))
+* **internal:** update `actions/checkout` version ([2448d28](https://github.com/zeroentropy-ai/zeroentropy-python/commit/2448d28a581c998a24ada6a39180cdc894a3a1c2))
+* speedup initial import ([5e2b1ce](https://github.com/zeroentropy-ai/zeroentropy-python/commit/5e2b1ce9622fd4b32b237041b6e16b2bdcafe44e))
+* update lockfile ([0178c61](https://github.com/zeroentropy-ai/zeroentropy-python/commit/0178c61d65f910bb134becf71fbb9c500c9b2009))
+
 ## 0.1.0-alpha.7 (2025-11-24)
 
 Full Changelog: [v0.1.0-alpha.6...v0.1.0-alpha.7](https://github.com/zeroentropy-ai/zeroentropy-python/compare/v0.1.0-alpha.6...v0.1.0-alpha.7)
