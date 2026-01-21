@@ -73,7 +73,7 @@ class TestDocuments:
     def test_method_delete(self, client: ZeroEntropy) -> None:
         document = client.documents.delete(
             collection_name="collection_name",
-            path="path",
+            path="string",
         )
         assert_matches_type(DocumentDeleteResponse, document, path=["response"])
 
@@ -81,7 +81,7 @@ class TestDocuments:
     def test_raw_response_delete(self, client: ZeroEntropy) -> None:
         response = client.documents.with_raw_response.delete(
             collection_name="collection_name",
-            path="path",
+            path="string",
         )
 
         assert response.is_closed is True
@@ -93,7 +93,7 @@ class TestDocuments:
     def test_streaming_response_delete(self, client: ZeroEntropy) -> None:
         with client.documents.with_streaming_response.delete(
             collection_name="collection_name",
-            path="path",
+            path="string",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -348,7 +348,7 @@ class TestAsyncDocuments:
     async def test_method_delete(self, async_client: AsyncZeroEntropy) -> None:
         document = await async_client.documents.delete(
             collection_name="collection_name",
-            path="path",
+            path="string",
         )
         assert_matches_type(DocumentDeleteResponse, document, path=["response"])
 
@@ -356,7 +356,7 @@ class TestAsyncDocuments:
     async def test_raw_response_delete(self, async_client: AsyncZeroEntropy) -> None:
         response = await async_client.documents.with_raw_response.delete(
             collection_name="collection_name",
-            path="path",
+            path="string",
         )
 
         assert response.is_closed is True
@@ -368,7 +368,7 @@ class TestAsyncDocuments:
     async def test_streaming_response_delete(self, async_client: AsyncZeroEntropy) -> None:
         async with async_client.documents.with_streaming_response.delete(
             collection_name="collection_name",
-            path="path",
+            path="string",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

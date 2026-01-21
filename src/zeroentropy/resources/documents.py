@@ -133,7 +133,7 @@ class DocumentsResource(SyncAPIResource):
         self,
         *,
         collection_name: str,
-        path: str,
+        path: Union[str, SequenceNotStr[str]],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -150,8 +150,11 @@ class DocumentsResource(SyncAPIResource):
         Args:
           collection_name: The name of the collection.
 
-          path: The filepath of the document that you are deleting. A `404 Not Found` status
-              code will be returned if no document with this path was found.
+          path: The path(s) of the document(s) that you are deleting. Must be either a `string`,
+              or a `list[str]` between 1 and 64 inclusive. A `404 Not Found` status code will
+              be returned if no document(s) with this path was found. If at least one of the
+              paths provided do exist, then `200 OK` will be returned, along with an array of
+              the document paths that were found and thus deleted.
 
           extra_headers: Send extra headers
 
@@ -536,7 +539,7 @@ class AsyncDocumentsResource(AsyncAPIResource):
         self,
         *,
         collection_name: str,
-        path: str,
+        path: Union[str, SequenceNotStr[str]],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -553,8 +556,11 @@ class AsyncDocumentsResource(AsyncAPIResource):
         Args:
           collection_name: The name of the collection.
 
-          path: The filepath of the document that you are deleting. A `404 Not Found` status
-              code will be returned if no document with this path was found.
+          path: The path(s) of the document(s) that you are deleting. Must be either a `string`,
+              or a `list[str]` between 1 and 64 inclusive. A `404 Not Found` status code will
+              be returned if no document(s) with this path was found. If at least one of the
+              paths provided do exist, then `200 OK` will be returned, along with an array of
+              the document paths that were found and thus deleted.
 
           extra_headers: Send extra headers
 
