@@ -75,9 +75,10 @@ Methods:
 Types:
 
 ```python
-from zeroentropy.types import ModelRerankResponse
+from zeroentropy.types import ModelEmbedResponse, ModelRerankResponse
 ```
 
 Methods:
 
+- <code title="post /models/embed">client.models.<a href="./src/zeroentropy/resources/models.py">embed</a>(\*\*<a href="src/zeroentropy/types/model_embed_params.py">params</a>) -> <a href="./src/zeroentropy/types/model_embed_response.py">ModelEmbedResponse</a></code>
 - <code title="post /models/rerank">client.models.<a href="./src/zeroentropy/resources/models.py">rerank</a>(\*\*<a href="src/zeroentropy/types/model_rerank_params.py">params</a>) -> <a href="./src/zeroentropy/types/model_rerank_response.py">ModelRerankResponse</a></code>

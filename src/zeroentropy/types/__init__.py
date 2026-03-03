@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+from .model_embed_params import ModelEmbedParams as ModelEmbedParams
 from .document_add_params import DocumentAddParams as DocumentAddParams
 from .model_rerank_params import ModelRerankParams as ModelRerankParams
+from .model_embed_response import ModelEmbedResponse as ModelEmbedResponse
 from .collection_add_params import CollectionAddParams as CollectionAddParams
 from .document_add_response import DocumentAddResponse as DocumentAddResponse
 from .model_rerank_response import ModelRerankResponse as ModelRerankResponse
