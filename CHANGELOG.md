@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.0-alpha.10 (2026-03-03)
+
+Full Changelog: [v0.1.0-alpha.9...v0.1.0-alpha.10](https://github.com/zeroentropy-ai/zeroentropy-python/compare/v0.1.0-alpha.9...v0.1.0-alpha.10)
+
+### Features
+
+* **api:** manual updates ([7fcec0a](https://github.com/zeroentropy-ai/zeroentropy-python/commit/7fcec0a1c901f98c5953c66affbd742fe45a4de6))
+* **api:** manual updates ([71f3afe](https://github.com/zeroentropy-ai/zeroentropy-python/commit/71f3afe6cc59df2c9a0c92e97f602b38a9e5d723))
+
 ## 0.1.0-alpha.9 (2026-03-03)
 
 Full Changelog: [v0.1.0-alpha.8...v0.1.0-alpha.9](https://github.com/zeroentropy-ai/zeroentropy-python/compare/v0.1.0-alpha.8...v0.1.0-alpha.9)
