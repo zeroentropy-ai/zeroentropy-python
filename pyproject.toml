@@ -1,6 +1,6 @@
 [project]
 name = "zeroentropy"
-version = "0.1.0-alpha.10"
+version = "0.1.0-alpha.11"
 description = "The official Python library for the zeroentropy API"
 dynamic = ["readme"]
 license = "Apache-2.0"
