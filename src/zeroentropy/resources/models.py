@@ -68,12 +68,13 @@ class ModelsResource(SyncAPIResource):
         embedding is such that queries will have high cosine similarity with documents
         that are relevant to that query.
 
-        Organizations will, by default, have a ratelimit of `2,500,000`
-        bytes-per-minute. If this is exceeded, requests will be throttled into
-        `latency: "slow"` mode, up to `20,000,000` bytes-per-minute. If even this is
-        exceeded, you will get a `429` error. To request higher ratelimits, please
-        contact [founders@zeroentropy.dev](mailto:founders@zeroentropy.dev) or message
-        us on [Discord](https://go.zeroentropy.dev/discord) or
+        Organizations will, by default, have a ratelimit of `2,500,000` bytes-per-minute
+        and 1000 QPM. Ratelimits are refreshed every 15 seconds. If this is exceeded,
+        requests will be throttled into `latency: "slow"` mode, up to `20,000,000`
+        bytes-per-minute. If even this is exceeded, you will get a `429` error. To
+        request higher ratelimits, please contact
+        [founders@zeroentropy.dev](mailto:founders@zeroentropy.dev) or message us on
+        [Discord](https://go.zeroentropy.dev/discord) or
         [Slack](https://go.zeroentropy.dev/slack)!
 
         Args:
@@ -146,12 +147,13 @@ class ModelsResource(SyncAPIResource):
         by the reranker model. The results will be returned in descending order of
         relevance.
 
-        Organizations will, by default, have a ratelimit of `2,500,000`
-        bytes-per-minute. If this is exceeded, requests will be throttled into
-        `latency: "slow"` mode, up to `20,000,000` bytes-per-minute. If even this is
-        exceeded, you will get a `429` error. To request higher ratelimits, please
-        contact [founders@zeroentropy.dev](mailto:founders@zeroentropy.dev) or message
-        us on [Discord](https://go.zeroentropy.dev/discord) or
+        Organizations will, by default, have a ratelimit of `2,500,000` bytes-per-minute
+        and 1000 QPM. Ratelimits are refreshed every 15 seconds. If this is exceeded,
+        requests will be throttled into `latency: "slow"` mode, up to `20,000,000`
+        bytes-per-minute. If even this is exceeded, you will get a `429` error. To
+        request higher ratelimits, please contact
+        [founders@zeroentropy.dev](mailto:founders@zeroentropy.dev) or message us on
+        [Discord](https://go.zeroentropy.dev/discord) or
         [Slack](https://go.zeroentropy.dev/slack)!
 
         Args:
@@ -242,12 +244,13 @@ class AsyncModelsResource(AsyncAPIResource):
         embedding is such that queries will have high cosine similarity with documents
         that are relevant to that query.
 
-        Organizations will, by default, have a ratelimit of `2,500,000`
-        bytes-per-minute. If this is exceeded, requests will be throttled into
-        `latency: "slow"` mode, up to `20,000,000` bytes-per-minute. If even this is
-        exceeded, you will get a `429` error. To request higher ratelimits, please
-        contact [founders@zeroentropy.dev](mailto:founders@zeroentropy.dev) or message
-        us on [Discord](https://go.zeroentropy.dev/discord) or
+        Organizations will, by default, have a ratelimit of `2,500,000` bytes-per-minute
+        and 1000 QPM. Ratelimits are refreshed every 15 seconds. If this is exceeded,
+        requests will be throttled into `latency: "slow"` mode, up to `20,000,000`
+        bytes-per-minute. If even this is exceeded, you will get a `429` error. To
+        request higher ratelimits, please contact
+        [founders@zeroentropy.dev](mailto:founders@zeroentropy.dev) or message us on
+        [Discord](https://go.zeroentropy.dev/discord) or
         [Slack](https://go.zeroentropy.dev/slack)!
 
         Args:
@@ -320,12 +323,13 @@ class AsyncModelsResource(AsyncAPIResource):
         by the reranker model. The results will be returned in descending order of
         relevance.
 
-        Organizations will, by default, have a ratelimit of `2,500,000`
-        bytes-per-minute. If this is exceeded, requests will be throttled into
-        `latency: "slow"` mode, up to `20,000,000` bytes-per-minute. If even this is
-        exceeded, you will get a `429` error. To request higher ratelimits, please
-        contact [founders@zeroentropy.dev](mailto:founders@zeroentropy.dev) or message
-        us on [Discord](https://go.zeroentropy.dev/discord) or
+        Organizations will, by default, have a ratelimit of `2,500,000` bytes-per-minute
+        and 1000 QPM. Ratelimits are refreshed every 15 seconds. If this is exceeded,
+        requests will be throttled into `latency: "slow"` mode, up to `20,000,000`
+        bytes-per-minute. If even this is exceeded, you will get a `429` error. To
+        request higher ratelimits, please contact
+        [founders@zeroentropy.dev](mailto:founders@zeroentropy.dev) or message us on
+        [Discord](https://go.zeroentropy.dev/discord) or
         [Slack](https://go.zeroentropy.dev/slack)!
 
         Args:
