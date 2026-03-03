@@ -51,9 +51,9 @@ class ModelsResource(SyncAPIResource):
         input: Union[str, SequenceNotStr[str]],
         input_type: Literal["query", "document"],
         model: str,
+        dimensions: Optional[int] | Omit = omit,
+        encoding_format: Literal["float", "base64"] | Omit = omit,
         latency: Optional[Literal["fast", "slow"]] | Omit = omit,
-        output_dimensions: Optional[int] | Omit = omit,
-        output_format: Literal["float", "base64"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -78,23 +78,26 @@ class ModelsResource(SyncAPIResource):
         [Slack](https://go.zeroentropy.dev/slack)!
 
         Args:
-          input: The string, or list of strings, to embed
+          input: The string, or list of strings, to embed.
 
           input_type: The input type. For retrieval tasks, either `query` or `document`.
 
           model: The model ID to use for embedding. Options are: ["zembed-1"]
 
+          dimensions: The output dimensionality of the embedding model. For `zembed-1`, the available
+              options are: [2560, 1280, 640, 320, 160, 80, 40].
+
+          encoding_format: The output format of the embedding. If `float`, an array of floats will be
+              returned for each embeddings. If `base64`, a f32 little endian byte array will
+              be returned, encoded as a base64 string. `base64` is significantly more
+              efficient than `float`. The default is `float`.
+
           latency: Whether the call will be inferenced "fast" or "slow". RateLimits for slow API
-              calls are orders of magnitude higher, but you can expect >10 second latency.
+              calls are orders of magnitude higher, but you can expect 2-20 second latency.
               Fast inferences are guaranteed subsecond, but rate limits are lower. If not
               specified, first a "fast" call will be attempted, but if you have exceeded your
               fast rate limit, then a slow call will be executed. If explicitly set to "fast",
               then 429 will be returned if it cannot be executed fast.
-
-          output_dimensions: The output dimensionality of the embedding model.
-
-          output_format: The output format of the embedding. `base64` is significantly more efficient
-              than `float`. The default is `float`.
 
           extra_headers: Send extra headers
 
@@ -111,9 +114,9 @@ class ModelsResource(SyncAPIResource):
                     "input": input,
                     "input_type": input_type,
                     "model": model,
+                    "dimensions": dimensions,
+                    "encoding_format": encoding_format,
                     "latency": latency,
-                    "output_dimensions": output_dimensions,
-                    "output_format": output_format,
                 },
                 model_embed_params.ModelEmbedParams,
             ),
@@ -227,9 +230,9 @@ class AsyncModelsResource(AsyncAPIResource):
         input: Union[str, SequenceNotStr[str]],
         input_type: Literal["query", "document"],
         model: str,
+        dimensions: Optional[int] | Omit = omit,
+        encoding_format: Literal["float", "base64"] | Omit = omit,
         latency: Optional[Literal["fast", "slow"]] | Omit = omit,
-        output_dimensions: Optional[int] | Omit = omit,
-        output_format: Literal["float", "base64"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -254,23 +257,26 @@ class AsyncModelsResource(AsyncAPIResource):
         [Slack](https://go.zeroentropy.dev/slack)!
 
         Args:
-          input: The string, or list of strings, to embed
+          input: The string, or list of strings, to embed.
 
           input_type: The input type. For retrieval tasks, either `query` or `document`.
 
           model: The model ID to use for embedding. Options are: ["zembed-1"]
 
+          dimensions: The output dimensionality of the embedding model. For `zembed-1`, the available
+              options are: [2560, 1280, 640, 320, 160, 80, 40].
+
+          encoding_format: The output format of the embedding. If `float`, an array of floats will be
+              returned for each embeddings. If `base64`, a f32 little endian byte array will
+              be returned, encoded as a base64 string. `base64` is significantly more
+              efficient than `float`. The default is `float`.
+
           latency: Whether the call will be inferenced "fast" or "slow". RateLimits for slow API
-              calls are orders of magnitude higher, but you can expect >10 second latency.
+              calls are orders of magnitude higher, but you can expect 2-20 second latency.
               Fast inferences are guaranteed subsecond, but rate limits are lower. If not
               specified, first a "fast" call will be attempted, but if you have exceeded your
               fast rate limit, then a slow call will be executed. If explicitly set to "fast",
               then 429 will be returned if it cannot be executed fast.
-
-          output_dimensions: The output dimensionality of the embedding model.
-
-          output_format: The output format of the embedding. `base64` is significantly more efficient
-              than `float`. The default is `float`.
 
           extra_headers: Send extra headers
 
@@ -287,9 +293,9 @@ class AsyncModelsResource(AsyncAPIResource):
                     "input": input,
                     "input_type": input_type,
                     "model": model,
+                    "dimensions": dimensions,
+                    "encoding_format": encoding_format,
                     "latency": latency,
-                    "output_dimensions": output_dimensions,
-                    "output_format": output_format,
                 },
                 model_embed_params.ModelEmbedParams,
             ),

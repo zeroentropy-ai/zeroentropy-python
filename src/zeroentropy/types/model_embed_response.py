@@ -9,10 +9,10 @@ __all__ = ["ModelEmbedResponse", "Result", "Usage"]
 
 class Result(BaseModel):
     embedding: Union[List[float], str]
-    """The embedding of the input text.
+    """The embedding of the input text, as an array of floats.
 
     If `base64` format is requested, the response will be an fp32 little endian byte
-    array, encoded as base64.
+    array, encoded as a base64 string.
     """
 
 
