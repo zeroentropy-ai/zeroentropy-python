@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.1.0-alpha.9 (2026-03-03)
+
+Full Changelog: [v0.1.0-alpha.8...v0.1.0-alpha.9](https://github.com/zeroentropy-ai/zeroentropy-python/compare/v0.1.0-alpha.8...v0.1.0-alpha.9)
+
+### Features
+
+* **api:** manual updates ([d172a59](https://github.com/zeroentropy-ai/zeroentropy-python/commit/d172a59fa7fe5e224aee24fd345c8ba1e69a1233))
+* **client:** add custom JSON encoder for extended type support ([16fc282](https://github.com/zeroentropy-ai/zeroentropy-python/commit/16fc2820ec1e883128e16be9f296b1070666f199))
+
+
+### Chores
+
+* **ci:** upgrade `actions/github-script` ([f2d6a4c](https://github.com/zeroentropy-ai/zeroentropy-python/commit/f2d6a4c509ae5ce57fc64c592b3e5039cf40a9ba))
+* format all `api.md` files ([fbc0e7e](https://github.com/zeroentropy-ai/zeroentropy-python/commit/fbc0e7e1d385c141f59a3b3c674fd78bdeea879a))
+* **internal:** add request options to SSE classes ([1c67b64](https://github.com/zeroentropy-ai/zeroentropy-python/commit/1c67b643e2c6d48d53123e404f0b89f8a9178713))
+* **internal:** bump dependencies ([1fd1cce](https://github.com/zeroentropy-ai/zeroentropy-python/commit/1fd1cce350f354877437976a2f795cf810c6e039))
+* **internal:** fix lint error on Python 3.14 ([31de67c](https://github.com/zeroentropy-ai/zeroentropy-python/commit/31de67c7c1b148810644411e0d62a9ef1eb6fa7e))
+* **internal:** make `test_proxy_environment_variables` more resilient ([ed5da02](https://github.com/zeroentropy-ai/zeroentropy-python/commit/ed5da0254ec6327ac53a498380975e0d0f985681))
+* **internal:** make `test_proxy_environment_variables` more resilient to env ([1f31fae](https://github.com/zeroentropy-ai/zeroentropy-python/commit/1f31fae37fe8f8b789e7d1303311d2a657a932a2))
+* update mock server docs ([78e43f9](https://github.com/zeroentropy-ai/zeroentropy-python/commit/78e43f9c7dc3216aaba24fdf9893103279b91fff))
+
 ## 0.1.0-alpha.8 (2026-01-21)
 
 Full Changelog: [v0.1.0-alpha.7...v0.1.0-alpha.8](https://github.com/zeroentropy-ai/zeroentropy-python/compare/v0.1.0-alpha.7...v0.1.0-alpha.8)

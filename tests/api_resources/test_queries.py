@@ -88,6 +88,7 @@ class TestQueries:
             query="query",
             filter={"foo": "bar"},
             include_content=True,
+            include_metadata=True,
             latency_mode="low",
         )
         assert_matches_type(QueryTopPagesResponse, query, path=["response"])
@@ -243,6 +244,7 @@ class TestAsyncQueries:
             query="query",
             filter={"foo": "bar"},
             include_content=True,
+            include_metadata=True,
             latency_mode="low",
         )
         assert_matches_type(QueryTopPagesResponse, query, path=["response"])

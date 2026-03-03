@@ -130,6 +130,7 @@ class QueriesResource(SyncAPIResource):
         query: str,
         filter: Optional[Dict[str, object]] | Omit = omit,
         include_content: bool | Omit = omit,
+        include_metadata: bool | Omit = omit,
         latency_mode: Literal["low", "high"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -155,6 +156,9 @@ class QueriesResource(SyncAPIResource):
 
           include_content: If set to true, then the content of all pages will be returned.
 
+          include_metadata: Whether or not to include the document metadata in the response. If not
+              provided, then the default will be `False`.
+
           latency_mode: This option selects between our two latency modes. The higher latency mode takes
               longer, but can allow for more accurate responses. If desired, test both to
               customize your search experience for your particular use-case, or use the
@@ -178,6 +182,7 @@ class QueriesResource(SyncAPIResource):
                     "query": query,
                     "filter": filter,
                     "include_content": include_content,
+                    "include_metadata": include_metadata,
                     "latency_mode": latency_mode,
                 },
                 query_top_pages_params.QueryTopPagesParams,
@@ -371,6 +376,7 @@ class AsyncQueriesResource(AsyncAPIResource):
         query: str,
         filter: Optional[Dict[str, object]] | Omit = omit,
         include_content: bool | Omit = omit,
+        include_metadata: bool | Omit = omit,
         latency_mode: Literal["low", "high"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -396,6 +402,9 @@ class AsyncQueriesResource(AsyncAPIResource):
 
           include_content: If set to true, then the content of all pages will be returned.
 
+          include_metadata: Whether or not to include the document metadata in the response. If not
+              provided, then the default will be `False`.
+
           latency_mode: This option selects between our two latency modes. The higher latency mode takes
               longer, but can allow for more accurate responses. If desired, test both to
               customize your search experience for your particular use-case, or use the
@@ -419,6 +428,7 @@ class AsyncQueriesResource(AsyncAPIResource):
                     "query": query,
                     "filter": filter,
                     "include_content": include_content,
+                    "include_metadata": include_metadata,
                     "latency_mode": latency_mode,
                 },
                 query_top_pages_params.QueryTopPagesParams,

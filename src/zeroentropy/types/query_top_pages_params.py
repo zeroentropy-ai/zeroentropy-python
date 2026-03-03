@@ -32,6 +32,12 @@ class QueryTopPagesParams(TypedDict, total=False):
     include_content: bool
     """If set to true, then the content of all pages will be returned."""
 
+    include_metadata: bool
+    """Whether or not to include the document metadata in the response.
+
+    If not provided, then the default will be `False`.
+    """
+
     latency_mode: Literal["low", "high"]
     """This option selects between our two latency modes.
 
