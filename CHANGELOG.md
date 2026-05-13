@@ -1,5 +1,55 @@
 # Changelog
 
+## 0.1.0-alpha.12 (2026-05-13)
+
+Full Changelog: [v0.1.0-alpha.11...v0.1.0-alpha.12](https://github.com/zeroentropy-ai/zeroentropy-python/compare/v0.1.0-alpha.11...v0.1.0-alpha.12)
+
+### Features
+
+* **internal:** implement indices array format for query and form serialization ([7afdedd](https://github.com/zeroentropy-ai/zeroentropy-python/commit/7afdedd66e2dff463aef37287e84596240d9ec3a))
+* support setting headers via env ([203afd7](https://github.com/zeroentropy-ai/zeroentropy-python/commit/203afd7d695864ce3d7175d00d9f0a2bf987a03e))
+
+
+### Bug Fixes
+
+* **client:** preserve hardcoded query params when merging with user params ([bb86cc5](https://github.com/zeroentropy-ai/zeroentropy-python/commit/bb86cc51decf47d411f9959dee26996fd2ec501b))
+* **deps:** bump minimum typing-extensions version ([f4373a8](https://github.com/zeroentropy-ai/zeroentropy-python/commit/f4373a8d663cb8d2ca4212f77eade5269b518d1e))
+* ensure file data are only sent as 1 parameter ([ca9efb2](https://github.com/zeroentropy-ai/zeroentropy-python/commit/ca9efb2c1f815a83b97e922cbf361f0fedd1cbc5))
+* **pydantic:** do not pass `by_alias` unless set ([74ac1d3](https://github.com/zeroentropy-ai/zeroentropy-python/commit/74ac1d3f8dac62dc11de9550d88838d984301ca5))
+* sanitize endpoint path params ([a5a6035](https://github.com/zeroentropy-ai/zeroentropy-python/commit/a5a60354eabb5dce3a6a8c519311cd8590995179))
+* use correct field name format for multipart file arrays ([6dbcfc6](https://github.com/zeroentropy-ai/zeroentropy-python/commit/6dbcfc65563a368ddb47e38f4939281a96946499))
+
+
+### Performance Improvements
+
+* **client:** optimize file structure copying in multipart requests ([62638d4](https://github.com/zeroentropy-ai/zeroentropy-python/commit/62638d4e38f6dbe92abf136d98b105265eb3557f))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([ca93b8a](https://github.com/zeroentropy-ai/zeroentropy-python/commit/ca93b8ae56e0dddb8d49ecc21125c2a1751594c6))
+* **ci:** skip uploading artifacts on stainless-internal branches ([d6bb8a8](https://github.com/zeroentropy-ai/zeroentropy-python/commit/d6bb8a8306064729e4739209011106a6cc5e224f))
+* **internal:** codegen related update ([22e2e37](https://github.com/zeroentropy-ai/zeroentropy-python/commit/22e2e3741320284fb678722a90d5febb6e423434))
+* **internal:** codegen related update ([d04e826](https://github.com/zeroentropy-ai/zeroentropy-python/commit/d04e82642f9257d413e2787d8d9841ed414a3cb0))
+* **internal:** codegen related update ([6d2c530](https://github.com/zeroentropy-ai/zeroentropy-python/commit/6d2c530d2206b6ed32b7619750321b77fca83f51))
+* **internal:** more robust bootstrap script ([b6b18e4](https://github.com/zeroentropy-ai/zeroentropy-python/commit/b6b18e43b1c4d1c20c112eb410ada7de1d83ec96))
+* **internal:** reformat pyproject.toml ([0588f9b](https://github.com/zeroentropy-ai/zeroentropy-python/commit/0588f9b51128f9de5f21a1e10451a25837a48f93))
+* **internal:** tweak CI branches ([536468f](https://github.com/zeroentropy-ai/zeroentropy-python/commit/536468f4e298fb16e55818729b42fbc906a9d21f))
+* **internal:** update gitignore ([3009ce0](https://github.com/zeroentropy-ai/zeroentropy-python/commit/3009ce0201a8f99cb608182617796dc71e17a910))
+* **test:** do not count install time for mock server timeout ([ed8f79f](https://github.com/zeroentropy-ai/zeroentropy-python/commit/ed8f79f5b4c05cde5e12eb4c6a8137cc6b7dde74))
+* **tests:** bump steady to v0.19.4 ([814a31b](https://github.com/zeroentropy-ai/zeroentropy-python/commit/814a31b0de576a870d04e41ef0b52da726741311))
+* **tests:** bump steady to v0.19.5 ([f9bdfb4](https://github.com/zeroentropy-ai/zeroentropy-python/commit/f9bdfb48058be235113b6c19054a15e670d7c32b))
+* **tests:** bump steady to v0.19.6 ([9433bde](https://github.com/zeroentropy-ai/zeroentropy-python/commit/9433bde7d0d7953ad3f9a7327bf1468f30f6d600))
+* **tests:** bump steady to v0.19.7 ([e2ddebd](https://github.com/zeroentropy-ai/zeroentropy-python/commit/e2ddebd1af39af87aea48cc211b2b3520002f02c))
+* **tests:** bump steady to v0.20.1 ([4942675](https://github.com/zeroentropy-ai/zeroentropy-python/commit/494267565119547a125bc548f258bda341c1925c))
+* **tests:** bump steady to v0.20.2 ([73a8f04](https://github.com/zeroentropy-ai/zeroentropy-python/commit/73a8f04822fb42ddcbc63946b99801ca12c8e87e))
+* **tests:** bump steady to v0.22.1 ([9c3fcb6](https://github.com/zeroentropy-ai/zeroentropy-python/commit/9c3fcb69b97fdb396880759e5bea46f54e0dde99))
+
+
+### Refactors
+
+* **tests:** switch from prism to steady ([5465c72](https://github.com/zeroentropy-ai/zeroentropy-python/commit/5465c7207251fa90b2281a7429c2f0f078632b2e))
+
 ## 0.1.0-alpha.11 (2026-03-03)
 
 Full Changelog: [v0.1.0-alpha.10...v0.1.0-alpha.11](https://github.com/zeroentropy-ai/zeroentropy-python/compare/v0.1.0-alpha.10...v0.1.0-alpha.11)
