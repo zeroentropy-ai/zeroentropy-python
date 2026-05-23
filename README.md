@@ -87,7 +87,7 @@ You can enable this by installing `aiohttp`:
 
 ```sh
 # install from PyPI
-pip install '--pre zeroentropy[aiohttp]'
+pip install --pre 'zeroentropy[aiohttp]'
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
